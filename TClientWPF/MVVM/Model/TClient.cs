@@ -26,6 +26,7 @@ namespace TClientWPF.Model
         private Settings settings;
         private long groupToWatch;
         private string log;
+        private bool reloginOnFaildeResume;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,6 +43,7 @@ namespace TClientWPF.Model
         public TClient(Settings settings)
         {
             this.settings = settings;
+            reloginOnFaildeResume = true;
             Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} [{"TDIWE!"[lvl]}] {str}\n";
             Initialize();
             SetTimer();
@@ -83,7 +85,7 @@ namespace TClientWPF.Model
         {
             try
             {
-                await client.LoginUserIfNeeded();
+                await client.LoginUserIfNeeded(null, reloginOnFaildeResume);
                 await FillFavoritesList();
                 await CheckOldMessages();
             }
