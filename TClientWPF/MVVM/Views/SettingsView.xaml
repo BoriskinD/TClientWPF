@@ -1,0 +1,76 @@
+﻿<Window x:Class="TClientWPF.Views.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:TClientWPF.Views" 
+        mc:Ignorable="d"
+        Title="Settings" Height="450" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding WindowClosingCommand}"
+                                       CommandParameter="$eventArgs"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Height="28" Margin="64,22,75,10" Width="58">Api ID</TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" 
+                   Height="21" Margin="60,22,64,17" Width="73">Api Hash</TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Height="22" Margin="51,22,54,17" Width="92">Phone number</TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Height="20" Margin="60,22,64,18" Width="73">Channel</TextBlock>
+        <TextBlock Grid.Row="4" Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Height="29" Margin="51,21,54,10" Width="92">What to seek</TextBlock>
+
+        <StackPanel DataContext="{Binding Settings}" Grid.Column="1" Grid.RowSpan="5">
+            <TextBox Name="ApiId" Text="{Binding Api_id, Mode=TwoWay}" 
+                     Height="60"/>
+            <TextBox Name="ApiHash" Text="{Binding Api_hash, Mode=TwoWay}"
+                     Height="63"/>
+            <TextBox Name="PhoneNumber" Text="{Binding Phone_Number, Mode=TwoWay}"
+                     Height="63"/>
+            <TextBox Name="Channel" Text="{Binding ObservedChannel, Mode=TwoWay}"
+                     Height="50"/>
+            <TextBox x:Name="WTSeek1" Text="{Binding RegexPattern, Mode=TwoWay}"
+                     Height="57"/>
+        </StackPanel>
+
+        <CheckBox x:Name="IsTwoStatement" Content="Использовать 2 выражения"
+                  Grid.Column="1" Grid.Row="5"
+                  Command="{Binding CheckBoxCheckCommand}"
+                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" Margin="0,10,21,20"/>
+
+        <Button Content="Export to file" Command="{Binding SaveCommand}" Grid.Row="6"/>
+        <Button Content="Import from file" Command="{Binding OpenCommand}" Grid.Row="6"
+                Grid.Column="1"/>
+    </Grid>
+</Window>
