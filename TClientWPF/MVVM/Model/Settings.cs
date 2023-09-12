@@ -58,9 +58,9 @@ namespace TClientWPF.Model
 
         public Settings()
         {
-            Api_id = "20413628";
-            Api_hash = "754dab6a532440af28f8050d9617490d";
-            Phone_Number = "+380714177989";
+            Api_id = "757557";
+            Api_hash = "brlkwjeh43";
+            Phone_Number = "+2222";
             ObservedChannel = 3268472694;
             RegexPattern = "dasd";
         }
