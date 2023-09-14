@@ -37,10 +37,10 @@ namespace TClientWPF.ViewModel
         public MainViewModel()
         {
             settings = new Settings();
-            client = new TClient(settings);
+            //client = new TClient(settings);
             //Текущий класс (MainViewModel) подписался на событие класса TClient и предоставил собственный обработчик
             //это необходимо для обновления привязок в MainView на основе изменений в TClient
-            client.PropertyChanged += OnTClientChanged;
+            //client.PropertyChanged += OnTClientChanged;
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
             StartCommand = new RelayCommand(StartWorking);
@@ -52,7 +52,7 @@ namespace TClientWPF.ViewModel
                 OnPropertyChanged("GetLog");
         }
 
-        public string GetLog
+        public string GetLog1
         {
             get => client.Log;
         }

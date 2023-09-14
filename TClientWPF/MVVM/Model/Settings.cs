@@ -14,46 +14,31 @@ namespace TClientWPF.Model
         public string RegexPattern
         {
             get => regexPattern;
-            set
-            {
-                regexPattern = value;
-            }
+            set => regexPattern = value;
         }
 
         public string Api_id
         {
             get => api_id;
-            set 
-            {
-                api_id = value;
-            }
+            set => api_id = value;
         }
 
         public string Api_hash
         {
             get => api_hash;
-            set
-            {
-                api_hash = value;
-            } 
+            set => api_hash = value;
         }
 
         public string Phone_Number
         {
             get => phone_number;
-            set
-            {
-                phone_number = value;
-            } 
+            set => phone_number = value;
         }
 
         public long ObservedChannel
         {
             get => channelToWatch;
-            set
-            {
-                channelToWatch = value;
-            } 
+            set => channelToWatch = value;
         }
 
         public Settings()
@@ -63,6 +48,6 @@ namespace TClientWPF.Model
             Phone_Number = "+2222";
             ObservedChannel = 3268472694;
             RegexPattern = "dasd";
-        }
+        }         
     }
 }

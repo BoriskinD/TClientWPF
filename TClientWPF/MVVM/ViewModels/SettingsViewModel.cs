@@ -22,28 +22,75 @@ namespace TClientWPF.ViewModels
             set
             {
                 settings = value;
-                OnPropertyChanged();
-            } 
+                //Событие PropertyChanged не желает вызываться при чтении данных из файла в класс Settings
+                //оно всегда по какой-то причине равно null, я так и не разобрался почему, поэтому приходится в ручную вызывать обновление View
+                //после измненения полей в Settings
+                OnPropertyChanged("RegexPattern");
+                OnPropertyChanged("Api_id");
+                OnPropertyChanged("Api_hash");
+                OnPropertyChanged("Phone_Number");
+                OnPropertyChanged("ObservedChannel");
+            }
         }
 
-        //public string RegexPattern
-        //{
-        //    get => Settings.RegexPattern;
-        //    set
-        //    {
-        //        if (twoStatements)
-        //        {
-        //            string[] parts = value.Split(' ');
-        //            Settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
-        //                                    "\\w*" + parts[1] + "\\w*";
-        //        }
-        //        else
-        //        {
-        //            Settings.RegexPattern = value;
-        //        }
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public string RegexPattern
+        {
+            get => Settings.RegexPattern;
+            set
+            {
+                if (twoStatements)
+                {
+                    string[] parts = value.Split(' ');
+                    Settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
+                                            "\\w*" + parts[1] + "\\w*";
+                }
+                else
+                {
+                    Settings.RegexPattern = value;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public string Api_id
+        {
+            get => Settings.Api_id;
+            set
+            {
+                Settings.Api_id = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Api_hash
+        {
+            get => Settings.Api_hash;
+            set
+            {
+                Settings.Api_hash = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Phone_Number
+        {
+            get => Settings.Phone_Number;
+            set
+            {
+                Settings.Phone_Number = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public long ObservedChannel
+        {
+            get => Settings.ObservedChannel;
+            set
+            {
+                Settings.ObservedChannel = value;
+                OnPropertyChanged();
+            }
+        }
 
         public SettingsViewModel(Settings settings)
         {
@@ -62,7 +109,7 @@ namespace TClientWPF.ViewModels
             {
                 if (dialogService.SaveFileDialog())
                 {
-                    fileService.Save(dialogService.FilePath, Settings);
+                    fileService.Save(dialogService.FilePath, settings);
                     dialogService.ShowMessage("File Saved");
                 }
             }

@@ -51,18 +51,21 @@
                    VerticalAlignment="Center"
                    Height="29" Margin="51,21,54,10" Width="92">What to seek</TextBlock>
 
-        <StackPanel DataContext="{Binding Settings}" Grid.Column="1" Grid.RowSpan="5">
-            <TextBox Name="ApiId" Text="{Binding Api_id, Mode=TwoWay}" 
-                     Height="60"/>
-            <TextBox Name="ApiHash" Text="{Binding Api_hash, Mode=TwoWay}"
-                     Height="63"/>
-            <TextBox Name="PhoneNumber" Text="{Binding Phone_Number, Mode=TwoWay}"
-                     Height="63"/>
-            <TextBox Name="Channel" Text="{Binding ObservedChannel, Mode=TwoWay}"
-                     Height="50"/>
-            <TextBox x:Name="WTSeek1" Text="{Binding RegexPattern, Mode=TwoWay}"
-                     Height="57"/>
-        </StackPanel>
+        <TextBox Name="ApiId" Text="{Binding Api_id, Mode=TwoWay}" 
+                 Height="60"
+                 Grid.Column="1" Grid.Row="0"/>
+        <TextBox Name="ApiHash" Text="{Binding Api_hash, Mode=TwoWay}"
+                 Height="63"
+                 Grid.Column="1" Grid.Row="1"/>
+        <TextBox Name="PhoneNumber" Text="{Binding Phone_Number, Mode=TwoWay}"
+                 Height="63"
+                 Grid.Column="1" Grid.Row="2"/>
+        <TextBox Name="Channel" Text="{Binding ObservedChannel, Mode=TwoWay}"
+                 Height="50"
+                 Grid.Column="1" Grid.Row="3"/>
+        <TextBox x:Name="WTSeek" Text="{Binding RegexPattern, Mode=TwoWay}"
+                 Height="57"
+                 Grid.Column="1" Grid.Row="4"/>
 
         <CheckBox x:Name="IsTwoStatement" Content="Использовать 2 выражения"
                   Grid.Column="1" Grid.Row="5"
