@@ -4,13 +4,10 @@ using TL;
 using System.Collections.Generic;
 using System.Timers;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
-using TClientWPF.Services;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows.Controls;
+using Microsoft.VisualBasic;
 
 namespace TClientWPF.Model
 {
@@ -76,6 +73,8 @@ namespace TClientWPF.Model
                     return settings.Api_hash;
                 case "phone_number":
                     return settings.Phone_Number;
+                case "verification_code":
+                    return Interaction.InputBox("You need to enter Verification Code that has been sent via app");
                 default:
                     return null;
             }

@@ -9,7 +9,7 @@ namespace TClientWPF.Services
     {
         public void ShowWindow(Settings settings, Action<Settings> callback)
         {
-            SettingsView settingsView = new(settings);
+            SettingsView settingsView = new (settings);
 
             EventHandler eventHandler = null;
             eventHandler = (s, e) =>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Data;
@@ -14,7 +15,36 @@ namespace TClientWPF.ViewModels
         private Settings settings;
         private IFile fileService;
         private IDialog dialogService;
+        private RelayCommand openCommand;
+        private RelayCommand saveCommand;
+        private RelayCommand checkBoxCheckCommand;
+        private RelayCommand navigateUri;
         private bool twoStatements;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public RelayCommand SaveCommand
+        {
+            get => saveCommand;
+            set => saveCommand = value;
+        }
+
+        public RelayCommand OpenCommand
+        {
+            get => openCommand;
+            set => openCommand = value;
+        }
+
+        public RelayCommand CheckBoxCheckCommand
+        {
+            get => checkBoxCheckCommand;
+            set => checkBoxCheckCommand = value;
+        }
+
+        public RelayCommand NavigateCommand
+        {
+            get => navigateUri;
+            set => navigateUri = value;
+        }
 
         public Settings Settings
         {
@@ -22,14 +52,7 @@ namespace TClientWPF.ViewModels
             set
             {
                 settings = value;
-                //Событие PropertyChanged не желает вызываться при чтении данных из файла в класс Settings
-                //оно всегда по какой-то причине равно null, я так и не разобрался почему, поэтому приходится в ручную вызывать обновление View
-                //после измненения полей в Settings
-                OnPropertyChanged("RegexPattern");
-                OnPropertyChanged("Api_id");
-                OnPropertyChanged("Api_hash");
-                OnPropertyChanged("Phone_Number");
-                OnPropertyChanged("ObservedChannel");
+                UpdateView();
             }
         }
 
@@ -95,14 +118,20 @@ namespace TClientWPF.ViewModels
         public SettingsViewModel(Settings settings)
         {
             Settings = settings;
+            SaveCommand = new RelayCommand(Save);
+            OpenCommand = new RelayCommand(Open);
+            CheckBoxCheckCommand = new RelayCommand(CheckChanged);
+            NavigateCommand = new RelayCommand(NavigateUri);
             fileService = new JsonFileService();
             dialogService = new DefaultDialogService();
         }
 
-        private RelayCommand saveCommand;
-        public RelayCommand SaveCommand =>
-                            saveCommand ?? (saveCommand = new RelayCommand(Save));
-        
+        private void NavigateUri(object obj)
+        {
+            if (obj is string uri)
+                Process.Start(new ProcessStartInfo(uri));
+        }
+                     
         private void Save(object obj)
         {
             try
@@ -116,13 +145,8 @@ namespace TClientWPF.ViewModels
             catch (Exception ex)
             {
                 dialogService.ShowMessage(ex.Message);
-            } 
+            }
         }
-
-
-        private RelayCommand openCommand;
-        public RelayCommand OpenCommand => 
-                            openCommand ?? (openCommand = new RelayCommand(Open));
 
         private void Open(object obj)
         {
@@ -140,25 +164,27 @@ namespace TClientWPF.ViewModels
             }
         }
 
-
-        private RelayCommand checkCommand;
-        public RelayCommand CheckBoxCheckCommand =>
-                            checkCommand ?? (checkCommand = new RelayCommand(CheckChanged));
-
         private void CheckChanged(object obj)
         {
             twoStatements = (bool)obj;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //private RelayCommand windowClosingCommand;
+        //public RelayCommand WindowClosingCommand =>
+        //                    windowClosingCommand ?? (windowClosingCommand = new RelayCommand(OnWindowClosing));
 
-        private RelayCommand windowClosingCommand;
-        public RelayCommand WindowClosingCommand =>
-                            windowClosingCommand ?? (windowClosingCommand = new RelayCommand(OnWindowClosing));
+        //private void OnWindowClosing(object obj)
+        //{
+        //    dialogService.ShowMessage("Data saved!");
+        //}
 
-        private void OnWindowClosing(object obj)
+        private void UpdateView()
         {
-            dialogService.ShowMessage("Data saved!");
+            OnPropertyChanged("RegexPattern");
+            OnPropertyChanged("Api_id");
+            OnPropertyChanged("Api_hash");
+            OnPropertyChanged("Phone_Number");
+            OnPropertyChanged("ObservedChannel");
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
