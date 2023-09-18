@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace TClientWPF.Model
+﻿namespace TClientWPF.Model
 {
     public class Settings 
     {

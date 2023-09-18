@@ -24,8 +24,30 @@ namespace TClientWPF.Model
         private long groupToWatch;
         private string log;
         private bool reloginOnFaildeResume;
+        private bool online;
+        private int countOfForwardedMsg;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public int CountOfForwardedMsg
+        {
+            get => countOfForwardedMsg;
+            set 
+            {
+                countOfForwardedMsg = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsOnline
+        {
+            get => online;
+            set
+            {
+                online = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string Log
         {
@@ -41,18 +63,20 @@ namespace TClientWPF.Model
         {
             this.settings = settings;
             reloginOnFaildeResume = true;
-            Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} [{"TDIWE!"[lvl]}] {str}\n";
-            Initialize();
+            IsOnline = false;
+            Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n"; //[{"TDIWE!"[lvl]}] 
+            //Initialize();
             SetTimer();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             users = new Dictionary<long, User>();
             chats = new Dictionary<long, ChatBase>();
             favoritesMsgs = new List<string>();
             favorites = InputPeer.Self;
             groupToWatch = settings.ObservedChannel;
+            countOfForwardedMsg = 0;
 
             pattern = new PatternMatching(settings.RegexPattern);
             client = new Client(Config);
@@ -85,6 +109,7 @@ namespace TClientWPF.Model
             try
             {
                 await client.LoginUserIfNeeded(null, reloginOnFaildeResume);
+                IsOnline = true;
                 await FillFavoritesList();
                 await CheckOldMessages();
             }
@@ -151,6 +176,7 @@ namespace TClientWPF.Model
                     Messages_Dialogs allDialogs = await client.Messages_GetAllDialogs();
                     ChatBase fromChat = allDialogs.chats[groupToWatch];
                     await client.Messages_ForwardMessages(fromChat, new[] { currentMsg.ID }, new[] { Helpers.RandomLong() }, favorites);
+                    CountOfForwardedMsg++;
                 }
             }
         }
@@ -169,19 +195,20 @@ namespace TClientWPF.Model
             InputPeer tdPeer = allDialogs.chats[groupToWatch];
             Messages_MessagesBase messages = await client.Messages_GetHistory(tdPeer);
             foreach (MessageBase tmp in messages.Messages)
-                     await ForwardMessage(tmp);
+                await ForwardMessage(tmp);
         }
 
         public void Dispose()
         {
-            client.Dispose();
-            users.Clear();
-            chats.Clear();
-            favoritesMsgs.Clear();
+            client?.Dispose();
+            users?.Clear();
+            chats?.Clear();
+            favoritesMsgs?.Clear();
             client = null;
             chats = null;
             users = null;
             favoritesMsgs = null;
+            IsOnline = false;
         }
     }
 }

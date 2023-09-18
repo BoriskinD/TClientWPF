@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TClient" Height="471" Width="800">
+        Title="TClient" Height="514" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,29 +14,32 @@
                     Content="Settings"
                     Width="200"
                     Margin="296,15,296,20"/>
-            <Button Content="Start"
+            <Button Content="Connect"
                     Width="200"
                     Command="{Binding StartCommand}"
                     Margin="296,1,296,20"/>
-            <TextBox Height="293"
-                     Name="loger"
+            <Button Content="Disconnect"
+                    Width="200"
+                    Command="{Binding StopCommand}"
+                    Margin="296,1,296,20"/>
+            <TextBox Height="299"
+                     x:Name="loger"
                      IsReadOnly="True"
-                     Text="{Binding GetLog, Mode=OneWay}"/>
+                     Text="{Binding Log, Mode=OneWay}"/>
             <StatusBar Height="25" Margin="0,5,0,0">
                 <StatusBarItem>
                     <TextBlock Text="Status:"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <Image Source="Images/Online.png"
-                           Width="30"
-                           Height="25"/>
+                    <Image Width="30" Height="20"
+                           Source= "{Binding IsOnline}"/>
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>
                     <TextBlock Text="Number of forwarded messages:"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <TextBlock Text="0"/>
+                    <TextBlock Text="{Binding CountOfForwardedMsg}"/>
                 </StatusBarItem>
             </StatusBar>
         </StackPanel>
