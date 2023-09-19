@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualBasic;
+using System.IO;
 
 namespace TClientWPF.Model
 {
@@ -21,6 +22,8 @@ namespace TClientWPF.Model
         private Client client;
         private PatternMatching pattern;
         private Settings settings;
+        private FileStream sessionFileStream;
+        private string sessionFilePath;
         private long groupToWatch;
         private string log;
         private bool reloginOnFaildeResume;
@@ -64,8 +67,9 @@ namespace TClientWPF.Model
             this.settings = settings;
             reloginOnFaildeResume = true;
             IsOnline = false;
-            Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n"; //[{"TDIWE!"[lvl]}] 
-            //Initialize();
+            sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
+            sessionFileStream = new FileStream(sessionFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n";
             SetTimer();
         }
 
@@ -79,7 +83,7 @@ namespace TClientWPF.Model
             countOfForwardedMsg = 0;
 
             pattern = new PatternMatching(settings.RegexPattern);
-            client = new Client(Config);
+            client = new Client(Config, sessionFileStream);
             client.OnUpdate += Client_OnUpdate;
             client.OnOther += Client_OnOther;
         }
@@ -200,6 +204,7 @@ namespace TClientWPF.Model
 
         public void Dispose()
         {
+            sessionFileStream?.Close();
             client?.Dispose();
             users?.Clear();
             chats?.Clear();
