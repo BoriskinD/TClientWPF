@@ -80,6 +80,7 @@ namespace TClientWPF.ViewModel
             {
                 client = new TClient(settings);
                 client.PropertyChanged += OnTClientChanged;
+
                 try
                 {
                     client.Initialize();
