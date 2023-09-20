@@ -26,6 +26,7 @@
                      x:Name="loger"
                      IsReadOnly="True"
                      Text="{Binding Log, Mode=OneWay}"/>
+
             <StatusBar Height="25" Margin="0,5,0,0">
                 <StatusBarItem>
                     <TextBlock Text="Status:"/>
@@ -36,10 +37,17 @@
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>
+                    <TextBlock Text="User:"/>
+                </StatusBarItem>
+                <StatusBarItem>
+                    <TextBlock Text="{Binding User}" Width="40"/>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem>
                     <TextBlock Text="Number of forwarded messages:"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <TextBlock Text="{Binding CountOfForwardedMsg}"/>
+                    <TextBlock Text="{Binding CountOfForwardedMsg}" Width="25"/>
                 </StatusBarItem>
             </StatusBar>
         </StackPanel>

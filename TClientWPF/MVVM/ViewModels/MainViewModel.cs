@@ -11,6 +11,7 @@ using TClientWPF.Interfaces;
 using TClientWPF.Model;
 using TClientWPF.Services;
 using TClientWPF.Views;
+using System.Windows;
 
 namespace TClientWPF.ViewModel
 {
@@ -44,6 +45,8 @@ namespace TClientWPF.ViewModel
             set => stopCommand = value;
         }
 
+        public string User => client?.User.first_name;
+
         public string Log => client?.Log;
 
         public string IsOnline => (client?.IsOnline ?? false) ? onlineImagePath : offlineImagePath;
@@ -52,6 +55,7 @@ namespace TClientWPF.ViewModel
 
         public MainViewModel()
         {
+            
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
@@ -80,38 +84,35 @@ namespace TClientWPF.ViewModel
             {
                 client = new TClient(settings);
                 client.PropertyChanged += OnTClientChanged;
-
-                try
-                {
-                    client.Initialize();
-                }
-                catch (Exception ex)
-                {
-                    dialogService.ShowMessage(ex.Message);
-                    client.Dispose();
-                    return;
-                }
-
-                try
-                {
-                    await client.ConnectAndCheckMsg();
-                }
-                catch (RpcException rpcEx)
-                {
-                    dialogService.ShowMessage(rpcEx.Message);
-                }
             }
             else
-            {
-                dialogService.ShowMessage("Ошибка! Нет настроек.");
+            { 
+                dialogService.ShowMessage("Ошибка! Нет настроек.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+
+            //if (client.IsOnline)
+            //{
+            //    dialogService.ShowMessage("Подключение уже было выполнено!.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}    
+                
+            try
+            {
+                client.Initialize();
+                await client.ConnectAndCheckMsg();
+            }
+            catch (Exception ex)
+            {
+                dialogService.ShowMessage(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                client.Dispose();
             }
         }
 
         private void StopWorking(object obj)
         {
             client.Dispose();
-            dialogService.ShowMessage("Disconnected");
+            dialogService.ShowMessage("Disconnected", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>

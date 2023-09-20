@@ -23,14 +23,24 @@ namespace TClientWPF.Model
         private PatternMatching pattern;
         private Settings settings;
         private FileStream sessionFileStream;
+        private User user;
         private string sessionFilePath;
         private long groupToWatch;
         private string log;
         private bool reloginOnFaildeResume;
         private bool online;
         private int countOfForwardedMsg;
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public User User
+        {
+            get => user;
+            set 
+            {
+                user = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int CountOfForwardedMsg
         {
@@ -112,7 +122,7 @@ namespace TClientWPF.Model
         {
             try
             {
-                await client.LoginUserIfNeeded(null, reloginOnFaildeResume);
+                User = await client.LoginUserIfNeeded(null, reloginOnFaildeResume);
                 IsOnline = true;
                 await FillFavoritesList();
                 await CheckOldMessages();
@@ -169,7 +179,6 @@ namespace TClientWPF.Model
         {
             if (messageBase is Message currentMsg)
             {
-                //Если есть дубликат в избранном
                 if (favoritesMsgs.Contains(currentMsg.message))
                     return;
 

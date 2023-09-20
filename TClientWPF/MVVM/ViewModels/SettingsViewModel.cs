@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 using TClientWPF.Model;
 using TClientWPF.Services;
 
@@ -139,12 +140,12 @@ namespace TClientWPF.ViewModels
                 if (dialogService.SaveFileDialog())
                 {
                     fileService.Save(dialogService.FilePath, settings);
-                    dialogService.ShowMessage("File Saved");
+                    dialogService.ShowMessage("File Saved", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                dialogService.ShowMessage(ex.Message);
+                dialogService.ShowMessage(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -155,12 +156,12 @@ namespace TClientWPF.ViewModels
                 if (dialogService.OpenFileDialog())
                 {
                     Settings = fileService.Open(dialogService.FilePath);
-                    dialogService.ShowMessage("File opened");
+                    dialogService.ShowMessage("File opened", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                dialogService.ShowMessage(ex.Message);
+                dialogService.ShowMessage(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
