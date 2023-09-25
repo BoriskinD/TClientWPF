@@ -3,7 +3,6 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\TClientWPF.exe
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\TClientWPF.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.AssemblyReference.cache
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\App.g.cs
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF_Content.g.cs
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF_MarkupCompile.cache
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.g.resources
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.Properties.Resources.resources

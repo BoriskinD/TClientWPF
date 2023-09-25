@@ -170,15 +170,6 @@ namespace TClientWPF.ViewModels
             twoStatements = (bool)obj;
         }
 
-        //private RelayCommand windowClosingCommand;
-        //public RelayCommand WindowClosingCommand =>
-        //                    windowClosingCommand ?? (windowClosingCommand = new RelayCommand(OnWindowClosing));
-
-        //private void OnWindowClosing(object obj)
-        //{
-        //    dialogService.ShowMessage("Data saved!");
-        //}
-
         private void UpdateView()
         {
             OnPropertyChanged("RegexPattern");

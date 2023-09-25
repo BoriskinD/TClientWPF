@@ -41,10 +41,11 @@ namespace TClientWPF
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            //string str = System.Reflection.Assembly.GetExecutingAssembly().Location;
             notifyIcon = new NotifyIcon
             {
                 Visible = true,
-                Icon = new Icon("myIcon.ico"),
+                Icon = new Icon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/TClient.ico")),
             };
             notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
 

@@ -11,17 +11,20 @@
         </Grid.RowDefinitions>
         <StackPanel  Grid.Row="0" Orientation="Vertical">
             <Button Command="{Binding SettingsCommand}" 
-                    Content="Settings"
+                    Content="Настройки"
                     Width="200"
-                    Margin="296,15,296,20"/>
-            <Button Content="Connect"
+                    Margin="296,15,296,20"
+                    IsEnabled="{Binding IsSettingsEnable}"/>
+            <Button Content="Подключиться"
                     Width="200"
                     Command="{Binding StartCommand}"
-                    Margin="296,1,296,20"/>
-            <Button Content="Disconnect"
+                    Margin="296,1,296,20"
+                    IsEnabled="{Binding IsConnectEnable}"/>
+            <Button Content="Отключиться"
                     Width="200"
                     Command="{Binding StopCommand}"
-                    Margin="296,1,296,20"/>
+                    Margin="296,1,296,20"
+                    IsEnabled="{Binding IsDisconnectEnable}"/>
             <TextBox Height="299"
                      x:Name="loger"
                      IsReadOnly="True"
@@ -29,7 +32,7 @@
 
             <StatusBar Height="25" Margin="0,5,0,0">
                 <StatusBarItem>
-                    <TextBlock Text="Status:"/>
+                    <TextBlock Text="Статус:"/>
                 </StatusBarItem>
                 <StatusBarItem>
                     <Image Width="30" Height="20"
@@ -37,14 +40,14 @@
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>
-                    <TextBlock Text="User:"/>
+                    <TextBlock Text="Пользователь:"/>
                 </StatusBarItem>
                 <StatusBarItem>
                     <TextBlock Text="{Binding User}" Width="40"/>
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>
-                    <TextBlock Text="Number of forwarded messages:"/>
+                    <TextBlock Text="Кол-во пересланных сообщений:"/>
                 </StatusBarItem>
                 <StatusBarItem>
                     <TextBlock Text="{Binding CountOfForwardedMsg}" Width="25"/>

@@ -25,6 +25,7 @@ namespace TClientWPF.ViewModel
         private RelayCommand stopCommand;
         private RelayCommand settingsCommand;
         private string onlineImagePath, offlineImagePath;
+        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public RelayCommand SettingsCommand
@@ -45,6 +46,36 @@ namespace TClientWPF.ViewModel
             set => stopCommand = value;
         }
 
+        public bool IsSettingsEnable
+        {
+            get => isSettingsEnable;
+            set
+            {
+                isSettingsEnable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsConnectEnable
+        {
+            get => isConnectEnable;
+            set
+            {
+                isConnectEnable = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsDisconnectEnable
+        {
+            get => isDisconnectEnable;
+            set
+            {
+                isDisconnectEnable = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string User => client?.User.first_name;
 
         public string Log => client?.Log;
@@ -55,7 +86,6 @@ namespace TClientWPF.ViewModel
 
         public MainViewModel()
         {
-            
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
@@ -63,6 +93,9 @@ namespace TClientWPF.ViewModel
             StopCommand = new RelayCommand(StopWorking);
             onlineImagePath = "pack://application:,,,/Images/Online.png";
             offlineImagePath = "pack://application:,,,/Images/Offline.png";
+            IsSettingsEnable = true;
+            IsConnectEnable = false;
+            IsDisconnectEnable = false;
         }
 
         private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
@@ -76,27 +109,15 @@ namespace TClientWPF.ViewModel
             {
                 settings = newSettings;
             });
+
+            IsConnectEnable = true;
         }
 
         private async void StartWorking(object obj)
         {
-            if (settings != null)
-            {
-                client = new TClient(settings);
-                client.PropertyChanged += OnTClientChanged;
-            }
-            else
-            { 
-                dialogService.ShowMessage("Ошибка! Нет настроек.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            client = new TClient(settings);
+            client.PropertyChanged += OnTClientChanged;
 
-            //if (client.IsOnline)
-            //{
-            //    dialogService.ShowMessage("Подключение уже было выполнено!.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    return;
-            //}    
-                
             try
             {
                 client.Initialize();
@@ -104,15 +125,24 @@ namespace TClientWPF.ViewModel
             }
             catch (Exception ex)
             {
-                dialogService.ShowMessage(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                dialogService.ShowMessage(ex.Message, "Ошибка подключения", MessageBoxButton.OK, MessageBoxImage.Error);
                 client.Dispose();
+                return;
             }
+
+            IsConnectEnable = false;
+            IsSettingsEnable = false;
+            IsDisconnectEnable = true;
         }
 
         private void StopWorking(object obj)
         {
             client.Dispose();
-            dialogService.ShowMessage("Disconnected", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            IsDisconnectEnable = false;
+            IsConnectEnable = true;
+            IsSettingsEnable = true;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>

@@ -6,14 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:TClientWPF.Views" 
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="425.547" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding WindowClosingCommand}"
-                                       CommandParameter="$eventArgs"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
+        Title="Settings" Height="450" Width="450.88" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70*"/>
@@ -26,30 +19,30 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="22*"/>
+            <ColumnDefinition Width="177*"/>
+            <ColumnDefinition Width="268*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Height="28" Margin="58,22,40,10" Width="58">Api ID</TextBlock>
+                   Height="28" Margin="25,22,17,10" Width="135">ID приложения (Api ID)</TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center" 
-                   Height="21" Margin="54,22,30,17" Width="72">Api Hash</TextBlock>
+                   Height="21" Margin="61,22,44,17" Width="72">Хэш приложения (Api Hash)</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Height="22" Margin="44,22,20,17" Width="92">Phone number</TextBlock>
+                   Height="22" Margin="51,22,34,17" Width="92">Номер телефона (Phone number)</TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Height="20" Margin="54,22,30,18" Width="72">Channel</TextBlock>
+                   Height="20" Margin="61,22,44,18" Width="72">Канал мониторинга (Channel)</TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Height="29" Margin="44,21,20,10" Width="92">What to seek</TextBlock>
+                   Height="29" Margin="51,21,34,10" Width="92">Что ищем?</TextBlock>
 
         <TextBox Name="ApiId" Text="{Binding Api_id, Mode=TwoWay}"
                  Grid.Column="1" Grid.Row="0"/>
@@ -71,18 +64,18 @@
         <TextBlock Grid.Row="5" Grid.Column="1"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Height="19" Margin="11,25,13,16" Width="240"> 
-                   To get your Api Hash and Api ID go
+                   Height="19" Margin="4,25,0,16" Width="264"> 
+                   Для получения Api Hash и Api ID тебе
                    <Hyperlink NavigateUri="https://my.telegram.org/apps"
                               Command="{Binding NavigateCommand}"
                               CommandParameter="https://my.telegram.org/apps">
-                        here
+                        сюда
                    </Hyperlink>
         </TextBlock>
 
 
-        <Button Content="Export to file" Command="{Binding SaveCommand}" Grid.Row="6"/>
-        <Button Content="Import from file" Command="{Binding OpenCommand}" Grid.Row="6"
+        <Button Content="Экспорт в файл" Command="{Binding SaveCommand}" Grid.Row="6"/>
+        <Button Content="Импорт из файла" Command="{Binding OpenCommand}" Grid.Row="6"
                 Grid.Column="1"/>
     </Grid>
 </Window>
