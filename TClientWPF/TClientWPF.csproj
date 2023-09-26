@@ -163,9 +163,9 @@
   <ItemGroup>
     <Resource Include="Images\Offline.png" />
     <Resource Include="Images\Online.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\TClient.ico" />
+    <Resource Include="Images\TClient.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.5\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.5\build\System.Text.Json.targets')" />

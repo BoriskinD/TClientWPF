@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.ComponentModel;
 using TClientWPF.ViewModel;
+using System.IO;
 
 namespace TClientWPF
 {
@@ -41,11 +42,10 @@ namespace TClientWPF
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            //string str = System.Reflection.Assembly.GetExecutingAssembly().Location;
             notifyIcon = new NotifyIcon
             {
                 Visible = true,
-                Icon = new Icon(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images/TClient.ico")),
+                Icon = new Icon("../../Images/TClient.ico"),
             };
             notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
 
