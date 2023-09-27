@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -127,13 +128,13 @@ namespace TClientWPF.ViewModels
             dialogService = new DefaultDialogService();
         }
 
-        private void NavigateUri(object obj)
+        private void NavigateUri()
         {
-            if (obj is string uri)
-                Process.Start(new ProcessStartInfo(uri));
+            //if (obj is string uri)
+            //    Process.Start(new ProcessStartInfo(uri));
         }
                      
-        private void Save(object obj)
+        private void Save()
         {
             try
             {
@@ -149,7 +150,7 @@ namespace TClientWPF.ViewModels
             }
         }
 
-        private void Open(object obj)
+        private void Open()
         {
             try
             {
@@ -165,9 +166,9 @@ namespace TClientWPF.ViewModels
             }
         }
 
-        private void CheckChanged(object obj)
+        private void CheckChanged()
         {
-            twoStatements = (bool)obj;
+            //twoStatements = (bool)obj;
         }
 
         private void UpdateView()

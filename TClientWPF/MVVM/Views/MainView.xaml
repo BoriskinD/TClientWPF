@@ -3,8 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
+        ShowInTaskbar="{Binding ShowInTaskbar}"
+        WindowState="{Binding WindowState}"
         Title="TClient" Height="514" Width="800">
+    <bh:Interaction.Triggers>
+        <bh:EventTrigger EventName="Closing">
+            <bh:InvokeCommandAction Command="{Binding HideWindowCommand}"
+                                    PassEventArgsToCommand="True"/>
+        </bh:EventTrigger>
+    </bh:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

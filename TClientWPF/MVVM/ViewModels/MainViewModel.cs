@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using TL;
 using TClientWPF.Interfaces;
 using TClientWPF.Model;
 using TClientWPF.Services;
-using TClientWPF.Views;
 using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 
 namespace TClientWPF.ViewModel
 {
@@ -24,9 +18,44 @@ namespace TClientWPF.ViewModel
         private RelayCommand startCommand;
         private RelayCommand stopCommand;
         private RelayCommand settingsCommand;
+        private RelayCommand<CancelEventArgs> hideWindowCommand;
+        private RelayCommand showWindowCommand;
+        private NotifyTrayIconWrapper notifyIcon;
+        private WindowState windowState;
+        private bool showInTaskbar;
         private string onlineImagePath, offlineImagePath;
+        private string iconPath;
         private bool isSettingsEnable, isConnectEnable, isDisconnectEnable;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public WindowState WindowState
+        {
+            get => windowState;
+            set
+            {
+                //ShowInTaskbar = true;
+                windowState = value;
+                ShowInTaskbar = value != WindowState.Minimized;
+            }
+        }
+
+        public bool ShowInTaskbar
+        {
+            get => showInTaskbar;
+            set => showInTaskbar = value;
+        }
+
+        public RelayCommand<CancelEventArgs> HideWindowCommand
+        {
+            get => hideWindowCommand;
+            set => hideWindowCommand = value;
+        }
+
+        public RelayCommand ShowWindowCommand
+        {
+            get => showWindowCommand;
+            set => showWindowCommand = value;
+        }
 
         public RelayCommand SettingsCommand
         {
@@ -86,11 +115,20 @@ namespace TClientWPF.ViewModel
 
         public MainViewModel()
         {
+            iconPath = "../../Images/TClient.ico";
+            notifyIcon = new NotifyTrayIconWrapper(iconPath);
+            //notifyIcon.HideWindowRequested += (sender, e) => HideWindow(null);
+            //notifyIcon.ShowWindowRequested += (sender, e) => ShowWindow(null);
+
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
             StartCommand = new RelayCommand(StartWorking);
             StopCommand = new RelayCommand(StopWorking);
+            HideWindowCommand = new RelayCommand<CancelEventArgs>(HideWindow);
+            ShowWindowCommand = new RelayCommand(ShowWindow);
+            
+
             onlineImagePath = "pack://application:,,,/Images/Online.png";
             offlineImagePath = "pack://application:,,,/Images/Offline.png";
             IsSettingsEnable = true;
@@ -98,9 +136,25 @@ namespace TClientWPF.ViewModel
             IsDisconnectEnable = false;
         }
 
+        private void ShowWindow()
+        {
+            //Application.Current.MainWindow.Visibility = Visibility.Visible;
+            
+        }
+
+        private void HideWindow(CancelEventArgs e)
+        {
+            //Application.Current.MainWindow.Visibility = Visibility.Hidden;
+            //ShowInTaskbar = false;
+            e.Cancel = true;
+            WindowState = WindowState.Minimized;
+            //Hide();
+            //base.OnClosing(e);
+        }
+
         private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
 
-        private void ShowSettings(object obj)
+        private void ShowSettings()
         {
             if (settings == null)
                 settings = new Settings();
@@ -113,7 +167,7 @@ namespace TClientWPF.ViewModel
             IsConnectEnable = true;
         }
 
-        private async void StartWorking(object obj)
+        private async void StartWorking()
         {
             client = new TClient(settings);
             client.PropertyChanged += OnTClientChanged;
@@ -135,7 +189,7 @@ namespace TClientWPF.ViewModel
             IsDisconnectEnable = true;
         }
 
-        private void StopWorking(object obj)
+        private void StopWorking()
         {
             client.Dispose();
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -38,21 +38,18 @@ namespace TClientWPF
             WindowState = WindowState.Normal;
             notifyIcon.Dispose();
             notifyIcon = null;
-        }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            notifyIcon = new NotifyIcon
-            {
-                Visible = true,
-                Icon = new Icon("../../Images/TClient.ico"),
-            };
-            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+            //notifyIcon = new NotifyIcon
+            //{
+            //    Visible = true,
+            //    Icon = new Icon("../../Images/TClient.ico"),
+            //};
+            //notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
 
-            ShowInTaskbar = false;
-            e.Cancel = true;
-            Hide();
-            base.OnClosing(e);
+            //ShowInTaskbar = false;
+            //e.Cancel = true;
+            //Hide();
+            //base.OnClosing(e);
         }
     }
 }

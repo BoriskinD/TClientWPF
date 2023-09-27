@@ -40,3 +40,7 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.CopyCom
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.exe
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.AssemblyReference.cache
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.dll
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\System.ComponentModel.Annotations.dll
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.pdb
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.xml
