@@ -25,31 +25,10 @@ namespace TClientWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        NotifyIcon notifyIcon;
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainViewModel();
-        }
-
-        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            Show();
-            WindowState = WindowState.Normal;
-            notifyIcon.Dispose();
-            notifyIcon = null;
-
-            //notifyIcon = new NotifyIcon
-            //{
-            //    Visible = true,
-            //    Icon = new Icon("../../Images/TClient.ico"),
-            //};
-            //notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
-
-            //ShowInTaskbar = false;
-            //e.Cancel = true;
-            //Hide();
-            //base.OnClosing(e);
         }
     }
 }

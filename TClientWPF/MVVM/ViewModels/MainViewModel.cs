@@ -20,7 +20,7 @@ namespace TClientWPF.ViewModel
         private RelayCommand settingsCommand;
         private RelayCommand<CancelEventArgs> hideWindowCommand;
         private RelayCommand showWindowCommand;
-        private NotifyTrayIconWrapper notifyIcon;
+        private NotifyIconWrapper notifyIconWrapper;
         private WindowState windowState;
         private bool showInTaskbar;
         private string onlineImagePath, offlineImagePath;
@@ -33,8 +33,8 @@ namespace TClientWPF.ViewModel
             get => windowState;
             set
             {
-                //ShowInTaskbar = true;
                 windowState = value;
+                OnPropertyChanged();
                 ShowInTaskbar = value != WindowState.Minimized;
             }
         }
@@ -42,7 +42,11 @@ namespace TClientWPF.ViewModel
         public bool ShowInTaskbar
         {
             get => showInTaskbar;
-            set => showInTaskbar = value;
+            set
+            {
+                showInTaskbar = value;
+                OnPropertyChanged();
+            }
         }
 
         public RelayCommand<CancelEventArgs> HideWindowCommand
@@ -116,9 +120,9 @@ namespace TClientWPF.ViewModel
         public MainViewModel()
         {
             iconPath = "../../Images/TClient.ico";
-            notifyIcon = new NotifyTrayIconWrapper(iconPath);
-            //notifyIcon.HideWindowRequested += (sender, e) => HideWindow(null);
-            //notifyIcon.ShowWindowRequested += (sender, e) => ShowWindow(null);
+            notifyIconWrapper = new NotifyIconWrapper(iconPath);
+            notifyIconWrapper.ShowWindowRequested += (sender, e) => ShowWindow();
+            notifyIconWrapper.ExitRequested += (sender, e) => CloseProgramm();
 
             dialogService = new DefaultDialogService();
             window = new WindowService();
@@ -136,20 +140,21 @@ namespace TClientWPF.ViewModel
             IsDisconnectEnable = false;
         }
 
+        private void CloseProgramm()
+        {
+            notifyIconWrapper.Dispose();
+            Application.Current.Shutdown();
+        }
+
         private void ShowWindow()
         {
-            //Application.Current.MainWindow.Visibility = Visibility.Visible;
-            
+            WindowState = WindowState.Normal;
         }
 
         private void HideWindow(CancelEventArgs e)
         {
-            //Application.Current.MainWindow.Visibility = Visibility.Hidden;
-            //ShowInTaskbar = false;
             e.Cancel = true;
             WindowState = WindowState.Minimized;
-            //Hide();
-            //base.OnClosing(e);
         }
 
         private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);

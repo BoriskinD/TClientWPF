@@ -109,7 +109,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IWindow.cs" />
-    <Compile Include="Services\NotifyTrayIconWrapper.cs" />
+    <Compile Include="Services\NotifyIconWrapper.cs" />
     <Compile Include="Services\WindowService.cs" />
     <Compile Include="MVVM\Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
