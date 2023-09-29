@@ -9,8 +9,8 @@
         WindowState="{Binding WindowState}"
         Title="TClient" Height="514" Width="800">
     <bh:Interaction.Triggers>
-        <bh:EventTrigger EventName="Closing">
-            <bh:InvokeCommandAction Command="{Binding HideWindowCommand}"
+        <bh:EventTrigger EventName = "Closing" >
+            <bh:InvokeCommandAction Command = "{Binding HideWindowCommand}"
                                     PassEventArgsToCommand="True"/>
         </bh:EventTrigger>
     </bh:Interaction.Triggers>

@@ -35,7 +35,6 @@ namespace TClientWPF.ViewModel
             {
                 windowState = value;
                 OnPropertyChanged();
-                ShowInTaskbar = value != WindowState.Minimized;
             }
         }
 
@@ -138,6 +137,7 @@ namespace TClientWPF.ViewModel
             IsSettingsEnable = true;
             IsConnectEnable = false;
             IsDisconnectEnable = false;
+            ShowInTaskbar = true;
         }
 
         private void CloseProgramm()
@@ -149,12 +149,14 @@ namespace TClientWPF.ViewModel
         private void ShowWindow()
         {
             WindowState = WindowState.Normal;
+            ShowInTaskbar = true;
         }
 
         private void HideWindow(CancelEventArgs e)
         {
             e.Cancel = true;
             WindowState = WindowState.Minimized;
+            ShowInTaskbar = false;
         }
 
         private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
