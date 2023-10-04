@@ -6,6 +6,8 @@ using TClientWPF.Model;
 using TClientWPF.Services;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.Generic;
+using TL;
 
 namespace TClientWPF.ViewModel
 {
@@ -22,11 +24,23 @@ namespace TClientWPF.ViewModel
         private RelayCommand showWindowCommand;
         private NotifyIconWrapper notifyIconWrapper;
         private WindowState windowState;
+        private KeyValuePair<long, ChatBase> selectedChannelData;
         private bool showInTaskbar;
         private string onlineImagePath, offlineImagePath;
         private string iconPath;
+        private string regexPattern;
         private bool isSettingsEnable, isConnectEnable, isDisconnectEnable;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public KeyValuePair<long, ChatBase> SelectedChannelData
+        {
+            get => selectedChannelData;
+            set 
+            {
+                selectedChannelData = value;
+                settings.ObservedChannel = selectedChannelData.Key;
+            }
+        }
 
         public WindowState WindowState
         {
@@ -108,6 +122,18 @@ namespace TClientWPF.ViewModel
             }
         }
 
+        public string RegexPattern
+        {
+            get => regexPattern;
+            set
+            {
+                regexPattern = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Dictionary<long, ChatBase> ChatsList => client?.ChatsList;
+
         public string User => client?.User.first_name;
 
         public string Log => client?.Log;
@@ -165,10 +191,12 @@ namespace TClientWPF.ViewModel
         {
             if (settings == null)
                 settings = new Settings();
+                
 
             window.ShowWindow(settings, newSettings =>
             {
                 settings = newSettings;
+                RegexPattern = settings.RegexPattern;
             });
 
             IsConnectEnable = true;
@@ -182,11 +210,11 @@ namespace TClientWPF.ViewModel
             try
             {
                 client.Initialize();
-                await client.ConnectAndCheckMsg();
+                await client.LoginAndStartWorking();
             }
             catch (Exception ex)
             {
-                dialogService.ShowMessage(ex.Message, "Ошибка подключения", MessageBoxButton.OK, MessageBoxImage.Error);
+                dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 client.Dispose();
                 return;
             }

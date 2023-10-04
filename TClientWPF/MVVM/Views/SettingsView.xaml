@@ -35,10 +35,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Height="22" Margin="51,22,34,17" Width="92">Номер телефона (Phone number)</TextBlock>
-        <TextBlock Grid.Row="3" Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Height="20" Margin="61,22,44,18" Width="72">Канал мониторинга (Channel)</TextBlock>
+      
         <TextBlock Grid.Row="4" Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -50,8 +47,6 @@
                  Grid.Column="1" Grid.Row="1" Margin="0,0,0,58" Grid.RowSpan="2"/>
         <TextBox Name="PhoneNumber" Text="{Binding Phone_Number, Mode=TwoWay}"
                  Grid.Column="1" Grid.Row="2" Margin="0,0,0,58" Grid.RowSpan="2"/>
-        <TextBox Name="Channel" Text="{Binding ObservedChannel, Mode=TwoWay}"
-                 Grid.Column="1" Grid.Row="3" Margin="0,5"/>
         <TextBox x:Name="WTSeek" Text="{Binding RegexPattern, Mode=TwoWay}"
                  Grid.Column="1" Grid.Row="4" Margin="0,1"/>
 

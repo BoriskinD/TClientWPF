@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
-        Title="TClient" Height="514" Width="800">
+        Title="TClient" Height="634" Width="800">
     <bh:Interaction.Triggers>
         <bh:EventTrigger EventName = "Closing" >
             <bh:InvokeCommandAction Command = "{Binding HideWindowCommand}"
@@ -15,9 +15,11 @@
         </bh:EventTrigger>
     </bh:Interaction.Triggers>
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <StackPanel  Grid.Row="0" Orientation="Vertical">
             <Button Command="{Binding SettingsCommand}" 
                     Content="Настройки"
@@ -45,7 +47,8 @@
                 </StatusBarItem>
                 <StatusBarItem>
                     <Image Width="30" Height="20"
-                           Source= "{Binding IsOnline}"/>
+                           Source= "{Binding IsOnline}"
+                           />
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>
@@ -62,6 +65,16 @@
                     <TextBlock Text="{Binding CountOfForwardedMsg}" Width="25"/>
                 </StatusBarItem>
             </StatusBar>
+            <TextBlock Text="В Канале мониторинга" Margin="206,0,384,0"/>
+            <ComboBox x:Name="comboBox" Margin="0, 10,0,0"
+                      ItemsSource="{Binding ChatsList}"
+                      DisplayMemberPath="Value.Title"
+                      SelectedItem="{Binding SelectedChannelData}"/>
+            <TextBlock Text="ищем текст" Margin="206,0,384,0"/>
+            <TextBox Width="200" Margin="296,0"
+                     Text="{Binding RegexPattern, Mode=OneWay}" 
+                     IsReadOnly="True"/>
         </StackPanel>
+        
     </Grid>
 </Window>

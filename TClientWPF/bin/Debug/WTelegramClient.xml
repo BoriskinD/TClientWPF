@@ -301,18 +301,18 @@
             <param name="max_id">If a positive value is passed, only messages with identifiers less or equal than the given one will be marked read</param>
         </member>
         <member name="M:WTelegram.Client.AnalyzeInviteLink(System.String,System.Boolean,System.Collections.Generic.IDictionary{System.Int64,TL.ChatBase})">
-            <summary>Return information about a chat/channel based on Invite Link</summary>
-            <param name="url">Public link or Invite link, like https://t.me/+InviteHash, https://t.me/joinchat/InviteHash or https://t.me/channelname<br/>Also work without https:// prefix</param>
+            <summary>Return information about a chat/channel based on Invite Link or Public Link</summary>
+            <param name="url">Public link or Invite link, like https://t.me/+InviteHash, https://t.me/joinchat/InviteHash or https://t.me/channelname<br/>Works also without https:// prefix</param>
             <param name="join"><see langword="true"/> to also join the chat/channel</param>
             <param name="chats">previously collected chats, to prevent unnecessary ResolveUsername</param>
             <returns>a Chat or Channel, possibly partial Channel information only (with flag <see cref="F:TL.Channel.Flags.min"/>)</returns>
         </member>
         <member name="M:WTelegram.Client.GetMessageByLink(System.String,System.Collections.Generic.IDictionary{System.Int64,TL.ChatBase})">
-            <summary>Return chat and message details based on a message URL</summary>
+            <summary>Return chat and message details based on a Message Link (URL)</summary>
             <param name="url">Message Link, like https://t.me/c/1234567890/1234 or https://t.me/channelname/1234</param>
             <param name="chats">previously collected chats, to prevent unnecessary ResolveUsername</param>
             <returns>Structure containing the message, chat and user details</returns>
-            <remarks>If link is for private group (<c>t.me/c/..</c>), user must have joined the group</remarks>
+            <remarks>If link is for private group (<c>t.me/c/..</c>), user must have joined that group</remarks>
         </member>
         <member name="P:WTelegram.Helpers.Log">
             <summary>Callback for logging a line (string) with its associated <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.loglevel">severity level</see> (int)</summary>
@@ -823,6 +823,9 @@
         <member name="F:TL.User.Flags2.bot_can_edit">
             <summary>Whether we can edit the profile picture, name, about text and description of this bot because we own it.</summary>
         </member>
+        <member name="F:TL.User.Flags2.has_stories_max_id">
+            <summary>Field <see cref="F:TL.User.stories_max_id"/> has a value</summary>
+        </member>
         <member name="T:TL.UserStatus">
             <remarks>a <c>null</c> value means <a href="https://corefork.telegram.org/constructor/userStatusEmpty">userStatusEmpty</a> = last seen a long time ago, more than a month (or blocked/deleted users)</remarks>
             <summary>User online status		<para>See <a href="https://corefork.telegram.org/type/UserStatus"/></para>		<para>Derived classes: <see cref="T:TL.UserStatusOnline"/>, <see cref="T:TL.UserStatusOffline"/>, <see cref="T:TL.UserStatusRecently"/>, <see cref="T:TL.UserStatusLastWeek"/>, <see cref="T:TL.UserStatusLastMonth"/></para></summary>
@@ -1082,6 +1085,9 @@
         </member>
         <member name="F:TL.Channel.Flags2.has_usernames">
             <summary>Field <see cref="F:TL.Channel.usernames"/> has a value</summary>
+        </member>
+        <member name="F:TL.Channel.Flags2.has_stories_max_id">
+            <summary>Field <see cref="F:TL.Channel.stories_max_id"/> has a value</summary>
         </member>
         <member name="P:TL.Channel.ID">
             <summary>ID of the channel</summary>
@@ -1530,6 +1536,9 @@
         <member name="F:TL.ChannelFull.Flags2.translations_disabled">
             <summary>Whether the <a href="https://corefork.telegram.org/api/translation">real-time chat translation popup</a> should be hidden.</summary>
         </member>
+        <member name="F:TL.ChannelFull.Flags2.has_stories">
+            <summary>Field <see cref="F:TL.ChannelFull.stories"/> has a value</summary>
+        </member>
         <member name="P:TL.ChannelFull.ID">
             <summary>ID of the channel</summary>
         </member>
@@ -1723,7 +1732,7 @@
             <summary>Name of the author of this message for channel posts (with signatures enabled)</summary>
         </member>
         <member name="F:TL.Message.grouped_id">
-            <summary>Multiple media messages sent using <see cref="M:TL.SchemaExtensions.Messages_SendMultiMedia(WTelegram.Client,TL.InputPeer,TL.InputSingleMedia[],System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">Messages_SendMultiMedia</see> with the same grouped ID indicate an <a href="https://corefork.telegram.org/api/files#albums-grouped-media">album or media group</a></summary>
+            <summary>Multiple media messages sent using <see cref="M:TL.SchemaExtensions.Messages_SendMultiMedia(WTelegram.Client,TL.InputPeer,TL.InputSingleMedia[],TL.InputReplyTo,System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">Messages_SendMultiMedia</see> with the same grouped ID indicate an <a href="https://corefork.telegram.org/api/files#albums-grouped-media">album or media group</a></summary>
         </member>
         <member name="F:TL.Message.reactions">
             <summary>Reactions to this message</summary>
@@ -1975,6 +1984,9 @@
         </member>
         <member name="F:TL.MessageMediaDocument.Flags.spoiler">
             <summary>Whether this media should be hidden behind a spoiler warning</summary>
+        </member>
+        <member name="F:TL.MessageMediaDocument.Flags.has_alt_document">
+            <summary>Field <see cref="F:TL.MessageMediaDocument.alt_document"/> has a value</summary>
         </member>
         <member name="T:TL.MessageMediaVenue">
             <summary>Venue		<para>See <a href="https://corefork.telegram.org/constructor/messageMediaVenue"/></para></summary>
@@ -2929,7 +2941,7 @@
             <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
         </member>
         <member name="T:TL.UpdatesTooLong">
-            <summary>Too many updates, it is necessary to execute <see cref="M:TL.SchemaExtensions.Updates_GetDifference(WTelegram.Client,System.Int32,System.DateTime,System.Int32,System.Nullable{System.Int32})">Updates_GetDifference</see>.		<para>See <a href="https://corefork.telegram.org/constructor/updatesTooLong"/></para></summary>
+            <summary>Too many updates, it is necessary to execute <see cref="M:TL.SchemaExtensions.Updates_GetDifference(WTelegram.Client,System.Int32,System.DateTime,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">Updates_GetDifference</see>.		<para>See <a href="https://corefork.telegram.org/constructor/updatesTooLong"/></para></summary>
         </member>
         <member name="M:TL.UpdatesTooLong.UserOrChat(TL.Peer)">
             <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
@@ -3378,6 +3390,9 @@
         </member>
         <member name="P:TL.Contacts_ResolvedPeer.Chat">
             <returns>A <see cref="T:TL.Channel"/> or <see cref="T:TL.ChannelForbidden"/>, or <see langword="null"/> if the username was for a user</returns>
+        </member>
+        <member name="P:TL.Contacts_ResolvedPeer.Channel">
+            <returns>A <see cref="T:TL.Channel"/>, or <see langword="null"/> if the username was for a user or for a forbidden channel</returns>
         </member>
         <member name="F:TL.Contacts_ResolvedPeer.peer">
             <summary>The peer</summary>
@@ -4219,6 +4234,9 @@
         <member name="F:TL.InputMediaDice.emoticon">
             <summary>The emoji, for now 🏀, 🎲 and 🎯 are supported</summary>
         </member>
+        <member name="T:TL.InputMediaStory">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/inputMediaStory"/></para></summary>
+        </member>
         <member name="T:TL.InputChatPhotoBase">
             <summary>Defines a new group profile photo.		<para>See <a href="https://corefork.telegram.org/type/InputChatPhoto"/></para>		<para>Derived classes: <see cref="T:TL.InputChatUploadedPhoto"/>, <see cref="T:TL.InputChatPhoto"/></para></summary>
             <remarks>a <see langword="null"/> value means <a href="https://corefork.telegram.org/constructor/inputChatPhotoEmpty">inputChatPhotoEmpty</a></remarks>
@@ -4571,6 +4589,9 @@
         <member name="F:TL.MessageMediaInvoice.Flags.has_extended_media">
             <summary>Field <see cref="F:TL.MessageMediaInvoice.extended_media"/> has a value</summary>
         </member>
+        <member name="T:TL.MessageMediaStory">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/messageMediaStory"/></para></summary>
+        </member>
         <member name="T:TL.MessageAction">
             <summary>Object describing actions connected to a service message.		<para>See <a href="https://corefork.telegram.org/type/MessageAction"/></para>		<para>Derived classes: <see cref="T:TL.MessageActionChatCreate"/>, <see cref="T:TL.MessageActionChatEditTitle"/>, <see cref="T:TL.MessageActionChatEditPhoto"/>, <see cref="T:TL.MessageActionChatDeletePhoto"/>, <see cref="T:TL.MessageActionChatAddUser"/>, <see cref="T:TL.MessageActionChatDeleteUser"/>, <see cref="T:TL.MessageActionChatJoinedByLink"/>, <see cref="T:TL.MessageActionChannelCreate"/>, <see cref="T:TL.MessageActionChatMigrateTo"/>, <see cref="T:TL.MessageActionChannelMigrateFrom"/>, <see cref="T:TL.MessageActionPinMessage"/>, <see cref="T:TL.MessageActionHistoryClear"/>, <see cref="T:TL.MessageActionGameScore"/>, <see cref="T:TL.MessageActionPaymentSentMe"/>, <see cref="T:TL.MessageActionPaymentSent"/>, <see cref="T:TL.MessageActionPhoneCall"/>, <see cref="T:TL.MessageActionScreenshotTaken"/>, <see cref="T:TL.MessageActionCustomAction"/>, <see cref="T:TL.MessageActionBotAllowed"/>, <see cref="T:TL.MessageActionSecureValuesSentMe"/>, <see cref="T:TL.MessageActionSecureValuesSent"/>, <see cref="T:TL.MessageActionContactSignUp"/>, <see cref="T:TL.MessageActionGeoProximityReached"/>, <see cref="T:TL.MessageActionGroupCall"/>, <see cref="T:TL.MessageActionInviteToGroupCall"/>, <see cref="T:TL.MessageActionSetMessagesTTL"/>, <see cref="T:TL.MessageActionGroupCallScheduled"/>, <see cref="T:TL.MessageActionSetChatTheme"/>, <see cref="T:TL.MessageActionChatJoinedByRequest"/>, <see cref="T:TL.MessageActionWebViewDataSentMe"/>, <see cref="T:TL.MessageActionWebViewDataSent"/>, <see cref="T:TL.MessageActionGiftPremium"/>, <see cref="T:TL.MessageActionTopicCreate"/>, <see cref="T:TL.MessageActionTopicEdit"/>, <see cref="T:TL.MessageActionSuggestProfilePhoto"/>, <see cref="T:TL.MessageActionRequestedPeer"/>, <see cref="T:TL.MessageActionSetChatWallPaper"/>, <see cref="T:TL.MessageActionSetSameChatWallPaper"/></para></summary>
             <remarks>a <see langword="null"/> value means <a href="https://corefork.telegram.org/constructor/messageActionEmpty">messageActionEmpty</a></remarks>
@@ -4915,16 +4936,16 @@
             <summary>Extra bits of information, use <c>flags.HasFlag(...)</c> to test for those</summary>
         </member>
         <member name="F:TL.MessageActionTopicEdit.title">
-            <summary>Topic title.</summary>
+            <summary>New topic title.</summary>
         </member>
         <member name="F:TL.MessageActionTopicEdit.icon_emoji_id">
-            <summary>ID of the <a href="https://corefork.telegram.org/api/custom-emoji">custom emoji</a> used as topic icon.</summary>
+            <summary>ID of the new <a href="https://corefork.telegram.org/api/custom-emoji">custom emoji</a> used as topic icon, or if it was removed.</summary>
         </member>
         <member name="F:TL.MessageActionTopicEdit.closed">
-            <summary>Whether the topic was closed.</summary>
+            <summary>Whether the topic was opened or closed.</summary>
         </member>
         <member name="F:TL.MessageActionTopicEdit.hidden">
-            <summary>Whether the topic was hidden (only valid for the "General" topic, <c>id=1</c>).</summary>
+            <summary>Whether the topic was hidden or unhidden (only valid for the "General" topic, <c>id=1</c>).</summary>
         </member>
         <member name="F:TL.MessageActionTopicEdit.Flags.has_title">
             <summary>Field <see cref="F:TL.MessageActionTopicEdit.title"/> has a value</summary>
@@ -5214,6 +5235,15 @@
         <member name="F:TL.InputPeerNotifySettings.Flags.has_sound">
             <summary>Field <see cref="F:TL.InputPeerNotifySettings.sound"/> has a value</summary>
         </member>
+        <member name="F:TL.InputPeerNotifySettings.Flags.has_stories_muted">
+            <summary>Field <see cref="F:TL.InputPeerNotifySettings.stories_muted"/> has a value</summary>
+        </member>
+        <member name="F:TL.InputPeerNotifySettings.Flags.has_stories_hide_sender">
+            <summary>Field <see cref="F:TL.InputPeerNotifySettings.stories_hide_sender"/> has a value</summary>
+        </member>
+        <member name="F:TL.InputPeerNotifySettings.Flags.has_stories_sound">
+            <summary>Field <see cref="F:TL.InputPeerNotifySettings.stories_sound"/> has a value</summary>
+        </member>
         <member name="T:TL.PeerNotifySettings">
             <summary>Notification settings.		<para>See <a href="https://corefork.telegram.org/constructor/peerNotifySettings"/></para></summary>
         </member>
@@ -5255,6 +5285,21 @@
         </member>
         <member name="F:TL.PeerNotifySettings.Flags.has_other_sound">
             <summary>Field <see cref="F:TL.PeerNotifySettings.other_sound"/> has a value</summary>
+        </member>
+        <member name="F:TL.PeerNotifySettings.Flags.has_stories_muted">
+            <summary>Field <see cref="F:TL.PeerNotifySettings.stories_muted"/> has a value</summary>
+        </member>
+        <member name="F:TL.PeerNotifySettings.Flags.has_stories_hide_sender">
+            <summary>Field <see cref="F:TL.PeerNotifySettings.stories_hide_sender"/> has a value</summary>
+        </member>
+        <member name="F:TL.PeerNotifySettings.Flags.has_stories_ios_sound">
+            <summary>Field <see cref="F:TL.PeerNotifySettings.stories_ios_sound"/> has a value</summary>
+        </member>
+        <member name="F:TL.PeerNotifySettings.Flags.has_stories_android_sound">
+            <summary>Field <see cref="F:TL.PeerNotifySettings.stories_android_sound"/> has a value</summary>
+        </member>
+        <member name="F:TL.PeerNotifySettings.Flags.has_stories_other_sound">
+            <summary>Field <see cref="F:TL.PeerNotifySettings.stories_other_sound"/> has a value</summary>
         </member>
         <member name="T:TL.PeerSettings">
             <summary>List of actions that are possible when interacting with this user, to be shown as suggested actions in the chat bar		<para>See <a href="https://corefork.telegram.org/constructor/peerSettings"/></para></summary>
@@ -5462,6 +5507,9 @@
         </member>
         <member name="F:TL.UserFull.Flags.has_wallpaper">
             <summary>Field <see cref="F:TL.UserFull.wallpaper"/> has a value</summary>
+        </member>
+        <member name="F:TL.UserFull.Flags.has_stories">
+            <summary>Field <see cref="F:TL.UserFull.stories"/> has a value</summary>
         </member>
         <member name="T:TL.Contact">
             <summary>A contact of the current user that is registered in the system.		<para>See <a href="https://corefork.telegram.org/constructor/contact"/></para></summary>
@@ -5696,6 +5744,9 @@
         <member name="F:TL.UpdateUserName.usernames">
             <summary>Usernames.</summary>
         </member>
+        <member name="T:TL.UpdateNewAuthorization">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/updateNewAuthorization"/></para></summary>
+        </member>
         <member name="T:TL.UpdateNewEncryptedMessage">
             <summary>New encrypted message.		<para>See <a href="https://corefork.telegram.org/constructor/updateNewEncryptedMessage"/></para></summary>
         </member>
@@ -5878,6 +5929,9 @@
         </member>
         <member name="F:TL.UpdateReadMessagesContents.pts_count">
             <summary><a href="https://corefork.telegram.org/api/updates">Number of events that were generated</a></summary>
+        </member>
+        <member name="F:TL.UpdateReadMessagesContents.Flags.has_date">
+            <summary>Field <see cref="F:TL.UpdateReadMessagesContents.date"/> has a value</summary>
         </member>
         <member name="T:TL.UpdateChannelTooLong">
             <summary>There are new updates in the specified channel, the client must fetch them.<br/>If the difference is too long or if the channel isn't currently in the states, start fetching from the specified pts.		<para>See <a href="https://corefork.telegram.org/constructor/updateChannelTooLong"/></para></summary>
@@ -6419,9 +6473,6 @@
         <member name="F:TL.UpdateMessagePollVote.poll_id">
             <summary>Poll ID</summary>
         </member>
-        <member name="F:TL.UpdateMessagePollVote.user_id">
-            <summary>User ID</summary>
-        </member>
         <member name="F:TL.UpdateMessagePollVote.options">
             <summary>Chosen option(s)</summary>
         </member>
@@ -6512,7 +6563,7 @@
         <member name="F:TL.UpdatePeerBlocked.peer_id">
             <summary>The blocked peer</summary>
         </member>
-        <member name="F:TL.UpdatePeerBlocked.blocked">
+        <member name="F:TL.UpdatePeerBlocked.Flags.blocked">
             <summary>Whether the peer was blocked or unblocked</summary>
         </member>
         <member name="T:TL.UpdateChannelUserTyping">
@@ -6922,6 +6973,21 @@
         </member>
         <member name="F:TL.UpdateGroupInvitePrivacyForbidden.user_id">
             <summary>ID of the user we couldn't add.</summary>
+        </member>
+        <member name="T:TL.UpdateStory">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/updateStory"/></para></summary>
+        </member>
+        <member name="T:TL.UpdateReadStories">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/updateReadStories"/></para></summary>
+        </member>
+        <member name="T:TL.UpdateStoryID">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/updateStoryID"/></para></summary>
+        </member>
+        <member name="T:TL.UpdateStoriesStealthMode">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/updateStoriesStealthMode"/></para></summary>
+        </member>
+        <member name="T:TL.UpdateSentStoryReaction">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/updateSentStoryReaction"/></para></summary>
         </member>
         <member name="T:TL.Updates_State">
             <summary>Updates state.		<para>See <a href="https://corefork.telegram.org/constructor/updates.state"/></para></summary>
@@ -7717,6 +7783,9 @@
         <member name="F:TL.InputPrivacyKey.VoiceMessages">
             <summary>Whether people can send you voice messages</summary>
         </member>
+        <member name="F:TL.InputPrivacyKey.About">
+            <summary>See <a href="https://corefork.telegram.org/constructor/inputPrivacyKeyAbout"/></summary>
+        </member>
         <member name="T:TL.PrivacyKey">
             <summary>Privacy key		<para>See <a href="https://corefork.telegram.org/type/PrivacyKey"/></para></summary>
         </member>
@@ -7746,6 +7815,9 @@
         </member>
         <member name="F:TL.PrivacyKey.VoiceMessages">
             <summary>Whether the user accepts voice messages</summary>
+        </member>
+        <member name="F:TL.PrivacyKey.About">
+            <summary>See <a href="https://corefork.telegram.org/constructor/privacyKeyAbout"/></summary>
         </member>
         <member name="T:TL.InputPrivacyRule">
             <summary>Privacy rule		<para>See <a href="https://corefork.telegram.org/type/InputPrivacyRule"/></para>		<para>Derived classes: <see cref="T:TL.InputPrivacyValueAllowContacts"/>, <see cref="T:TL.InputPrivacyValueAllowAll"/>, <see cref="T:TL.InputPrivacyValueAllowUsers"/>, <see cref="T:TL.InputPrivacyValueDisallowContacts"/>, <see cref="T:TL.InputPrivacyValueDisallowAll"/>, <see cref="T:TL.InputPrivacyValueDisallowUsers"/>, <see cref="T:TL.InputPrivacyValueAllowChatParticipants"/>, <see cref="T:TL.InputPrivacyValueDisallowChatParticipants"/></para></summary>
@@ -7786,6 +7858,9 @@
         <member name="F:TL.InputPrivacyValueDisallowChatParticipants.chats">
             <summary>Disallowed chat IDs</summary>
         </member>
+        <member name="T:TL.InputPrivacyValueAllowCloseFriends">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/inputPrivacyValueAllowCloseFriends"/></para></summary>
+        </member>
         <member name="T:TL.PrivacyRule">
             <summary>Privacy rule		<para>See <a href="https://corefork.telegram.org/type/PrivacyRule"/></para>		<para>Derived classes: <see cref="T:TL.PrivacyValueAllowContacts"/>, <see cref="T:TL.PrivacyValueAllowAll"/>, <see cref="T:TL.PrivacyValueAllowUsers"/>, <see cref="T:TL.PrivacyValueDisallowContacts"/>, <see cref="T:TL.PrivacyValueDisallowAll"/>, <see cref="T:TL.PrivacyValueDisallowUsers"/>, <see cref="T:TL.PrivacyValueAllowChatParticipants"/>, <see cref="T:TL.PrivacyValueDisallowChatParticipants"/></para></summary>
         </member>
@@ -7824,6 +7899,9 @@
         </member>
         <member name="F:TL.PrivacyValueDisallowChatParticipants.chats">
             <summary>Disallowed chats</summary>
+        </member>
+        <member name="T:TL.PrivacyValueAllowCloseFriends">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/privacyValueAllowCloseFriends"/></para></summary>
         </member>
         <member name="T:TL.Account_PrivacyRules">
             <summary>Privacy rules		<para>See <a href="https://corefork.telegram.org/constructor/account.privacyRules"/></para></summary>
@@ -7902,6 +7980,9 @@
         </member>
         <member name="F:TL.DocumentAttributeVideo.Flags.supports_streaming">
             <summary>Whether the video supports streaming</summary>
+        </member>
+        <member name="F:TL.DocumentAttributeVideo.Flags.has_preload_prefix_size">
+            <summary>Field <see cref="F:TL.DocumentAttributeVideo.preload_prefix_size"/> has a value</summary>
         </member>
         <member name="T:TL.DocumentAttributeAudio">
             <summary>Represents an audio file		<para>See <a href="https://corefork.telegram.org/constructor/documentAttributeAudio"/></para></summary>
@@ -8711,13 +8792,13 @@
             <summary>User ID</summary>
         </member>
         <member name="T:TL.KeyboardButtonWebView">
-            <summary>Button to open a <a href="https://corefork.telegram.org/api/bots/webapps">bot web app</a> using <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,System.Nullable{System.Int32},System.String,TL.DataJSON,System.String,System.Nullable{System.Int32},TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see>, sending over user information after user confirmation.		<para>See <a href="https://corefork.telegram.org/constructor/keyboardButtonWebView"/></para></summary>
+            <summary>Button to open a <a href="https://corefork.telegram.org/api/bots/webapps">bot web app</a> using <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,TL.InputReplyTo,System.String,TL.DataJSON,System.String,TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see>, sending over user information after user confirmation.		<para>See <a href="https://corefork.telegram.org/constructor/keyboardButtonWebView"/></para></summary>
         </member>
         <member name="F:TL.KeyboardButtonWebView.url">
             <summary><a href="https://corefork.telegram.org/api/bots/webapps">Web app url</a></summary>
         </member>
         <member name="T:TL.KeyboardButtonSimpleWebView">
-            <summary>Button to open a <a href="https://corefork.telegram.org/api/bots/webapps">bot web app</a> using <see cref="M:TL.SchemaExtensions.Messages_RequestSimpleWebView(WTelegram.Client,TL.InputUserBase,System.String,System.String,TL.DataJSON,System.Boolean)">Messages_RequestSimpleWebView</see>, without sending user information to the web app.		<para>See <a href="https://corefork.telegram.org/constructor/keyboardButtonSimpleWebView"/></para></summary>
+            <summary>Button to open a <a href="https://corefork.telegram.org/api/bots/webapps">bot web app</a> using <see cref="M:TL.SchemaExtensions.Messages_RequestSimpleWebView(WTelegram.Client,TL.InputUserBase,System.String,TL.DataJSON,System.String,System.String,System.Boolean,System.Boolean)">Messages_RequestSimpleWebView</see>, without sending user information to the web app.		<para>See <a href="https://corefork.telegram.org/constructor/keyboardButtonSimpleWebView"/></para></summary>
         </member>
         <member name="T:TL.KeyboardButtonRequestPeer">
             <summary>Prompts the user to select and share a peer with the bot using <see cref="M:TL.SchemaExtensions.Messages_SendBotRequestedPeer(WTelegram.Client,TL.InputPeer,System.Int32,System.Int32,TL.InputPeer)">Messages_SendBotRequestedPeer</see>		<para>See <a href="https://corefork.telegram.org/constructor/keyboardButtonRequestPeer"/></para></summary>
@@ -8726,7 +8807,7 @@
             <summary>Button ID, to be passed to <see cref="M:TL.SchemaExtensions.Messages_SendBotRequestedPeer(WTelegram.Client,TL.InputPeer,System.Int32,System.Int32,TL.InputPeer)">Messages_SendBotRequestedPeer</see>.</summary>
         </member>
         <member name="F:TL.KeyboardButtonRequestPeer.peer_type">
-            <summary>Filtering criteria to use for the peer selection list shown to the user.</summary>
+            <summary>Filtering criteria to use for the peer selection list shown to the user. <br/>The list should display all existing peers of the specified type, and should also offer an option for the user to create and immediately use a peer of the specified type, if needed.</summary>
         </member>
         <member name="T:TL.KeyboardButtonRow">
             <summary>Inline keyboard row		<para>See <a href="https://corefork.telegram.org/constructor/keyboardButtonRow"/></para></summary>
@@ -8801,7 +8882,7 @@
             <summary>Unknown message entity		<para>See <a href="https://corefork.telegram.org/constructor/messageEntityUnknown"/></para></summary>
         </member>
         <member name="T:TL.MessageEntityMention">
-            <summary>Message entity <a href="https://corefork.telegram.org/api/mentions">mentioning</a> the current user		<para>See <a href="https://corefork.telegram.org/constructor/messageEntityMention"/></para></summary>
+            <summary>Message entity <a href="https://corefork.telegram.org/api/mentions">mentioning</a> a user by <c>@username</c>; <see cref="T:TL.MessageEntityMentionName"/> can also be used to mention users by their ID.		<para>See <a href="https://corefork.telegram.org/constructor/messageEntityMention"/></para></summary>
         </member>
         <member name="T:TL.MessageEntityHashtag">
             <summary><strong>#hashtag</strong> message entity		<para>See <a href="https://corefork.telegram.org/constructor/messageEntityHashtag"/></para></summary>
@@ -9825,7 +9906,7 @@
             <summary>Length of the sent verification code</summary>
         </member>
         <member name="F:TL.Auth_SentCodeTypeEmailCode.reset_available_period">
-            <summary>The login email can be reset by invoking <see cref="M:TL.SchemaExtensions.Auth_ResetLoginEmail(WTelegram.Client,System.String,System.String)">Auth_ResetLoginEmail</see> and waiting for the specified amount of seconds.</summary>
+            <summary>Clients should wait for the specified amount of seconds before allowing the user to invoke <see cref="M:TL.SchemaExtensions.Auth_ResetLoginEmail(WTelegram.Client,System.String,System.String)">Auth_ResetLoginEmail</see> (will be 0 for <a href="https://corefork.telegram.org/api/premium">Premium</a> users).</summary>
         </member>
         <member name="F:TL.Auth_SentCodeTypeEmailCode.reset_pending_date">
             <summary>An email reset was already requested, and will occur at the specified date.</summary>
@@ -10757,9 +10838,6 @@
         <member name="F:TL.Invoice.suggested_tip_amounts">
             <summary>A vector of suggested amounts of tips in the <em>smallest units</em> of the currency (integer, not float/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed <c>max_tip_amount</c>.</summary>
         </member>
-        <member name="F:TL.Invoice.recurring_terms_url">
-            <summary>Terms of service URL for the recurring payment</summary>
-        </member>
         <member name="F:TL.Invoice.Flags.test">
             <summary>Test invoice</summary>
         </member>
@@ -10789,6 +10867,9 @@
         </member>
         <member name="F:TL.Invoice.Flags.recurring">
             <summary>Whether this is a recurring payment</summary>
+        </member>
+        <member name="F:TL.Invoice.Flags.has_terms_url">
+            <summary>Field <see cref="F:TL.Invoice.terms_url"/> has a value</summary>
         </member>
         <member name="T:TL.PaymentCharge">
             <summary>Payment identifier		<para>See <a href="https://corefork.telegram.org/constructor/paymentCharge"/></para></summary>
@@ -12205,7 +12286,7 @@
             <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
         </member>
         <member name="T:TL.InputSingleMedia">
-            <summary>A single media in an <a href="https://corefork.telegram.org/api/files#albums-grouped-media">album or grouped media</a> sent with <see cref="M:TL.SchemaExtensions.Messages_SendMultiMedia(WTelegram.Client,TL.InputPeer,TL.InputSingleMedia[],System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">Messages_SendMultiMedia</see>.		<para>See <a href="https://corefork.telegram.org/constructor/inputSingleMedia"/></para></summary>
+            <summary>A single media in an <a href="https://corefork.telegram.org/api/files#albums-grouped-media">album or grouped media</a> sent with <see cref="M:TL.SchemaExtensions.Messages_SendMultiMedia(WTelegram.Client,TL.InputPeer,TL.InputSingleMedia[],TL.InputReplyTo,System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">Messages_SendMultiMedia</see>.		<para>See <a href="https://corefork.telegram.org/constructor/inputSingleMedia"/></para></summary>
         </member>
         <member name="F:TL.InputSingleMedia.flags">
             <summary>Extra bits of information, use <c>flags.HasFlag(...)</c> to test for those</summary>
@@ -13859,65 +13940,8 @@
         <member name="F:TL.WebPageAttributeTheme.Flags.has_settings">
             <summary>Field <see cref="F:TL.WebPageAttributeTheme.settings"/> has a value</summary>
         </member>
-        <member name="T:TL.MessageUserVoteBase">
-            <summary>How a user voted in a poll		<para>See <a href="https://corefork.telegram.org/type/MessageUserVote"/></para>		<para>Derived classes: <see cref="T:TL.MessageUserVote"/>, <see cref="T:TL.MessageUserVoteInputOption"/>, <see cref="T:TL.MessageUserVoteMultiple"/></para></summary>
-        </member>
-        <member name="P:TL.MessageUserVoteBase.UserId">
-            <summary>User ID</summary>
-        </member>
-        <member name="P:TL.MessageUserVoteBase.Date">
-            <summary>When did the user cast the vote</summary>
-        </member>
-        <member name="T:TL.MessageUserVote">
-            <summary>How a user voted in a poll		<para>See <a href="https://corefork.telegram.org/constructor/messageUserVote"/></para></summary>
-        </member>
-        <member name="F:TL.MessageUserVote.user_id">
-            <summary>User ID</summary>
-        </member>
-        <member name="F:TL.MessageUserVote.option">
-            <summary>The option chosen by the user</summary>
-        </member>
-        <member name="F:TL.MessageUserVote.date">
-            <summary>When did the user cast the vote</summary>
-        </member>
-        <member name="P:TL.MessageUserVote.UserId">
-            <summary>User ID</summary>
-        </member>
-        <member name="P:TL.MessageUserVote.Date">
-            <summary>When did the user cast the vote</summary>
-        </member>
-        <member name="T:TL.MessageUserVoteInputOption">
-            <summary>How a user voted in a poll (reduced constructor, returned if an <c>option</c> was provided to <see cref="M:TL.SchemaExtensions.Messages_GetPollVotes(WTelegram.Client,TL.InputPeer,System.Int32,System.Int32,System.Byte[],System.String)">Messages_GetPollVotes</see>)		<para>See <a href="https://corefork.telegram.org/constructor/messageUserVoteInputOption"/></para></summary>
-        </member>
-        <member name="F:TL.MessageUserVoteInputOption.user_id">
-            <summary>The user that voted for the queried <c>option</c></summary>
-        </member>
-        <member name="F:TL.MessageUserVoteInputOption.date">
-            <summary>When did the user cast the vote</summary>
-        </member>
-        <member name="P:TL.MessageUserVoteInputOption.UserId">
-            <summary>The user that voted for the queried <c>option</c></summary>
-        </member>
-        <member name="P:TL.MessageUserVoteInputOption.Date">
-            <summary>When did the user cast the vote</summary>
-        </member>
-        <member name="T:TL.MessageUserVoteMultiple">
-            <summary>How a user voted in a multiple-choice poll		<para>See <a href="https://corefork.telegram.org/constructor/messageUserVoteMultiple"/></para></summary>
-        </member>
-        <member name="F:TL.MessageUserVoteMultiple.user_id">
-            <summary>User ID</summary>
-        </member>
-        <member name="F:TL.MessageUserVoteMultiple.options">
-            <summary>Options chosen by the user</summary>
-        </member>
-        <member name="F:TL.MessageUserVoteMultiple.date">
-            <summary>When did the user cast their votes</summary>
-        </member>
-        <member name="P:TL.MessageUserVoteMultiple.UserId">
-            <summary>User ID</summary>
-        </member>
-        <member name="P:TL.MessageUserVoteMultiple.Date">
-            <summary>When did the user cast their votes</summary>
+        <member name="T:TL.WebPageAttributeStory">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/webPageAttributeStory"/></para></summary>
         </member>
         <member name="T:TL.Messages_VotesList">
             <summary>How users voted in a poll		<para>See <a href="https://corefork.telegram.org/constructor/messages.votesList"/></para></summary>
@@ -13939,6 +13963,9 @@
         </member>
         <member name="F:TL.Messages_VotesList.Flags.has_next_offset">
             <summary>Field <see cref="F:TL.Messages_VotesList.next_offset"/> has a value</summary>
+        </member>
+        <member name="M:TL.Messages_VotesList.UserOrChat(TL.Peer)">
+            <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
         </member>
         <member name="T:TL.BankCardOpenUrl">
             <summary>Credit card info URL provided by the bank		<para>See <a href="https://corefork.telegram.org/constructor/bankCardOpenUrl"/></para></summary>
@@ -14400,11 +14427,8 @@
         <member name="F:TL.GlobalPrivacySettings.flags">
             <summary>Extra bits of information, use <c>flags.HasFlag(...)</c> to test for those</summary>
         </member>
-        <member name="F:TL.GlobalPrivacySettings.archive_and_mute_new_noncontact_peers">
+        <member name="F:TL.GlobalPrivacySettings.Flags.archive_and_mute_new_noncontact_peers">
             <summary>Whether to archive and mute new chats from non-contacts</summary>
-        </member>
-        <member name="F:TL.GlobalPrivacySettings.Flags.has_archive_and_mute_new_noncontact_peers">
-            <summary>Field <see cref="F:TL.GlobalPrivacySettings.archive_and_mute_new_noncontact_peers"/> has a value</summary>
         </member>
         <member name="T:TL.Help_CountryCode">
             <summary>Country code and phone number pattern of a specific country		<para>See <a href="https://corefork.telegram.org/constructor/help.countryCode"/></para></summary>
@@ -14539,6 +14563,9 @@
         <member name="M:TL.Messages_DiscussionMessage.UserOrChat(TL.Peer)">
             <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
         </member>
+        <member name="T:TL.MessageReplyHeaderBase">
+            <summary>Reply information		<para>See <a href="https://corefork.telegram.org/type/MessageReplyHeader"/></para>		<para>Derived classes: <see cref="T:TL.MessageReplyHeader"/></para></summary>
+        </member>
         <member name="T:TL.MessageReplyHeader">
             <summary>Message replies and <a href="https://corefork.telegram.org/api/threads">thread</a> information		<para>See <a href="https://corefork.telegram.org/constructor/messageReplyHeader"/></para></summary>
         </member>
@@ -14565,6 +14592,9 @@
         </member>
         <member name="F:TL.MessageReplyHeader.Flags.forum_topic">
             <summary>Whether this message was sent in a <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topic</a> (except for the General topic).</summary>
+        </member>
+        <member name="T:TL.MessageReplyStoryHeader">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/messageReplyStoryHeader"/></para></summary>
         </member>
         <member name="T:TL.MessageReplies">
             <summary>Info about <a href="https://corefork.telegram.org/api/threads">the comment section of a channel post, or a simple message thread</a>		<para>See <a href="https://corefork.telegram.org/constructor/messageReplies"/></para></summary>
@@ -15200,6 +15230,9 @@
         <member name="F:TL.SponsoredMessage.Flags.has_additional_info">
             <summary>Field <see cref="F:TL.SponsoredMessage.additional_info"/> has a value</summary>
         </member>
+        <member name="F:TL.SponsoredMessage.Flags.has_webpage">
+            <summary>Field <see cref="F:TL.SponsoredMessage.webpage"/> has a value</summary>
+        </member>
         <member name="T:TL.Messages_SponsoredMessages">
             <summary>A set of sponsored messages associated to a channel		<para>See <a href="https://corefork.telegram.org/constructor/messages.sponsoredMessages"/></para></summary>
             <remarks>a <see langword="null"/> value means <a href="https://corefork.telegram.org/constructor/messages.sponsoredMessagesEmpty">messages.sponsoredMessagesEmpty</a></remarks>
@@ -15498,6 +15531,9 @@
         </member>
         <member name="F:TL.MessagePeerReaction.Flags.unread">
             <summary>Whether the reaction wasn't yet marked as read by the current user</summary>
+        </member>
+        <member name="F:TL.MessagePeerReaction.Flags.my">
+            <summary>Starting from layer 159, <see cref="M:TL.SchemaExtensions.Messages_SendReaction(WTelegram.Client,TL.InputPeer,System.Int32,TL.Reaction[],System.Boolean,System.Boolean)">Messages_SendReaction</see> will send reactions from the peer (user or channel) specified using <see cref="M:TL.SchemaExtensions.Messages_SaveDefaultSendAs(WTelegram.Client,TL.InputPeer,TL.InputPeer)">Messages_SaveDefaultSendAs</see>. <br/>If set, this flag indicates that this reaction was sent by us, even if the <c>peer</c> doesn't point to the current account.</summary>
         </member>
         <member name="T:TL.GroupCallStreamChannel">
             <summary>Info about an RTMP stream in a group call or livestream		<para>See <a href="https://corefork.telegram.org/constructor/groupCallStreamChannel"/></para></summary>
@@ -16625,6 +16661,123 @@
         <member name="F:TL.Bots_BotInfo.description">
             <summary>Bot description</summary>
         </member>
+        <member name="T:TL.MessagePeerVoteBase">
+            <summary><para>See <a href="https://corefork.telegram.org/type/MessagePeerVote"/></para></summary>
+        </member>
+        <member name="T:TL.MessagePeerVote">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/messagePeerVote"/></para></summary>
+        </member>
+        <member name="T:TL.MessagePeerVoteInputOption">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/messagePeerVoteInputOption"/></para></summary>
+        </member>
+        <member name="T:TL.MessagePeerVoteMultiple">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/messagePeerVoteMultiple"/></para></summary>
+        </member>
+        <member name="T:TL.SponsoredWebPage">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/sponsoredWebPage"/></para></summary>
+        </member>
+        <member name="T:TL.StoryViews">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/storyViews"/></para></summary>
+        </member>
+        <member name="T:TL.StoryItemBase">
+            <summary><para>See <a href="https://corefork.telegram.org/type/StoryItem"/></para></summary>
+        </member>
+        <member name="T:TL.StoryItemDeleted">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/storyItemDeleted"/></para></summary>
+        </member>
+        <member name="T:TL.StoryItemSkipped">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/storyItemSkipped"/></para></summary>
+        </member>
+        <member name="T:TL.StoryItem">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/storyItem"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_AllStoriesBase">
+            <summary><para>See <a href="https://corefork.telegram.org/type/stories.AllStories"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_AllStoriesNotModified">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.allStoriesNotModified"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_AllStories">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.allStories"/></para></summary>
+        </member>
+        <member name="M:TL.Stories_AllStories.UserOrChat(TL.Peer)">
+            <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
+        </member>
+        <member name="T:TL.Stories_Stories">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.stories"/></para></summary>
+        </member>
+        <member name="M:TL.Stories_Stories.UserOrChat(TL.Peer)">
+            <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
+        </member>
+        <member name="T:TL.StoryView">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/storyView"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_StoryViewsList">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.storyViewsList"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_StoryViews">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.storyViews"/></para></summary>
+        </member>
+        <member name="T:TL.InputReplyTo">
+            <summary><para>See <a href="https://corefork.telegram.org/type/InputReplyTo"/></para></summary>
+        </member>
+        <member name="T:TL.InputReplyToMessage">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/inputReplyToMessage"/></para></summary>
+        </member>
+        <member name="T:TL.InputReplyToStory">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/inputReplyToStory"/></para></summary>
+        </member>
+        <member name="T:TL.ExportedStoryLink">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/exportedStoryLink"/></para></summary>
+        </member>
+        <member name="T:TL.StoriesStealthMode">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/storiesStealthMode"/></para></summary>
+        </member>
+        <member name="T:TL.MediaAreaCoordinates">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/mediaAreaCoordinates"/></para></summary>
+        </member>
+        <member name="T:TL.MediaArea">
+            <summary><para>See <a href="https://corefork.telegram.org/type/MediaArea"/></para></summary>
+        </member>
+        <member name="T:TL.MediaAreaVenue">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/mediaAreaVenue"/></para></summary>
+        </member>
+        <member name="T:TL.InputMediaAreaVenue">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/inputMediaAreaVenue"/></para></summary>
+        </member>
+        <member name="T:TL.MediaAreaGeoPoint">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/mediaAreaGeoPoint"/></para></summary>
+        </member>
+        <member name="T:TL.MediaAreaSuggestedReaction">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/mediaAreaSuggestedReaction"/></para></summary>
+        </member>
+        <member name="T:TL.PeerStories">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/peerStories"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_PeerStories">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.peerStories"/></para></summary>
+        </member>
+        <member name="M:TL.Stories_PeerStories.UserOrChat(TL.Peer)">
+            <summary>returns a <see cref="T:TL.User"/> or <see cref="T:TL.ChatBase"/> for the given Peer</summary>
+        </member>
+        <member name="T:TL.Stories_BoostsStatus">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.boostsStatus"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_CanApplyBoostResult">
+            <summary><para>See <a href="https://corefork.telegram.org/type/stories.CanApplyBoostResult"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_CanApplyBoostOk">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.canApplyBoostOk"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_CanApplyBoostReplace">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.canApplyBoostReplace"/></para></summary>
+        </member>
+        <member name="T:TL.Booster">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/booster"/></para></summary>
+        </member>
+        <member name="T:TL.Stories_BoostersList">
+            <summary><para>See <a href="https://corefork.telegram.org/constructor/stories.boostersList"/></para></summary>
+        </member>
         <member name="M:TL.SchemaExtensions.InvokeAfterMsg``1(WTelegram.Client,System.Int64,TL.IMethod{``0})">
             <summary>Invokes a query after successful completion of one of the previous queries.		<para>See <a href="https://corefork.telegram.org/method/invokeAfterMsg"/></para></summary>
             <param name="msg_id">Message identifier on which a current query depends</param>
@@ -16841,8 +16994,8 @@
         </member>
         <member name="M:TL.SchemaExtensions.Account_SetPrivacy(WTelegram.Client,TL.InputPrivacyKey,TL.InputPrivacyRule[])">
             <summary>Change privacy settings of current account		<para>See <a href="https://corefork.telegram.org/method/account.setPrivacy"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/account.setPrivacy#possible-errors">details</a>)</para></summary>
-            <param name="key">Peers to which the privacy rules apply</param>
-            <param name="rules">New privacy rules</param>
+            <param name="key">New privacy rule</param>
+            <param name="rules">Peers to which the privacy rule will apply.</param>
         </member>
         <member name="M:TL.SchemaExtensions.Account_DeleteAccount(WTelegram.Client,System.String,TL.InputCheckPasswordSRP)">
             <summary>Delete the user's account from the telegram servers.		<para>See <a href="https://corefork.telegram.org/method/account.deleteAccount"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 420 (<a href="https://corefork.telegram.org/method/account.deleteAccount#possible-errors">details</a>)</para></summary>
@@ -16997,7 +17150,7 @@
             <summary>Toggle contact sign up notifications		<para>See <a href="https://corefork.telegram.org/method/account.setContactSignUpNotification"/></para></summary>
             <param name="silent">Whether to disable contact sign up notifications</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Account_GetNotifyExceptions(WTelegram.Client,TL.InputNotifyPeerBase,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Account_GetNotifyExceptions(WTelegram.Client,TL.InputNotifyPeerBase,System.Boolean,System.Boolean)">
             <summary>Returns list of chats with non-default notification settings		<para>See <a href="https://corefork.telegram.org/method/account.getNotifyExceptions"/></para></summary>
             <param name="compare_sound">If true, chats with non-default sound will also be returned</param>
             <param name="peer">If specified, only chats of the specified category will be returned</param>
@@ -17122,7 +17275,7 @@
             <summary>Set time-to-live of current session		<para>See <a href="https://corefork.telegram.org/method/account.setAuthorizationTTL"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406 (<a href="https://corefork.telegram.org/method/account.setAuthorizationTTL#possible-errors">details</a>)</para></summary>
             <param name="authorization_ttl_days">Time-to-live of current session in days</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Account_ChangeAuthorizationSettings(WTelegram.Client,System.Int64,System.Nullable{System.Boolean},System.Nullable{System.Boolean})">
+        <member name="M:TL.SchemaExtensions.Account_ChangeAuthorizationSettings(WTelegram.Client,System.Int64,System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.Boolean)">
             <summary>Change authorization settings		<para>See <a href="https://corefork.telegram.org/method/account.changeAuthorizationSettings"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/account.changeAuthorizationSettings#possible-errors">details</a>)</para></summary>
             <param name="hash">Session ID from the <see cref="T:TL.Authorization"/>, fetchable using <see cref="M:TL.SchemaExtensions.Account_GetAuthorizations(WTelegram.Client)">Account_GetAuthorizations</see></param>
             <param name="encrypted_requests_disabled">Whether to enable or disable receiving encrypted chats: if the flag is not set, the previous setting is not changed</param>
@@ -17194,12 +17347,15 @@
         <member name="M:TL.SchemaExtensions.Account_DeleteAutoSaveExceptions(WTelegram.Client)">
             <summary>Clear all peer-specific autosave settings.		<para>See <a href="https://corefork.telegram.org/method/account.deleteAutoSaveExceptions"/></para></summary>
         </member>
+        <member name="M:TL.SchemaExtensions.Account_InvalidateSignInCodes(WTelegram.Client,System.String[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/account.invalidateSignInCodes"/></para></summary>
+        </member>
         <member name="M:TL.SchemaExtensions.Users_GetUsers(WTelegram.Client,TL.InputUserBase[])">
             <summary>Returns basic user info according to their identifiers.		<para>See <a href="https://corefork.telegram.org/method/users.getUsers"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/users.getUsers#possible-errors">details</a>)</para></summary>
             <param name="id">List of user identifiers</param>
         </member>
         <member name="M:TL.SchemaExtensions.Users_GetFullUser(WTelegram.Client,TL.InputUserBase)">
-            <summary>Returns extended user info by ID.		<para>See <a href="https://corefork.telegram.org/method/users.getFullUser"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/users.getFullUser#possible-errors">details</a>)</para></summary>
+            <summary>Returns extended user info by ID.		<para>See <a href="https://corefork.telegram.org/method/users.getFullUser"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,500 (<a href="https://corefork.telegram.org/method/users.getFullUser#possible-errors">details</a>)</para></summary>
             <param name="id">User ID</param>
         </member>
         <member name="M:TL.SchemaExtensions.Users_SetSecureValueErrors(WTelegram.Client,TL.InputUserBase,TL.SecureValueErrorBase[])">
@@ -17231,15 +17387,15 @@
             <summary>Delete contacts by phone number		<para>See <a href="https://corefork.telegram.org/method/contacts.deleteByPhones"/></para></summary>
             <param name="phones">Phone numbers</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Contacts_Block(WTelegram.Client,TL.InputPeer)">
+        <member name="M:TL.SchemaExtensions.Contacts_Block(WTelegram.Client,TL.InputPeer,System.Boolean)">
             <summary>Adds the user to the blacklist.		<para>See <a href="https://corefork.telegram.org/method/contacts.block"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/contacts.block#possible-errors">details</a>)</para></summary>
             <param name="id">User ID</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Contacts_Unblock(WTelegram.Client,TL.InputPeer)">
+        <member name="M:TL.SchemaExtensions.Contacts_Unblock(WTelegram.Client,TL.InputPeer,System.Boolean)">
             <summary>Deletes the user from the blacklist.		<para>See <a href="https://corefork.telegram.org/method/contacts.unblock"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/contacts.unblock#possible-errors">details</a>)</para></summary>
             <param name="id">User ID</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Contacts_GetBlocked(WTelegram.Client,System.Int32,System.Int32)">
+        <member name="M:TL.SchemaExtensions.Contacts_GetBlocked(WTelegram.Client,System.Int32,System.Int32,System.Boolean)">
             <summary>Returns the list of blocked users.		<para>See <a href="https://corefork.telegram.org/method/contacts.getBlocked"/></para></summary>
             <param name="offset">The number of list elements to be skipped</param>
             <param name="limit">The number of list elements to be returned</param>
@@ -17319,6 +17475,12 @@
             <summary>Obtain user info from a <a href="https://corefork.telegram.org/api/links#temporary-profile-links">temporary profile link</a>.		<para>See <a href="https://corefork.telegram.org/method/contacts.importContactToken"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/contacts.importContactToken#possible-errors">details</a>)</para></summary>
             <param name="token">The token extracted from the <a href="https://corefork.telegram.org/api/links#temporary-profile-links">temporary profile link</a>.</param>
         </member>
+        <member name="M:TL.SchemaExtensions.Contacts_EditCloseFriends(WTelegram.Client,System.Int64[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/contacts.editCloseFriends"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Contacts_SetBlocked(WTelegram.Client,TL.InputPeer[],System.Int32,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/contacts.setBlocked"/></para></summary>
+        </member>
         <member name="M:TL.SchemaExtensions.Messages_GetMessages(WTelegram.Client,TL.InputMessage[])">
             <summary><para>⚠ <b>This method is only for basic Chat</b>. See <see href="https://wiz0u.github.io/WTelegramClient/README#terminology">Terminology</see> to understand what this means<br/>Search for a similar method name starting with <c>Channels_</c> if you're dealing with a <see cref="T:TL.Channel"/></para>		Returns the list of messages by their IDs.		<para>See <a href="https://corefork.telegram.org/method/messages.getMessages"/> [bots: ✓]</para></summary>
             <param name="id">Message ID list</param>
@@ -17328,7 +17490,7 @@
             <param name="exclude_pinned">Exclude pinned dialogs</param>
             <param name="folder_id"><a href="https://corefork.telegram.org/api/folders#peer-folders">Peer folder ID, for more info click here</a></param>
             <param name="offset_date"><a href="https://corefork.telegram.org/api/offsets">Offsets for pagination, for more info click here</a></param>
-            <param name="offset_id"><a href="https://corefork.telegram.org/api/offsets">Offsets for pagination, for more info click here</a></param>
+            <param name="offset_id"><a href="https://corefork.telegram.org/api/offsets">Offsets for pagination, for more info click here</a> (<c>top_message</c> ID used for pagination)</param>
             <param name="offset_peer"><a href="https://corefork.telegram.org/api/offsets">Offset peer for pagination</a></param>
             <param name="limit">Number of list elements to be returned</param>
             <param name="hash"><a href="https://corefork.telegram.org/api/offsets#hash-generation">Hash for pagination, for more info click here</a></param>
@@ -17389,7 +17551,7 @@
             <param name="top_msg_id"><a href="https://corefork.telegram.org/api/threads">Topic ID</a></param>
             <param name="action">Type of action</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_SendMessage(WTelegram.Client,TL.InputPeer,System.String,System.Int64,System.Nullable{System.Int32},TL.ReplyMarkup,TL.MessageEntity[],System.Nullable{System.Int32},System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_SendMessage(WTelegram.Client,TL.InputPeer,System.String,System.Int64,TL.InputReplyTo,TL.ReplyMarkup,TL.MessageEntity[],System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
             <summary>Sends a message to a chat		<para>See <a href="https://corefork.telegram.org/method/messages.sendMessage"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,406,420,500 (<a href="https://corefork.telegram.org/method/messages.sendMessage#possible-errors">details</a>)</para></summary>
             <param name="no_webpage">Set this flag to disable generation of the webpage preview</param>
             <param name="silent">Send this message silently (no notifications for the receivers)</param>
@@ -17398,8 +17560,6 @@
             <param name="noforwards">Only for bots, disallows forwarding and saving of the messages, even if the destination chat doesn't have <a href="https://telegram.org/blog/protected-content-delete-by-date-and-more">content protection</a> enabled</param>
             <param name="update_stickersets_order">Whether to move used stickersets to top, <a href="https://corefork.telegram.org/api/stickers#recent-stickersets">see here for more info on this flag »</a></param>
             <param name="peer">The destination where the message will be sent</param>
-            <param name="reply_to_msg_id">The message ID to which this message will reply to</param>
-            <param name="top_msg_id">This field must contain the topic ID <strong>only</strong> when replying to messages in <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topics</a> different from the "General" topic (i.e. <c>reply_to_msg_id</c> is set and <c>reply_to_msg_id != topicID</c> and <c>topicID != 1</c>). <br/>If the replied-to message is deleted before the method finishes execution, the value in this field will be used to send the message to the correct topic, instead of the "General" topic.</param>
             <param name="message">The message</param>
             <param name="random_id">Unique client message ID required to prevent message resending <para>You can use <see cref="M:WTelegram.Helpers.RandomLong"/></para></param>
             <param name="reply_markup">Reply markup for sending bot buttons</param>
@@ -17407,7 +17567,7 @@
             <param name="schedule_date">Scheduled message date for <a href="https://corefork.telegram.org/api/scheduled-messages">scheduled messages</a></param>
             <param name="send_as">Send this message as the specified peer</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_SendMedia(WTelegram.Client,TL.InputPeer,TL.InputMedia,System.String,System.Int64,System.Nullable{System.Int32},TL.ReplyMarkup,TL.MessageEntity[],System.Nullable{System.Int32},System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_SendMedia(WTelegram.Client,TL.InputPeer,TL.InputMedia,System.String,System.Int64,TL.InputReplyTo,TL.ReplyMarkup,TL.MessageEntity[],System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
             <summary>Send a media		<para>See <a href="https://corefork.telegram.org/method/messages.sendMedia"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,406,420,500 (<a href="https://corefork.telegram.org/method/messages.sendMedia#possible-errors">details</a>)</para></summary>
             <param name="silent">Send message silently (no notification should be triggered)</param>
             <param name="background">Send message in background</param>
@@ -17415,8 +17575,6 @@
             <param name="noforwards">Only for bots, disallows forwarding and saving of the messages, even if the destination chat doesn't have <a href="https://telegram.org/blog/protected-content-delete-by-date-and-more">content protection</a> enabled</param>
             <param name="update_stickersets_order">Whether to move used stickersets to top, <a href="https://corefork.telegram.org/api/stickers#recent-stickersets">see here for more info on this flag »</a></param>
             <param name="peer">Destination</param>
-            <param name="reply_to_msg_id">Message ID to which this message should reply to</param>
-            <param name="top_msg_id">This field must contain the topic ID <strong>only</strong> when replying to messages in <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topics</a> different from the "General" topic (i.e. <c>reply_to_msg_id</c> is set and <c>reply_to_msg_id != topicID</c> and <c>topicID != 1</c>). <br/>If the replied-to message is deleted before the method finishes execution, the value in this field will be used to send the message to the correct topic, instead of the "General" topic.</param>
             <param name="media">Attached media</param>
             <param name="message">Caption</param>
             <param name="random_id">Random ID to avoid resending the same message <para>You can use <see cref="M:WTelegram.Helpers.RandomLong"/></para></param>
@@ -17540,13 +17698,13 @@
             <param name="file">File attachment for the secret chat</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_SendEncryptedService(WTelegram.Client,TL.InputEncryptedChat,System.Int64,System.Byte[])">
-            <summary>Sends a service message to a secret chat.		<para>See <a href="https://corefork.telegram.org/method/messages.sendEncryptedService"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/messages.sendEncryptedService#possible-errors">details</a>)</para></summary>
+            <summary>Sends a service message to a secret chat.		<para>See <a href="https://corefork.telegram.org/method/messages.sendEncryptedService"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,500 (<a href="https://corefork.telegram.org/method/messages.sendEncryptedService#possible-errors">details</a>)</para></summary>
             <param name="peer">Secret chat ID</param>
             <param name="random_id">Unique client message ID required to prevent message resending <para>You can use <see cref="M:WTelegram.Helpers.RandomLong"/></para></param>
             <param name="data">TL-serialization of  <see cref="T:TL.DecryptedMessageBase"/> type, encrypted with a key generated during chat initialization</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_ReceivedQueue(WTelegram.Client,System.Int32)">
-            <summary>Confirms receipt of messages in a secret chat by client, cancels push notifications.<br/>The method returns a list of <strong>random_id</strong>s of messages for which push notifications were cancelled.		<para>See <a href="https://corefork.telegram.org/method/messages.receivedQueue"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.receivedQueue#possible-errors">details</a>)</para></summary>
+            <summary>Confirms receipt of messages in a secret chat by client, cancels push notifications.<br/>The method returns a list of <strong>random_id</strong>s of messages for which push notifications were cancelled.		<para>See <a href="https://corefork.telegram.org/method/messages.receivedQueue"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,500 (<a href="https://corefork.telegram.org/method/messages.receivedQueue#possible-errors">details</a>)</para></summary>
             <param name="max_qts">Maximum qts value available at the client</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_ReportEncryptedSpam(WTelegram.Client,TL.InputEncryptedChat)">
@@ -17584,7 +17742,7 @@
             <param name="title">Description of the invite link, visible only to administrators</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_CheckChatInvite(WTelegram.Client,System.String)">
-            <summary>Check the validity of a chat invite link and get basic info about it		<para>See <a href="https://corefork.telegram.org/method/messages.checkChatInvite"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406 (<a href="https://corefork.telegram.org/method/messages.checkChatInvite#possible-errors">details</a>)</para></summary>
+            <summary>Check the validity of a chat invite link and get basic info about it		<para>See <a href="https://corefork.telegram.org/method/messages.checkChatInvite"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406,500 (<a href="https://corefork.telegram.org/method/messages.checkChatInvite#possible-errors">details</a>)</para></summary>
             <param name="hash">Invite hash from <a href="https://corefork.telegram.org/api/links#chat-invite-links">chat invite deep link »</a>.</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_ImportChatInvite(WTelegram.Client,System.String)">
@@ -17682,15 +17840,13 @@
             <param name="switch_pm">If passed, clients will display a button on top of the remaining inline result list with the specified text, that switches the user to a private chat with the bot and sends the bot a start message with a certain parameter.</param>
             <param name="switch_webview">If passed, clients will display a button on top of the remaining inline result list with the specified text, that switches the user to the specified <a href="https://corefork.telegram.org/api/bots/webapps#simple-web-apps">bot web app</a>.</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_SendInlineBotResult(WTelegram.Client,TL.InputPeer,System.Int64,System.Int64,System.String,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_SendInlineBotResult(WTelegram.Client,TL.InputPeer,System.Int64,System.Int64,System.String,TL.InputReplyTo,System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
             <summary>Send a result obtained using <see cref="M:TL.SchemaExtensions.Messages_GetInlineBotResults(WTelegram.Client,TL.InputUserBase,TL.InputPeer,System.String,System.String,TL.InputGeoPoint)">Messages_GetInlineBotResults</see>.		<para>See <a href="https://corefork.telegram.org/method/messages.sendInlineBotResult"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,420,500 (<a href="https://corefork.telegram.org/method/messages.sendInlineBotResult#possible-errors">details</a>)</para></summary>
             <param name="silent">Whether to send the message silently (no notification will be triggered on the other client)</param>
             <param name="background">Whether to send the message in background</param>
             <param name="clear_draft">Whether to clear the <a href="https://corefork.telegram.org/api/drafts">draft</a></param>
             <param name="hide_via">Whether to hide the <c>via @botname</c> in the resulting message (only for bot usernames encountered in the <see cref="T:TL.Config"/>)</param>
             <param name="peer">Destination</param>
-            <param name="reply_to_msg_id">ID of the message this message should reply to</param>
-            <param name="top_msg_id">This field must contain the topic ID <strong>only</strong> when replying to messages in <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topics</a> different from the "General" topic (i.e. <c>reply_to_msg_id</c> is set and <c>reply_to_msg_id != topicID</c> and <c>topicID != 1</c>). <br/>If the replied-to message is deleted before the method finishes execution, the value in this field will be used to send the message to the correct topic, instead of the "General" topic.</param>
             <param name="random_id">Random ID to avoid resending the same query <para>You can use <see cref="M:WTelegram.Helpers.RandomLong"/></para></param>
             <param name="query_id">Query ID from <see cref="M:TL.SchemaExtensions.Messages_GetInlineBotResults(WTelegram.Client,TL.InputUserBase,TL.InputPeer,System.String,System.String,TL.InputGeoPoint)">Messages_GetInlineBotResults</see></param>
             <param name="id">Result ID from <see cref="M:TL.SchemaExtensions.Messages_GetInlineBotResults(WTelegram.Client,TL.InputUserBase,TL.InputPeer,System.String,System.String,TL.InputGeoPoint)">Messages_GetInlineBotResults</see></param>
@@ -17828,9 +17984,6 @@
             <param name="max_id">Maximum ID of chat to return (see <a href="https://corefork.telegram.org/api/offsets">pagination</a>)</param>
             <param name="limit">Maximum number of results to return, <a href="https://corefork.telegram.org/api/offsets">see pagination</a></param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_GetAllChats(WTelegram.Client,System.Int64[])">
-            <summary><para>See <a href="https://corefork.telegram.org/method/messages.getAllChats"/></para></summary>
-        </member>
         <member name="M:TL.SchemaExtensions.Messages_GetWebPage(WTelegram.Client,System.String,System.Int32)">
             <summary>Get <a href="https://instantview.telegram.org">instant view</a> page		<para>See <a href="https://corefork.telegram.org/method/messages.getWebPage"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.getWebPage#possible-errors">details</a>)</para></summary>
             <param name="url">URL of IV page to fetch</param>
@@ -17864,15 +18017,14 @@
             <param name="error">Required if the <c>success</c> isn't set. Error message in human readable form that explains the reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts while you were busy filling out your payment details. Please choose a different color or garment!"). Telegram will display this message to the user.</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_UploadMedia(WTelegram.Client,TL.InputPeer,TL.InputMedia)">
-            <summary>Upload a file and associate it to a chat (without actually sending it to the chat)		<para>See <a href="https://corefork.telegram.org/method/messages.uploadMedia"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/messages.uploadMedia#possible-errors">details</a>)</para></summary>
+            <summary>Upload a file and associate it to a chat (without actually sending it to the chat)		<para>See <a href="https://corefork.telegram.org/method/messages.uploadMedia"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,500 (<a href="https://corefork.telegram.org/method/messages.uploadMedia#possible-errors">details</a>)</para></summary>
             <param name="peer">The chat, can be <see langword="null"/> for bots and <see cref="T:TL.InputPeerSelf"/> for users.</param>
             <param name="media">File uploaded in chunks as described in <a href="https://corefork.telegram.org/api/files">files »</a></param>
             <returns>a <c>null</c> value means <a href="https://corefork.telegram.org/constructor/messageMediaEmpty">messageMediaEmpty</a></returns>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_SendScreenshotNotification(WTelegram.Client,TL.InputPeer,System.Int32,System.Int64)">
+        <member name="M:TL.SchemaExtensions.Messages_SendScreenshotNotification(WTelegram.Client,TL.InputPeer,TL.InputReplyTo,System.Int64)">
             <summary>Notify the other user in a private chat that a screenshot of the chat was taken		<para>See <a href="https://corefork.telegram.org/method/messages.sendScreenshotNotification"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.sendScreenshotNotification#possible-errors">details</a>)</para></summary>
             <param name="peer">Other user</param>
-            <param name="reply_to_msg_id">ID of message that was screenshotted, can be 0</param>
             <param name="random_id">Random ID to avoid message resending <para>You can use <see cref="M:WTelegram.Helpers.RandomLong"/></para></param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_GetFavedStickers(WTelegram.Client,System.Int64)">
@@ -17906,7 +18058,7 @@
             <param name="limit">Maximum number of results to return, <a href="https://corefork.telegram.org/api/offsets">see pagination</a></param>
             <param name="hash"><a href="https://corefork.telegram.org/api/offsets#hash-generation">Hash for pagination, for more info click here</a></param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_SendMultiMedia(WTelegram.Client,TL.InputPeer,TL.InputSingleMedia[],System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_SendMultiMedia(WTelegram.Client,TL.InputPeer,TL.InputSingleMedia[],TL.InputReplyTo,System.Nullable{System.DateTime},TL.InputPeer,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
             <summary>Send an <a href="https://corefork.telegram.org/api/files#albums-grouped-media">album or grouped media</a>		<para>See <a href="https://corefork.telegram.org/method/messages.sendMultiMedia"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,420,500 (<a href="https://corefork.telegram.org/method/messages.sendMultiMedia#possible-errors">details</a>)</para></summary>
             <param name="silent">Whether to send the album silently (no notification triggered)</param>
             <param name="background">Send in background?</param>
@@ -17914,8 +18066,6 @@
             <param name="noforwards">Only for bots, disallows forwarding and saving of the messages, even if the destination chat doesn't have <a href="https://telegram.org/blog/protected-content-delete-by-date-and-more">content protection</a> enabled</param>
             <param name="update_stickersets_order">Whether to move used stickersets to top, <a href="https://corefork.telegram.org/api/stickers#recent-stickersets">see here for more info on this flag »</a></param>
             <param name="peer">The destination chat</param>
-            <param name="reply_to_msg_id">The message to reply to</param>
-            <param name="top_msg_id">This field must contain the topic ID <strong>only</strong> when replying to messages in <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topics</a> different from the "General" topic (i.e. <c>reply_to_msg_id</c> is set and <c>reply_to_msg_id != topicID</c> and <c>topicID != 1</c>). <br/>If the replied-to message is deleted before the method finishes execution, the value in this field will be used to send the message to the correct topic, instead of the "General" topic.</param>
             <param name="multi_media">The medias to send: note that they must be separately uploaded using <see cref="M:TL.SchemaExtensions.Messages_UploadMedia(WTelegram.Client,TL.InputPeer,TL.InputMedia)">Messages_UploadMedia</see> first, using raw <c>inputMediaUploaded*</c> constructors is not supported.</param>
             <param name="schedule_date">Scheduled message date for scheduled messages</param>
             <param name="send_as">Send this message as the specified peer</param>
@@ -18127,7 +18277,7 @@
             <param name="media_count">Number of media files associated with the chat that will be uploaded using <see cref="M:TL.SchemaExtensions.Messages_UploadImportedMedia(WTelegram.Client,TL.InputPeer,System.Int64,System.String,TL.InputMedia)">Messages_UploadImportedMedia</see>.</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_UploadImportedMedia(WTelegram.Client,TL.InputPeer,System.Int64,System.String,TL.InputMedia)">
-            <summary>Upload a media file associated with an <a href="https://corefork.telegram.org/api/import">imported chat, click here for more info »</a>.		<para>See <a href="https://corefork.telegram.org/method/messages.uploadImportedMedia"/></para></summary>
+            <summary>Upload a media file associated with an <a href="https://corefork.telegram.org/api/import">imported chat, click here for more info »</a>.		<para>See <a href="https://corefork.telegram.org/method/messages.uploadImportedMedia"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.uploadImportedMedia#possible-errors">details</a>)</para></summary>
             <param name="peer">The Telegram chat where the media will be imported</param>
             <param name="import_id">Identifier of a <a href="https://corefork.telegram.org/api/import">history import session</a>, returned by <see cref="M:TL.SchemaExtensions.Messages_InitHistoryImport(WTelegram.Client,TL.InputPeer,TL.InputFileBase,System.Int32)">Messages_InitHistoryImport</see></param>
             <param name="file_name">File name</param>
@@ -18184,7 +18334,7 @@
             <param name="link">Invite link</param>
             <param name="q">Search for a user in the pending <a href="https://corefork.telegram.org/api/invites#join-requests">join requests »</a> list: only available when the <c>requested</c> flag is set, cannot be used together with a specific <c>link</c>.</param>
             <param name="offset_date"><a href="https://corefork.telegram.org/api/offsets">Offsets for pagination, for more info click here</a></param>
-            <param name="offset_user">User ID for <a href="https://corefork.telegram.org/api/offsets">pagination</a></param>
+            <param name="offset_user">User ID for <a href="https://corefork.telegram.org/api/offsets">pagination</a>: if set, <c>offset_date</c> <strong>must also be set</strong>.</param>
             <param name="limit">Maximum number of results to return, <a href="https://corefork.telegram.org/api/offsets">see pagination</a></param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_SetHistoryTTL(WTelegram.Client,TL.InputPeer,System.Int32)">
@@ -18243,7 +18393,7 @@
             <param name="send_as">The default peer that should be used when sending messages to the group</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_SendReaction(WTelegram.Client,TL.InputPeer,System.Int32,TL.Reaction[],System.Boolean,System.Boolean)">
-            <summary>React to message		<para>See <a href="https://corefork.telegram.org/method/messages.sendReaction"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/messages.sendReaction#possible-errors">details</a>)</para></summary>
+            <summary>React to message.		<para>See <a href="https://corefork.telegram.org/method/messages.sendReaction"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/messages.sendReaction#possible-errors">details</a>)</para></summary>
             <param name="big">Whether a bigger and longer reaction should be shown</param>
             <param name="add_to_recent">Add this reaction to the <a href="https://corefork.telegram.org/api/reactions#recent-reactions">recent reactions list »</a>.</param>
             <param name="peer">Peer</param>
@@ -18320,7 +18470,7 @@
             <param name="bot">Bot ID</param>
             <param name="enabled">Toggle</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,System.Nullable{System.Int32},System.String,TL.DataJSON,System.String,System.Nullable{System.Int32},TL.InputPeer,System.Boolean,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,TL.InputReplyTo,System.String,TL.DataJSON,System.String,TL.InputPeer,System.Boolean,System.Boolean)">
             <summary>Open a <a href="https://corefork.telegram.org/bots/webapps">bot web app</a>, sending over user information after user confirmation.		<para>See <a href="https://corefork.telegram.org/method/messages.requestWebView"/></para></summary>
             <param name="from_bot_menu">Whether the webview was opened by clicking on the bot's <a href="https://corefork.telegram.org/api/bots/menu">menu button »</a>.</param>
             <param name="silent">Whether the inline message that will be sent by the bot on behalf of the user once the web app interaction is <see cref="M:TL.SchemaExtensions.Messages_SendWebViewResultMessage(WTelegram.Client,System.String,TL.InputBotInlineResultBase)">Messages_SendWebViewResultMessage</see> should be sent silently (no notifications for the receivers).</param>
@@ -18330,21 +18480,17 @@
             <param name="start_param">If the web app was opened from the attachment menu using a <a href="https://corefork.telegram.org/api/links#bot-attachment-menu-links">attachment menu deep link</a>, <c>start_param</c> should contain the <c>data</c> from the <c>startattach</c> parameter.</param>
             <param name="theme_params"><a href="https://corefork.telegram.org/api/bots/webapps#theme-parameters">Theme parameters »</a></param>
             <param name="platform">Short name of the application; 0-64 English letters, digits, and underscores</param>
-            <param name="reply_to_msg_id">Whether the inline message that will be sent by the bot on behalf of the user once the web app interaction is <see cref="M:TL.SchemaExtensions.Messages_SendWebViewResultMessage(WTelegram.Client,System.String,TL.InputBotInlineResultBase)">Messages_SendWebViewResultMessage</see> should be sent in reply to this message ID.</param>
-            <param name="top_msg_id">This field must contain the topic ID <strong>only</strong> when replying to messages in <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topics</a> different from the "General" topic (i.e. <c>reply_to_msg_id</c> is set and <c>reply_to_msg_id != topicID</c> and <c>topicID != 1</c>). <br/>If the replied-to message is deleted before the method finishes execution, the value in this field will be used to send the message to the correct topic, instead of the "General" topic.</param>
             <param name="send_as">Open the web app as the specified peer, sending the resulting the message as the specified peer.</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_ProlongWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.Int64,System.Nullable{System.Int32},System.Nullable{System.Int32},TL.InputPeer,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_ProlongWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.Int64,TL.InputReplyTo,TL.InputPeer,System.Boolean)">
             <summary>Indicate to the server (from the user side) that the user is still using a web app.		<para>See <a href="https://corefork.telegram.org/method/messages.prolongWebView"/></para></summary>
             <param name="silent">Whether the inline message that will be sent by the bot on behalf of the user once the web app interaction is <see cref="M:TL.SchemaExtensions.Messages_SendWebViewResultMessage(WTelegram.Client,System.String,TL.InputBotInlineResultBase)">Messages_SendWebViewResultMessage</see> should be sent silently (no notifications for the receivers).</param>
             <param name="peer">Dialog where the web app was opened.</param>
             <param name="bot">Bot that owns the <a href="https://corefork.telegram.org/api/bots/webapps">web app</a></param>
-            <param name="query_id">Web app interaction ID obtained from <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,System.Nullable{System.Int32},System.String,TL.DataJSON,System.String,System.Nullable{System.Int32},TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see></param>
-            <param name="reply_to_msg_id">Whether the inline message that will be sent by the bot on behalf of the user once the web app interaction is <see cref="M:TL.SchemaExtensions.Messages_SendWebViewResultMessage(WTelegram.Client,System.String,TL.InputBotInlineResultBase)">Messages_SendWebViewResultMessage</see> should be sent in reply to this message ID.</param>
-            <param name="top_msg_id">This field must contain the topic ID <strong>only</strong> when replying to messages in <a href="https://corefork.telegram.org/api/forum#forum-topics">forum topics</a> different from the "General" topic (i.e. <c>reply_to_msg_id</c> is set and <c>reply_to_msg_id != topicID</c> and <c>topicID != 1</c>). <br/>If the replied-to message is deleted before the method finishes execution, the value in this field will be used to send the message to the correct topic, instead of the "General" topic.</param>
+            <param name="query_id">Web app interaction ID obtained from <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,TL.InputReplyTo,System.String,TL.DataJSON,System.String,TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see></param>
             <param name="send_as">Open the web app as the specified peer</param>
         </member>
-        <member name="M:TL.SchemaExtensions.Messages_RequestSimpleWebView(WTelegram.Client,TL.InputUserBase,System.String,System.String,TL.DataJSON,System.Boolean)">
+        <member name="M:TL.SchemaExtensions.Messages_RequestSimpleWebView(WTelegram.Client,TL.InputUserBase,System.String,TL.DataJSON,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>Open a <a href="https://corefork.telegram.org/api/bots/webapps">bot web app</a>.		<para>See <a href="https://corefork.telegram.org/method/messages.requestSimpleWebView"/></para></summary>
             <param name="from_switch_webview">Whether the webapp was opened by clicking on the <c>switch_webview</c> button shown on top of the inline results list returned by <see cref="M:TL.SchemaExtensions.Messages_GetInlineBotResults(WTelegram.Client,TL.InputUserBase,TL.InputPeer,System.String,System.String,TL.InputGeoPoint)">Messages_GetInlineBotResults</see>.</param>
             <param name="bot">Bot that owns the webapp</param>
@@ -18353,8 +18499,8 @@
             <param name="platform">Short name of the application; 0-64 English letters, digits, and underscores</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_SendWebViewResultMessage(WTelegram.Client,System.String,TL.InputBotInlineResultBase)">
-            <summary><para>⚠ <b>This method is only for basic Chat</b>. See <see href="https://wiz0u.github.io/WTelegramClient/README#terminology">Terminology</see> to understand what this means<br/>Search for a similar method name starting with <c>Channels_</c> if you're dealing with a <see cref="T:TL.Channel"/></para>		Terminate webview interaction started with <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,System.Nullable{System.Int32},System.String,TL.DataJSON,System.String,System.Nullable{System.Int32},TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see>, sending the specified message to the chat on behalf of the user.		<para>See <a href="https://corefork.telegram.org/method/messages.sendWebViewResultMessage"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.sendWebViewResultMessage#possible-errors">details</a>)</para></summary>
-            <param name="bot_query_id">Webview interaction ID obtained from <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,System.Nullable{System.Int32},System.String,TL.DataJSON,System.String,System.Nullable{System.Int32},TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see></param>
+            <summary><para>⚠ <b>This method is only for basic Chat</b>. See <see href="https://wiz0u.github.io/WTelegramClient/README#terminology">Terminology</see> to understand what this means<br/>Search for a similar method name starting with <c>Channels_</c> if you're dealing with a <see cref="T:TL.Channel"/></para>		Terminate webview interaction started with <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,TL.InputReplyTo,System.String,TL.DataJSON,System.String,TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see>, sending the specified message to the chat on behalf of the user.		<para>See <a href="https://corefork.telegram.org/method/messages.sendWebViewResultMessage"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.sendWebViewResultMessage#possible-errors">details</a>)</para></summary>
+            <param name="bot_query_id">Webview interaction ID obtained from <see cref="M:TL.SchemaExtensions.Messages_RequestWebView(WTelegram.Client,TL.InputPeer,TL.InputUserBase,System.String,TL.InputReplyTo,System.String,TL.DataJSON,System.String,TL.InputPeer,System.Boolean,System.Boolean)">Messages_RequestWebView</see></param>
             <param name="result">Message to send</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_SendWebViewData(WTelegram.Client,TL.InputUserBase,System.Int64,System.String,System.String)">
@@ -18390,7 +18536,7 @@
             <param name="hash"><a href="https://corefork.telegram.org/api/offsets#hash-generation">Hash for pagination, for more info click here</a></param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_ReportReaction(WTelegram.Client,TL.InputPeer,System.Int32,TL.InputPeer)">
-            <summary>Report a <a href="https://corefork.telegram.org/api/reactions">message reaction</a>		<para>See <a href="https://corefork.telegram.org/method/messages.reportReaction"/></para></summary>
+            <summary>Report a <a href="https://corefork.telegram.org/api/reactions">message reaction</a>		<para>See <a href="https://corefork.telegram.org/method/messages.reportReaction"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.reportReaction#possible-errors">details</a>)</para></summary>
             <param name="peer">Peer where the message was sent</param>
             <param name="id">Message ID</param>
             <param name="reaction_peer">Peer that sent the reaction</param>
@@ -18456,12 +18602,12 @@
             <param name="peer">The peer</param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_GetBotApp(WTelegram.Client,TL.InputBotApp,System.Int64)">
-            <summary>Obtain information about a <a href="https://corefork.telegram.org/api/bots/webapps#named-bot-web-apps">named bot web app</a>		<para>See <a href="https://corefork.telegram.org/method/messages.getBotApp"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.getBotApp#possible-errors">details</a>)</para></summary>
+            <summary>Obtain information about a <a href="https://corefork.telegram.org/api/bots/webapps#named-bot-web-apps">named bot web app</a>		<para>See <a href="https://corefork.telegram.org/method/messages.getBotApp"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.getBotApp#possible-errors">details</a>)</para></summary>
             <param name="app">Bot app information obtained from a <a href="https://corefork.telegram.org/api/links#named-bot-web-app-links">named bot web app deep link »</a>.</param>
             <param name="hash"><a href="https://corefork.telegram.org/api/offsets#hash-generation">Hash for pagination, for more info click here</a></param>
         </member>
         <member name="M:TL.SchemaExtensions.Messages_RequestAppWebView(WTelegram.Client,TL.InputPeer,TL.InputBotApp,System.String,System.String,TL.DataJSON,System.Boolean)">
-            <summary>Open a <a href="https://corefork.telegram.org/bots/webapps">bot web app</a> from a <a href="https://corefork.telegram.org/api/links#named-bot-web-app-links">named bot web app deep link</a>, sending over user information after user confirmation.		<para>See <a href="https://corefork.telegram.org/method/messages.requestAppWebView"/> [bots: ✓]</para></summary>
+            <summary>Open a <a href="https://corefork.telegram.org/bots/webapps">bot web app</a> from a <a href="https://corefork.telegram.org/api/links#named-bot-web-app-links">named bot web app deep link</a>, sending over user information after user confirmation.		<para>See <a href="https://corefork.telegram.org/method/messages.requestAppWebView"/></para></summary>
             <param name="write_allowed">Set this flag if the bot is asking permission to send messages to the user as specified in the <a href="https://corefork.telegram.org/api/links#named-bot-web-app-links">named bot web app deep link</a> docs, and the user agreed.</param>
             <param name="peer">If the client has clicked on the link in a Telegram chat, pass the chat's peer information; otherwise pass the bot's peer information, instead.</param>
             <param name="app">The app obtained by invoking <see cref="M:TL.SchemaExtensions.Messages_GetBotApp(WTelegram.Client,TL.InputBotApp,System.Int64)">Messages_GetBotApp</see> as specified in the <a href="https://corefork.telegram.org/api/links#named-bot-web-app-links">named bot web app deep link</a> docs.</param>
@@ -18472,14 +18618,14 @@
         <member name="M:TL.SchemaExtensions.Messages_SetChatWallPaper(WTelegram.Client,TL.InputPeer,TL.InputWallPaperBase,System.Nullable{System.Int32},TL.WallPaperSettings)">
             <summary>Set a custom <a href="https://corefork.telegram.org/api/wallpapers">wallpaper »</a> in a specific private chat with another user.		<para>See <a href="https://corefork.telegram.org/method/messages.setChatWallPaper"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/messages.setChatWallPaper#possible-errors">details</a>)</para></summary>
             <param name="peer">The private chat where the wallpaper will be set</param>
-            <param name="wallpaper">The <a href="https://corefork.telegram.org/api/wallpapers">wallpaper »</a>, obtained as described in the <a href="https://corefork.telegram.org/api/wallpapers#uploading-wallpapers">wallpaper documentation »</a> or from a <see cref="T:TL.MessageActionSetChatWallPaper"/> service message.</param>
+            <param name="wallpaper">The <a href="https://corefork.telegram.org/api/wallpapers">wallpaper »</a>, obtained as described in the <a href="https://corefork.telegram.org/api/wallpapers#uploading-wallpapers">wallpaper documentation »</a>; must <strong>not</strong> be provided when installing a wallpaper obtained from a <see cref="T:TL.MessageActionSetChatWallPaper"/> service message (<c>id</c> must be provided, instead).</param>
             <param name="settings">Wallpaper settings, obtained as described in the <a href="https://corefork.telegram.org/api/wallpapers#uploading-wallpapers">wallpaper documentation »</a> or from <see cref="T:TL.MessageActionSetChatWallPaper"/>.<c>wallpaper</c>.<c>settings</c>.</param>
             <param name="id">If the wallpaper was obtained from a <see cref="T:TL.MessageActionSetChatWallPaper"/> service message, must contain the ID of that message.</param>
         </member>
         <member name="M:TL.SchemaExtensions.Updates_GetState(WTelegram.Client)">
             <summary>Returns a current state of updates.		<para>See <a href="https://corefork.telegram.org/method/updates.getState"/> [bots: ✓]</para></summary>
         </member>
-        <member name="M:TL.SchemaExtensions.Updates_GetDifference(WTelegram.Client,System.Int32,System.DateTime,System.Int32,System.Nullable{System.Int32})">
+        <member name="M:TL.SchemaExtensions.Updates_GetDifference(WTelegram.Client,System.Int32,System.DateTime,System.Int32,System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>Get new <a href="https://corefork.telegram.org/api/updates">updates</a>.		<para>See <a href="https://corefork.telegram.org/method/updates.getDifference"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403,500 (<a href="https://corefork.telegram.org/method/updates.getDifference#possible-errors">details</a>)</para></summary>
             <param name="pts">PTS, see <a href="https://corefork.telegram.org/api/updates">updates</a>.</param>
             <param name="pts_total_limit">For fast updating: if provided and <c>pts + pts_total_limit &lt; remote pts</c>, <see cref="T:TL.Updates_DifferenceTooLong"/> will be returned.<br/>Simply tells the server to not return the difference if it is bigger than <c>pts_total_limit</c><br/>If the remote pts is too big (&gt; ~4000000), this field will default to 1000000</param>
@@ -18495,7 +18641,7 @@
             <param name="limit">How many updates to fetch, max <c>100000</c><br/>Ordinary (non-bot) users are supposed to pass <c>10-100</c></param>
         </member>
         <member name="M:TL.SchemaExtensions.Photos_UpdateProfilePhoto(WTelegram.Client,TL.InputPhoto,TL.InputUserBase,System.Boolean)">
-            <summary>Installs a previously uploaded photo as a profile photo.		<para>See <a href="https://corefork.telegram.org/method/photos.updateProfilePhoto"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/photos.updateProfilePhoto#possible-errors">details</a>)</para></summary>
+            <summary>Installs a previously uploaded photo as a profile photo.		<para>See <a href="https://corefork.telegram.org/method/photos.updateProfilePhoto"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,500 (<a href="https://corefork.telegram.org/method/photos.updateProfilePhoto#possible-errors">details</a>)</para></summary>
             <param name="fallback">If set, the chosen profile photo will be shown to users that can't display your main profile photo due to your privacy settings.</param>
             <param name="bot">Can contain info of a bot we own, to change the profile photo of that bot, instead of the current user.</param>
             <param name="id">Input photo</param>
@@ -18534,7 +18680,7 @@
             <summary>Saves a part of file for further sending to one of the methods.		<para>See <a href="https://corefork.telegram.org/method/upload.saveFilePart"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/upload.saveFilePart#possible-errors">details</a>)</para></summary>
             <param name="file_id">Random file identifier created by the client</param>
             <param name="file_part">Numerical order of a part</param>
-            <param name="bytes">Binary data, contend of a part</param>
+            <param name="bytes">Binary data, content of a part</param>
         </member>
         <member name="M:TL.SchemaExtensions.Upload_GetFile(WTelegram.Client,TL.InputFileLocationBase,System.Int64,System.Int32,System.Boolean,System.Boolean)">
             <summary>Returns content of a whole file or its part.		<para>See <a href="https://corefork.telegram.org/method/upload.getFile"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406 (<a href="https://corefork.telegram.org/method/upload.getFile#possible-errors">details</a>)</para></summary>
@@ -18717,7 +18863,7 @@
             <param name="channel">The <a href="https://corefork.telegram.org/api/channel#channels">channel</a>, <a href="https://corefork.telegram.org/api/channel#supergroups">supergroup</a> or <a href="https://corefork.telegram.org/api/channel#gigagroups">gigagroup</a> to get info about</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_CreateChannel(WTelegram.Client,System.String,System.String,TL.InputGeoPoint,System.String,System.Nullable{System.Int32},System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
-            <summary>Create a <a href="https://corefork.telegram.org/api/channel">supergroup/channel</a>.		<para>See <a href="https://corefork.telegram.org/method/channels.createChannel"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406 (<a href="https://corefork.telegram.org/method/channels.createChannel#possible-errors">details</a>)</para></summary>
+            <summary>Create a <a href="https://corefork.telegram.org/api/channel">supergroup/channel</a>.		<para>See <a href="https://corefork.telegram.org/method/channels.createChannel"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406,500 (<a href="https://corefork.telegram.org/method/channels.createChannel#possible-errors">details</a>)</para></summary>
             <param name="broadcast">Whether to create a <a href="https://corefork.telegram.org/api/channel">channel</a></param>
             <param name="megagroup">Whether to create a <a href="https://corefork.telegram.org/api/channel">supergroup</a></param>
             <param name="for_import">Whether the supergroup is being created to import messages from a foreign chat service using <see cref="M:TL.SchemaExtensions.Messages_InitHistoryImport(WTelegram.Client,TL.InputPeer,TL.InputFileBase,System.Int32)">Messages_InitHistoryImport</see></param>
@@ -18751,12 +18897,12 @@
             <param name="username">The username to check</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_UpdateUsername(WTelegram.Client,TL.InputChannelBase,System.String)">
-            <summary>Change the username of a supergroup/channel		<para>See <a href="https://corefork.telegram.org/method/channels.updateUsername"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/channels.updateUsername#possible-errors">details</a>)</para></summary>
+            <summary>Change or remove the username of a supergroup/channel		<para>See <a href="https://corefork.telegram.org/method/channels.updateUsername"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/channels.updateUsername#possible-errors">details</a>)</para></summary>
             <param name="channel">Channel</param>
-            <param name="username">New username</param>
+            <param name="username">New username, pass an empty string to remove the username</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_JoinChannel(WTelegram.Client,TL.InputChannelBase)">
-            <summary>Join a channel/supergroup		<para>See <a href="https://corefork.telegram.org/method/channels.joinChannel"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406 (<a href="https://corefork.telegram.org/method/channels.joinChannel#possible-errors">details</a>)</para></summary>
+            <summary>Join a channel/supergroup		<para>See <a href="https://corefork.telegram.org/method/channels.joinChannel"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,406,500 (<a href="https://corefork.telegram.org/method/channels.joinChannel#possible-errors">details</a>)</para></summary>
             <param name="channel">Channel/supergroup to join</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_LeaveChannel(WTelegram.Client,TL.InputChannelBase)">
@@ -18912,7 +19058,7 @@
             <param name="enabled">Enable or disable forum functionality</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_CreateForumTopic(WTelegram.Client,TL.InputChannelBase,System.String,System.Int64,System.Nullable{System.Int32},TL.InputPeer,System.Nullable{System.Int64})">
-            <summary>Create a <a href="https://corefork.telegram.org/api/forum">forum topic</a>; requires <a href="https://corefork.telegram.org/api/rights"><c>manage_topics</c> rights</a>.		<para>See <a href="https://corefork.telegram.org/method/channels.createForumTopic"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/channels.createForumTopic#possible-errors">details</a>)</para></summary>
+            <summary>Create a <a href="https://corefork.telegram.org/api/forum">forum topic</a>; requires <a href="https://corefork.telegram.org/api/rights"><c>manage_topics</c> rights</a>.		<para>See <a href="https://corefork.telegram.org/method/channels.createForumTopic"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/channels.createForumTopic#possible-errors">details</a>)</para></summary>
             <param name="channel"><a href="https://corefork.telegram.org/api/forum">The forum</a></param>
             <param name="title">Topic title (maximum UTF-8 length: 128)</param>
             <param name="icon_color">If no custom emoji icon is specified, specifies the color of the fallback topic icon (RGB), one of <c>0x6FB9F0</c>, <c>0xFFD67E</c>, <c>0xCB86DB</c>, <c>0x8EEE98</c>, <c>0xFF93B2</c>, or <c>0xFB6F5F</c>.</param>
@@ -18921,7 +19067,7 @@
             <param name="send_as">Create the topic as the specified peer</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_GetForumTopics(WTelegram.Client,TL.InputChannelBase,System.DateTime,System.Int32,System.Int32,System.Int32,System.String)">
-            <summary>Get <a href="https://corefork.telegram.org/api/forum">topics of a forum</a>		<para>See <a href="https://corefork.telegram.org/method/channels.getForumTopics"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/channels.getForumTopics#possible-errors">details</a>)</para></summary>
+            <summary>Get <a href="https://corefork.telegram.org/api/forum">topics of a forum</a>		<para>See <a href="https://corefork.telegram.org/method/channels.getForumTopics"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/channels.getForumTopics#possible-errors">details</a>)</para></summary>
             <param name="channel">Supergroup</param>
             <param name="q">Search query</param>
             <param name="offset_date"><a href="https://corefork.telegram.org/api/offsets">Offsets for pagination, for more info click here</a></param>
@@ -18930,7 +19076,7 @@
             <param name="limit">Maximum number of results to return, <a href="https://corefork.telegram.org/api/offsets">see pagination</a></param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_GetForumTopicsByID(WTelegram.Client,TL.InputChannelBase,System.Int32[])">
-            <summary>Get forum topics by their ID		<para>See <a href="https://corefork.telegram.org/method/channels.getForumTopicsByID"/> [bots: ✓]</para></summary>
+            <summary>Get forum topics by their ID		<para>See <a href="https://corefork.telegram.org/method/channels.getForumTopicsByID"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/channels.getForumTopicsByID#possible-errors">details</a>)</para></summary>
             <param name="channel">Forum</param>
             <param name="topics">Topic IDs</param>
         </member>
@@ -18950,7 +19096,7 @@
             <param name="pinned">Whether to pin or unpin the topic</param>
         </member>
         <member name="M:TL.SchemaExtensions.Channels_DeleteTopicHistory(WTelegram.Client,TL.InputChannelBase,System.Int32)">
-            <summary>Delete message history of a <a href="https://corefork.telegram.org/api/forum">forum topic</a>		<para>See <a href="https://corefork.telegram.org/method/channels.deleteTopicHistory"/> [bots: ✓]</para></summary>
+            <summary>Delete message history of a <a href="https://corefork.telegram.org/api/forum">forum topic</a>		<para>See <a href="https://corefork.telegram.org/method/channels.deleteTopicHistory"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/channels.deleteTopicHistory#possible-errors">details</a>)</para></summary>
             <param name="channel">Forum</param>
             <param name="top_msg_id">Topic ID</param>
         </member>
@@ -18974,6 +19120,9 @@
             <summary>Hide or display the participants list in a <a href="https://corefork.telegram.org/api/channel">supergroup</a>.		<para>See <a href="https://corefork.telegram.org/method/channels.toggleParticipantsHidden"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/channels.toggleParticipantsHidden#possible-errors">details</a>)</para></summary>
             <param name="channel">Supergroup ID</param>
             <param name="enabled">If true, will hide the participants list; otherwise will unhide it.</param>
+        </member>
+        <member name="M:TL.SchemaExtensions.Channels_ClickSponsoredMessage(WTelegram.Client,TL.InputChannelBase,System.Byte[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/channels.clickSponsoredMessage"/></para></summary>
         </member>
         <member name="M:TL.SchemaExtensions.Bots_SendCustomRequest(WTelegram.Client,System.String,TL.DataJSON)">
             <summary>Sends a custom request; for bots only		<para>See <a href="https://corefork.telegram.org/method/bots.sendCustomRequest"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/bots.sendCustomRequest#possible-errors">details</a>)</para></summary>
@@ -19042,6 +19191,15 @@
             <param name="bot">The bot</param>
             <param name="username">Username</param>
             <param name="active">Whether to activate or deactivate it</param>
+        </member>
+        <member name="M:TL.SchemaExtensions.Bots_CanSendMessage(WTelegram.Client,TL.InputUserBase)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/bots.canSendMessage"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Bots_AllowSendMessage(WTelegram.Client,TL.InputUserBase)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/bots.allowSendMessage"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Bots_InvokeWebViewCustomMethod(WTelegram.Client,TL.InputUserBase,System.String,TL.DataJSON)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/bots.invokeWebViewCustomMethod"/></para></summary>
         </member>
         <member name="M:TL.SchemaExtensions.Payments_GetPaymentForm(WTelegram.Client,TL.InputInvoice,TL.DataJSON)">
             <summary>Get a payment form		<para>See <a href="https://corefork.telegram.org/method/payments.getPaymentForm"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/payments.getPaymentForm#possible-errors">details</a>)</para></summary>
@@ -19230,7 +19388,7 @@
             <param name="video_stopped">If set, the user's video will be disabled by default upon joining.</param>
             <param name="call">The group call</param>
             <param name="join_as">Join the group call, presenting yourself as the specified user/channel</param>
-            <param name="invite_hash">The invitation hash from the <a href="https://corefork.telegram.org/api/links#video-chatlivestream-links">invite link »</a>, if provided allows speaking in a livestream or muted group chat.</param>
+            <param name="invite_hash">The invitation hash from the <a href="https://corefork.telegram.org/api/links#video-chat-livestream-links">invite link »</a>, if provided allows speaking in a livestream or muted group chat.</param>
             <param name="params_">WebRTC parameters</param>
         </member>
         <member name="M:TL.SchemaExtensions.Phone_LeaveGroupCall(WTelegram.Client,TL.InputGroupCall,System.Int32)">
@@ -19254,7 +19412,7 @@
             <param name="join_muted">Whether all users will that join this group call are muted by default upon joining the group call</param>
         </member>
         <member name="M:TL.SchemaExtensions.Phone_GetGroupCall(WTelegram.Client,TL.InputGroupCall,System.Int32)">
-            <summary>Get info about a group call		<para>See <a href="https://corefork.telegram.org/method/phone.getGroupCall"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/phone.getGroupCall#possible-errors">details</a>)</para></summary>
+            <summary>Get info about a group call		<para>See <a href="https://corefork.telegram.org/method/phone.getGroupCall"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400,403 (<a href="https://corefork.telegram.org/method/phone.getGroupCall#possible-errors">details</a>)</para></summary>
             <param name="call">The group call</param>
             <param name="limit">Maximum number of results to return, <a href="https://corefork.telegram.org/api/offsets">see pagination</a></param>
         </member>
@@ -19300,7 +19458,7 @@
             <param name="peer">The dialog whose group call or livestream we're trying to join</param>
         </member>
         <member name="M:TL.SchemaExtensions.Phone_ExportGroupCallInvite(WTelegram.Client,TL.InputGroupCall,System.Boolean)">
-            <summary>Get an <a href="https://corefork.telegram.org/api/links#video-chatlivestream-links">invite link</a> for a group call or livestream		<para>See <a href="https://corefork.telegram.org/method/phone.exportGroupCallInvite"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 403 (<a href="https://corefork.telegram.org/method/phone.exportGroupCallInvite#possible-errors">details</a>)</para></summary>
+            <summary>Get an <a href="https://corefork.telegram.org/api/links#video-chat-livestream-links">invite link</a> for a group call or livestream		<para>See <a href="https://corefork.telegram.org/method/phone.exportGroupCallInvite"/></para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 403 (<a href="https://corefork.telegram.org/method/phone.exportGroupCallInvite#possible-errors">details</a>)</para></summary>
             <param name="can_self_unmute">For livestreams or muted group chats, if set, users that join using this link will be able to speak without explicitly requesting permission by (for example by raising their hand).</param>
             <param name="call">The group call</param>
         </member>
@@ -19433,7 +19591,7 @@
             <param name="peers">List of new chats to join, fetched using <see cref="M:TL.SchemaExtensions.Chatlists_CheckChatlistInvite(WTelegram.Client,System.String)">Chatlists_CheckChatlistInvite</see> and filtered as specified in the <a href="https://corefork.telegram.org/api/folders#shared-folders">documentation »</a>.</param>
         </member>
         <member name="M:TL.SchemaExtensions.Chatlists_GetChatlistUpdates(WTelegram.Client,TL.InputChatlist)">
-            <summary>Fetch new chats associated with an imported <a href="https://corefork.telegram.org/api/links#chat-folder-links">chat folder deep link »</a>. Must be invoked at most every <c>chatlist_update_period</c> seconds (as per the related <a href="https://corefork.telegram.org/api/config#chatlist-update-period">client configuration parameter »</a>).		<para>See <a href="https://corefork.telegram.org/method/chatlists.getChatlistUpdates"/> [bots: ✓]</para></summary>
+            <summary>Fetch new chats associated with an imported <a href="https://corefork.telegram.org/api/links#chat-folder-links">chat folder deep link »</a>. Must be invoked at most every <c>chatlist_update_period</c> seconds (as per the related <a href="https://corefork.telegram.org/api/config#chatlist-update-period">client configuration parameter »</a>).		<para>See <a href="https://corefork.telegram.org/method/chatlists.getChatlistUpdates"/> [bots: ✓]</para>		<para>Possible <see cref="T:TL.RpcException"/> codes: 400 (<a href="https://corefork.telegram.org/method/chatlists.getChatlistUpdates#possible-errors">details</a>)</para></summary>
             <param name="chatlist">The folder</param>
         </member>
         <member name="M:TL.SchemaExtensions.Chatlists_JoinChatlistUpdates(WTelegram.Client,TL.InputChatlist,TL.InputPeer[])">
@@ -19453,6 +19611,87 @@
             <summary>Delete a folder imported using a <a href="https://corefork.telegram.org/api/links#chat-folder-links">chat folder deep link »</a>		<para>See <a href="https://corefork.telegram.org/method/chatlists.leaveChatlist"/> [bots: ✓]</para></summary>
             <param name="chatlist">Folder ID</param>
             <param name="peers">Also leave the specified channels and groups</param>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_CanSendStory(WTelegram.Client,TL.InputPeer)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.canSendStory"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_SendStory(WTelegram.Client,TL.InputPeer,TL.InputMedia,TL.InputPrivacyRule[],System.Int64,System.String,TL.MessageEntity[],System.Nullable{System.Int32},TL.MediaArea[],System.Boolean,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.sendStory"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_EditStory(WTelegram.Client,TL.InputPeer,System.Int32,TL.InputMedia,System.String,TL.MessageEntity[],TL.InputPrivacyRule[],TL.MediaArea[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.editStory"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_DeleteStories(WTelegram.Client,TL.InputPeer,System.Int32[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.deleteStories"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_TogglePinned(WTelegram.Client,TL.InputPeer,System.Int32[],System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.togglePinned"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetAllStories(WTelegram.Client,System.String,System.Boolean,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getAllStories"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetPinnedStories(WTelegram.Client,TL.InputPeer,System.Int32,System.Int32)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getPinnedStories"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetStoriesArchive(WTelegram.Client,TL.InputPeer,System.Int32,System.Int32)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getStoriesArchive"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetStoriesByID(WTelegram.Client,TL.InputPeer,System.Int32[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getStoriesByID"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_ToggleAllStoriesHidden(WTelegram.Client,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.toggleAllStoriesHidden"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_ReadStories(WTelegram.Client,TL.InputPeer,System.Int32)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.readStories"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_IncrementStoryViews(WTelegram.Client,TL.InputPeer,System.Int32[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.incrementStoryViews"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetStoryViewsList(WTelegram.Client,TL.InputPeer,System.Int32,System.String,System.Int32,System.String,System.Boolean,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getStoryViewsList"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetStoriesViews(WTelegram.Client,TL.InputPeer,System.Int32[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getStoriesViews"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_ExportStoryLink(WTelegram.Client,TL.InputPeer,System.Int32)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.exportStoryLink"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_Report(WTelegram.Client,TL.InputPeer,System.Int32[],TL.ReportReason,System.String)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.report"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_ActivateStealthMode(WTelegram.Client,System.Boolean,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.activateStealthMode"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_SendReaction(WTelegram.Client,TL.InputPeer,System.Int32,TL.Reaction,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.sendReaction"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetPeerStories(WTelegram.Client,TL.InputPeer)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getPeerStories"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetAllReadPeerStories(WTelegram.Client)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getAllReadPeerStories"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetPeerMaxIDs(WTelegram.Client,TL.InputPeer[])">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getPeerMaxIDs"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetChatsToSend(WTelegram.Client)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getChatsToSend"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_TogglePeerStoriesHidden(WTelegram.Client,TL.InputPeer,System.Boolean)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.togglePeerStoriesHidden"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetBoostsStatus(WTelegram.Client,TL.InputPeer)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getBoostsStatus"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_GetBoostersList(WTelegram.Client,TL.InputPeer,System.String,System.Int32)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.getBoostersList"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_CanApplyBoost(WTelegram.Client,TL.InputPeer)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.canApplyBoost"/></para></summary>
+        </member>
+        <member name="M:TL.SchemaExtensions.Stories_ApplyBoost(WTelegram.Client,TL.InputPeer)">
+            <summary><para>See <a href="https://corefork.telegram.org/method/stories.applyBoost"/></para></summary>
         </member>
         <member name="T:TL.DecryptedMessageBase">
             <summary>Object describes the contents of an encrypted message.		<para>See <a href="https://corefork.telegram.org/type/DecryptedMessage"/></para></summary>
@@ -19910,6 +20149,24 @@
         </member>
         <member name="T:TL.Layer66.SendMessageUploadRoundAction">
             <summary>User is uploading a round video		<para>See <a href="https://corefork.telegram.org/constructor/sendMessageUploadRoundAction"/></para></summary>
+        </member>
+        <member name="T:TL.Layer66.DocumentAttributeVideo">
+            <summary>Defines a video		<para>See <a href="https://corefork.telegram.org/constructor/documentAttributeVideo"/></para></summary>
+        </member>
+        <member name="F:TL.Layer66.DocumentAttributeVideo.flags">
+            <summary>Extra bits of information, use <c>flags.HasFlag(...)</c> to test for those</summary>
+        </member>
+        <member name="F:TL.Layer66.DocumentAttributeVideo.duration">
+            <summary>Duration in seconds</summary>
+        </member>
+        <member name="F:TL.Layer66.DocumentAttributeVideo.w">
+            <summary>Video width</summary>
+        </member>
+        <member name="F:TL.Layer66.DocumentAttributeVideo.h">
+            <summary>Video height</summary>
+        </member>
+        <member name="F:TL.Layer66.DocumentAttributeVideo.Flags.round_message">
+            <summary>Whether this is a round video</summary>
         </member>
         <member name="T:TL.Layer73.DecryptedMessage">
             <summary>Contents of an encrypted message.		<para>See <a href="https://corefork.telegram.org/constructor/decryptedMessage"/></para></summary>

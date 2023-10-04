@@ -1,6 +1,6 @@
-﻿[![API Layer](https://img.shields.io/badge/API_Layer-158-blueviolet)](https://corefork.telegram.org/methods)
+﻿[![API Layer](https://img.shields.io/badge/API_Layer-164-blueviolet)](https://corefork.telegram.org/methods)
 [![NuGet version](https://img.shields.io/nuget/v/WTelegramClient?color=00508F)](https://www.nuget.org/packages/WTelegramClient/)
-[![Build Status](https://img.shields.io/azure-devops/build/wiz0u/WTelegramClient/7)](https://dev.azure.com/wiz0u/WTelegramClient/_build?definitionId=7)
+[![NuGet prerelease](https://img.shields.io/nuget/vpre/WTelegramClient?color=C09030&label=dev+nuget)](https://www.nuget.org/packages/WTelegramClient/absoluteLatest)
 [![Donate](https://img.shields.io/badge/Help_this_project:-Donate-ff4444)](https://www.buymeacoffee.com/wizou)
 
 ## _Telegram Client API library written 100% in C# and .NET_
@@ -91,6 +91,8 @@ Since version 3.0.0, a new approach to login/configuration has been added. Some 
 ```csharp
 WTelegram.Client client = new WTelegram.Client(YOUR_API_ID, "YOUR_API_HASH"); // this constructor doesn't need a Config method
 await DoLogin("+12025550156"); // initial call with user's phone_number
+...
+//client.Dispose(); // the client must be disposed when you're done running your userbot.
 
 async Task DoLogin(string loginInfo) // (add this method to your code)
 {
@@ -161,8 +163,8 @@ See [FAQ #4](https://wiz0u.github.io/WTelegramClient/FAQ#access-hash) to learn m
 
 # Other things to know
 
-The Client class also offers `OnUpdate` and `OnOther` events that are triggered when Telegram servers sends Updates (like new messages or status) or other structures, independently of your API requests.
-See [Examples/Program_ListenUpdates.cs](https://github.com/wiz0u/WTelegramClient/blob/master/Examples/Program_ListenUpdates.cs?ts=4#L23)
+The Client class also offers `OnUpdate` and `OnOther` events that are triggered when Telegram servers sends Updates (like new messages or status) or other notifications, independently of your API requests.
+See [Examples/Program_ListenUpdates.cs](https://github.com/wiz0u/WTelegramClient/blob/master/Examples/Program_ListenUpdates.cs?ts=4#L23) and [Examples/Program_ReactorError.cs](https://github.com/wiz0u/WTelegramClient/blob/master/Examples/Program_ReactorError.cs?ts=4#L32)
 
 An invalid API request can result in a `RpcException` being raised, reflecting the [error code and status text](https://revgram.github.io/errors.html) of the problem.
 

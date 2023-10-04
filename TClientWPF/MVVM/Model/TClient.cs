@@ -17,6 +17,7 @@ namespace TClientWPF.Model
         private Timer timer;
         private Dictionary<long, User> users;
         private Dictionary<long, ChatBase> chats;
+        private Dictionary<long, ChatBase> myChats;
         private List<string> favoritesMsgs;
         private InputPeer favorites;
         private Client client;
@@ -27,10 +28,20 @@ namespace TClientWPF.Model
         private string sessionFilePath;
         private long groupToWatch;
         private string log;
-        private bool reloginOnFaildeResume;
+        //private bool reloginOnFaildeResume;
         private bool online;
         private int countOfForwardedMsg;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Dictionary<long, ChatBase> ChatsList
+        {
+            get => myChats;
+            set
+            {
+                myChats = value;
+                OnPropertyChanged();
+            }
+        }
 
         public User User
         {
@@ -75,7 +86,7 @@ namespace TClientWPF.Model
         public TClient(Settings settings)
         {
             this.settings = settings;
-            reloginOnFaildeResume = true;
+            //reloginOnFaildeResume = true;
             IsOnline = false;
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
             sessionFileStream = new FileStream(sessionFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -87,6 +98,7 @@ namespace TClientWPF.Model
         {
             users = new Dictionary<long, User>();
             chats = new Dictionary<long, ChatBase>();
+            myChats = new Dictionary<long, ChatBase>();
             favoritesMsgs = new List<string>();
             favorites = InputPeer.Self;
             groupToWatch = settings.ObservedChannel;
@@ -118,20 +130,31 @@ namespace TClientWPF.Model
             }
         }
 
-        public async Task ConnectAndCheckMsg()
+        public async Task LoginAndStartWorking()
         {
             try
             {
-                User = await client.LoginUserIfNeeded(null, reloginOnFaildeResume);
+                User = await client.LoginUserIfNeeded();
                 IsOnline = true;
-                await FillFavoritesList();
-                await CheckOldMessages();
+                await GetChats();
             }
             catch (SocketException)
             {
                 Dispose();
                 timer.Start();
             }
+        }
+
+        //public async Task MonitorChannel()
+        //{
+        //    await FillFavoritesList();
+        //    await CheckOldMessages();
+        //}
+
+        private async Task GetChats()
+        {
+            Messages_Chats messagesChats = await client.Messages_GetAllChats();
+            ChatsList = messagesChats.chats;
         }
 
         private async Task<object> Client_OnUpdate(IObject arg)
@@ -172,7 +195,7 @@ namespace TClientWPF.Model
         {
             timer.Stop();
             Initialize();
-            await ConnectAndCheckMsg();
+            await LoginAndStartWorking();
         }
 
         private async Task ForwardMessage(MessageBase messageBase)

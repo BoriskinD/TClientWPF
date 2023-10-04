@@ -1,6 +1,11 @@
-﻿namespace TClientWPF.Model
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
+
+namespace TClientWPF.Model
 {
-    public class Settings 
+    public class Settings
     {
         private string api_id;
         private string api_hash;
@@ -32,6 +37,7 @@
             set => phone_number = value;
         }
 
+        [JsonIgnore]
         public long ObservedChannel
         {
             get => channelToWatch;
@@ -40,11 +46,11 @@
 
         public Settings()
         {
-            Api_id = "757557";
-            Api_hash = "brlkwjeh43";
-            Phone_Number = "+2222";
-            ObservedChannel = 3268472694;
-            RegexPattern = "dasd";
-        }         
+            //Api_id = "757557";
+            //Api_hash = "brlkwjeh43";
+            //Phone_Number = "+2222";
+            //ObservedChannel = 3268472694;
+            //RegexPattern = "dasd";
+        }
     }
 }
