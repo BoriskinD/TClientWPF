@@ -7,74 +7,143 @@
         mc:Ignorable="d"
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
-        Title="TClient" Height="634" Width="800">
+        Title="TClient" Height="634" Width="800" WindowStartupLocation="CenterScreen">
+
     <bh:Interaction.Triggers>
         <bh:EventTrigger EventName = "Closing" >
             <bh:InvokeCommandAction Command = "{Binding HideWindowCommand}"
                                     PassEventArgsToCommand="True"/>
         </bh:EventTrigger>
     </bh:Interaction.Triggers>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="586*"/>
         </Grid.RowDefinitions>
-        
-        <StackPanel  Grid.Row="0" Orientation="Vertical">
-            <Button Command="{Binding SettingsCommand}" 
+
+        <Grid Background="AliceBlue"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     Content="Настройки"
-                    Width="200"
-                    Margin="296,15,296,20"
-                    IsEnabled="{Binding IsSettingsEnable}"/>
+                    Width="100"
+                    Height="25"
+                    IsEnabled="{Binding IsSettingsEnable}"
+                    Command="{Binding SettingsCommand}" />
+        </Grid>
+
+        <Grid Grid.Column="1"
+              Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="217*"/>
+                <ColumnDefinition Width="118*"/>
+                <ColumnDefinition Width="277*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="61*"/>
+                <RowDefinition Height="52*"/>
+                <RowDefinition Height="54*"/>
+                <RowDefinition Height="55*"/>
+                <RowDefinition Height="307*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="pack://application:,,,/Images/pngwing.png"
+                   Grid.RowSpan="2"/>
+
             <Button Content="Подключиться"
-                    Width="200"
+                    Grid.Column="2"
+                    Grid.Row="1"
                     Command="{Binding StartCommand}"
-                    Margin="296,1,296,20"
-                    IsEnabled="{Binding IsConnectEnable}"/>
+                    IsEnabled="{Binding IsConnectEnable}" Margin="38,10,32,12"/>
+
             <Button Content="Отключиться"
-                    Width="200"
+                    Grid.Row="2"
+                    Grid.Column="2"
                     Command="{Binding StopCommand}"
-                    Margin="296,1,296,20"
-                    IsEnabled="{Binding IsDisconnectEnable}"/>
-            <TextBox Height="299"
+                    IsEnabled="{Binding IsDisconnectEnable}" Margin="22,10"/>
+
+            <TextBlock Text="ищем текст" 
+                       Grid.Row="2" Margin="23,20,25,0"/>
+
+            <TextBox Grid.Row="3"
+                     Text="{Binding RegexPattern, Mode=OneWay}" 
+                     IsReadOnly="True" Margin="10,10,10,9"/>
+
+            <ComboBox x:Name="comboBox"
+                      Grid.Row="3"
+                      Grid.Column="2"
+                      DisplayMemberPath="Value.Title"
+                      ItemsSource="{Binding ChatsList}"
+                      SelectedItem="{Binding SelectedChannelData}" Margin="16,10,22,10"/>
+
+            <TextBlock Text="в канале" 
+                       Grid.Row="3"
+                       Grid.Column="1" Margin="40,20,0,0"/>
+
+            <TextBlock Grid.Row="4" Margin="38,21,40,10">
+                Дополнительная инфа
+            </TextBlock>
+
+            <Button Content="Проверить историю сообщений"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    Command="{Binding CheckMsgHistoryCommand}"
+                    IsEnabled="{Binding IsCheckMsgHistoryEnable}" Margin="32,5,10,5"/>
+
+            <TextBox Grid.Row="5"
+                     Grid.ColumnSpan="3"
                      x:Name="loger"
                      IsReadOnly="True"
                      Text="{Binding Log, Mode=OneWay}"/>
 
-            <StatusBar Height="25" Margin="0,5,0,0">
+            <StatusBar Grid.Row="6"
+                       Grid.ColumnSpan="3">
+
                 <StatusBarItem>
                     <TextBlock Text="Статус:"/>
                 </StatusBarItem>
+
                 <StatusBarItem>
                     <Image Width="30" Height="20"
-                           Source= "{Binding IsOnline}"
-                           />
+                           Source= "{Binding IsOnline}"/>
                 </StatusBarItem>
+
                 <Separator/>
+
                 <StatusBarItem>
                     <TextBlock Text="Пользователь:"/>
                 </StatusBarItem>
+
                 <StatusBarItem>
                     <TextBlock Text="{Binding User}" Width="40"/>
                 </StatusBarItem>
+
                 <Separator/>
+
                 <StatusBarItem>
                     <TextBlock Text="Кол-во пересланных сообщений:"/>
                 </StatusBarItem>
+
                 <StatusBarItem>
                     <TextBlock Text="{Binding CountOfForwardedMsg}" Width="25"/>
                 </StatusBarItem>
+
             </StatusBar>
-            <TextBlock Text="В Канале мониторинга" Margin="206,0,384,0"/>
-            <ComboBox x:Name="comboBox" Margin="0, 10,0,0"
-                      ItemsSource="{Binding ChatsList}"
-                      DisplayMemberPath="Value.Title"
-                      SelectedItem="{Binding SelectedChannelData}"/>
-            <TextBlock Text="ищем текст" Margin="206,0,384,0"/>
-            <TextBox Width="200" Margin="296,0"
-                     Text="{Binding RegexPattern, Mode=OneWay}" 
-                     IsReadOnly="True"/>
-        </StackPanel>
-        
+        </Grid>
     </Grid>
 </Window>

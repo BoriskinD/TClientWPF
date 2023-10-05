@@ -22,13 +22,12 @@ namespace TClientWPF.Model
         private InputPeer favorites;
         private Client client;
         private PatternMatching pattern;
-        private Settings settings;
+        private Settings currentSettings;
         private FileStream sessionFileStream;
         private User user;
         private string sessionFilePath;
         private long groupToWatch;
         private string log;
-        //private bool reloginOnFaildeResume;
         private bool online;
         private int countOfForwardedMsg;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -85,12 +84,14 @@ namespace TClientWPF.Model
 
         public TClient(Settings settings)
         {
-            this.settings = settings;
-            //reloginOnFaildeResume = true;
+            currentSettings = settings;
+            currentSettings.PropertyChanged += (sender, e) => groupToWatch = currentSettings.ObservedChannel;
             IsOnline = false;
+
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
             sessionFileStream = new FileStream(sessionFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n";
+
             SetTimer();
         }
 
@@ -101,10 +102,10 @@ namespace TClientWPF.Model
             myChats = new Dictionary<long, ChatBase>();
             favoritesMsgs = new List<string>();
             favorites = InputPeer.Self;
-            groupToWatch = settings.ObservedChannel;
+            groupToWatch = currentSettings.ObservedChannel;
             countOfForwardedMsg = 0;
 
-            pattern = new PatternMatching(settings.RegexPattern);
+            pattern = new PatternMatching(currentSettings.RegexPattern);
             client = new Client(Config, sessionFileStream);
             client.OnUpdate += Client_OnUpdate;
             client.OnOther += Client_OnOther;
@@ -118,11 +119,11 @@ namespace TClientWPF.Model
             switch (what)
             {
                 case "api_id":
-                    return settings.Api_id;
+                    return currentSettings.Api_id;
                 case "api_hash":
-                    return settings.Api_hash;
+                    return currentSettings.Api_hash;
                 case "phone_number":
-                    return settings.Phone_Number;
+                    return currentSettings.Phone_Number;
                 case "verification_code":
                     return Interaction.InputBox("You need to enter Verification Code that has been sent via app");
                 default:
@@ -145,11 +146,11 @@ namespace TClientWPF.Model
             }
         }
 
-        //public async Task MonitorChannel()
-        //{
-        //    await FillFavoritesList();
-        //    await CheckOldMessages();
-        //}
+        public async Task MonitorChannel()
+        {
+            await FillFavoritesList();
+            await CheckOldMessages();
+        }
 
         private async Task GetChats()
         {

@@ -22,6 +22,7 @@ namespace TClientWPF.ViewModel
         private RelayCommand settingsCommand;
         private RelayCommand<CancelEventArgs> hideWindowCommand;
         private RelayCommand showWindowCommand;
+        private RelayCommand checkMsgHistoryCommand;
         private NotifyIconWrapper notifyIconWrapper;
         private WindowState windowState;
         private KeyValuePair<long, ChatBase> selectedChannelData;
@@ -29,7 +30,7 @@ namespace TClientWPF.ViewModel
         private string onlineImagePath, offlineImagePath;
         private string iconPath;
         private string regexPattern;
-        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable;
+        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public KeyValuePair<long, ChatBase> SelectedChannelData
@@ -39,6 +40,7 @@ namespace TClientWPF.ViewModel
             {
                 selectedChannelData = value;
                 settings.ObservedChannel = selectedChannelData.Key;
+                IsCheckMsgHistoryEnable = true;
             }
         }
 
@@ -60,6 +62,12 @@ namespace TClientWPF.ViewModel
                 showInTaskbar = value;
                 OnPropertyChanged();
             }
+        }
+
+        public RelayCommand CheckMsgHistoryCommand
+        {
+            get => checkMsgHistoryCommand;
+            set => checkMsgHistoryCommand = value;
         }
 
         public RelayCommand<CancelEventArgs> HideWindowCommand
@@ -90,6 +98,16 @@ namespace TClientWPF.ViewModel
         {
             get => stopCommand;
             set => stopCommand = value;
+        }
+
+        public bool IsCheckMsgHistoryEnable
+        {
+            get => isCheckMsgHistoryEnable;
+            set
+            {
+                isCheckMsgHistoryEnable = value;
+                OnPropertyChanged();
+            }
         }
 
         public bool IsSettingsEnable
@@ -156,6 +174,7 @@ namespace TClientWPF.ViewModel
             StopCommand = new RelayCommand(StopWorking);
             HideWindowCommand = new RelayCommand<CancelEventArgs>(HideWindow);
             ShowWindowCommand = new RelayCommand(ShowWindow);
+            CheckMsgHistoryCommand = new RelayCommand(CheckMessageHistory);
             
 
             onlineImagePath = "pack://application:,,,/Images/Online.png";
@@ -163,7 +182,24 @@ namespace TClientWPF.ViewModel
             IsSettingsEnable = true;
             IsConnectEnable = false;
             IsDisconnectEnable = false;
+            IsCheckMsgHistoryEnable = false;
             ShowInTaskbar = true;
+        }
+
+        private async void CheckMessageHistory()
+        {
+            try
+            {
+                await client.MonitorChannel();
+            }
+            catch (Exception ex)
+            {
+                dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            dialogService.ShowMessage($"Сообщения в канале '{SelectedChannelData.Value.Title}' проверены, было переслано {client.CountOfForwardedMsg} сообщений.",
+                                      "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void CloseProgramm()
@@ -227,11 +263,13 @@ namespace TClientWPF.ViewModel
         private void StopWorking()
         {
             client.Dispose();
-            dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
 
             IsDisconnectEnable = false;
             IsConnectEnable = true;
             IsSettingsEnable = true;
+            IsCheckMsgHistoryEnable = false;
+
+            dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>

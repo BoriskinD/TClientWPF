@@ -5,13 +5,15 @@ using System.Text.Json.Serialization;
 
 namespace TClientWPF.Model
 {
-    public class Settings
+    public class Settings : INotifyPropertyChanged
     {
         private string api_id;
         private string api_hash;
         private string phone_number;
         private long channelToWatch;
         private string regexPattern;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string RegexPattern
         {
@@ -41,7 +43,11 @@ namespace TClientWPF.Model
         public long ObservedChannel
         {
             get => channelToWatch;
-            set => channelToWatch = value;
+            set
+            {
+                channelToWatch = value;
+                OnPropertyChanged();
+            } 
         }
 
         public Settings()
@@ -52,5 +58,8 @@ namespace TClientWPF.Model
             //ObservedChannel = 3268472694;
             //RegexPattern = "dasd";
         }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
+                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
