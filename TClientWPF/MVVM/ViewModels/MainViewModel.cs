@@ -20,9 +20,10 @@ namespace TClientWPF.ViewModel
         private RelayCommand startCommand;
         private RelayCommand stopCommand;
         private RelayCommand settingsCommand;
-        private RelayCommand<CancelEventArgs> hideWindowCommand;
+        private RelayCommand hideWindowCommand;
         private RelayCommand showWindowCommand;
         private RelayCommand checkMsgHistoryCommand;
+        private RelayCommand closeWindowCommand;
         private NotifyIconWrapper notifyIconWrapper;
         private WindowState windowState;
         private KeyValuePair<long, ChatBase> selectedChannelData;
@@ -64,13 +65,19 @@ namespace TClientWPF.ViewModel
             }
         }
 
+        public RelayCommand CloseWindowCommand
+        {
+            get => closeWindowCommand;
+            set => closeWindowCommand = value;
+        }
+
         public RelayCommand CheckMsgHistoryCommand
         {
             get => checkMsgHistoryCommand;
             set => checkMsgHistoryCommand = value;
         }
 
-        public RelayCommand<CancelEventArgs> HideWindowCommand
+        public RelayCommand HideWindowCommand
         {
             get => hideWindowCommand;
             set => hideWindowCommand = value;
@@ -172,7 +179,8 @@ namespace TClientWPF.ViewModel
             SettingsCommand = new RelayCommand(ShowSettings);
             StartCommand = new RelayCommand(StartWorking);
             StopCommand = new RelayCommand(StopWorking);
-            HideWindowCommand = new RelayCommand<CancelEventArgs>(HideWindow);
+            HideWindowCommand = new RelayCommand(HideWindow);
+            CloseWindowCommand = new RelayCommand(CloseWindow);
             ShowWindowCommand = new RelayCommand(ShowWindow);
             CheckMsgHistoryCommand = new RelayCommand(CheckMessageHistory);
             
@@ -214,9 +222,16 @@ namespace TClientWPF.ViewModel
             ShowInTaskbar = true;
         }
 
-        private void HideWindow(CancelEventArgs e)
+        //Сворачивание приложения
+        private void HideWindow()
         {
-            e.Cancel = true;
+            WindowState = WindowState.Minimized;
+            ShowInTaskbar = true;
+        }
+
+        //Закрытие на крестик приложения
+        private void CloseWindow()
+        {
             WindowState = WindowState.Minimized;
             ShowInTaskbar = false;
         }

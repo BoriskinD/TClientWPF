@@ -7,142 +7,193 @@
         mc:Ignorable="d"
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
-        Title="TClient" Height="634" Width="800" WindowStartupLocation="CenterScreen">
+        WindowStyle="None"
+        Title="TClient" Height="423" Width="738" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="CenterButtons">
+            <Setter Property="Button.Background" Value="#FF7F50"/>
+            <Setter Property="Button.FontFamily" Value="Verdana"/>
+            <Style.Triggers>
+                <Trigger Property="Button.IsEnabled" Value="False">
+                    <Setter Property="Button.Background" Value="#A66000"/>
+                </Trigger>
+                <Trigger Property="Button.IsMouseOver" Value="true">
+                    <Setter Property="Button.Background" Value="#FF9400"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-    <bh:Interaction.Triggers>
-        <bh:EventTrigger EventName = "Closing" >
-            <bh:InvokeCommandAction Command = "{Binding HideWindowCommand}"
-                                    PassEventArgsToCommand="True"/>
-        </bh:EventTrigger>
-    </bh:Interaction.Triggers>
+        <ControlTemplate TargetType="Button" x:Key="CenterButtonsTemplate">
+            <Border Width="210" Height="25" CornerRadius="18"
+                    Background="{TemplateBinding Background}">
+                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
 
-    <Grid>
+        <Style x:Key="LeftBarButtons">
+            <Setter Property="Button.Background" Value="#7CFC00"/>
+            <Setter Property="Button.FontFamily" Value="Verdana"/>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Background" Value="#00FF00"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <ControlTemplate TargetType="Button" x:Key="LeftBarButtonsTemplate">
+            <Border Width="100" Height="25" CornerRadius="15"
+                    Background="{TemplateBinding Background}">
+                <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+            </Border>
+        </ControlTemplate>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="Parent">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="125*"/>
+            <ColumnDefinition Width="608*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="586*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="186*"/>
         </Grid.RowDefinitions>
 
-        <Grid Background="AliceBlue"
-              Grid.Row="1">
+        <Grid x:Name="TopBar"
+              Background="#9C41DE"
+              Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="125*"/>
+                <ColumnDefinition Width="513*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="TelegramWatcher"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" Height="16"/>
+
+            <Button Content="-" Grid.Column="2"
+                    Command="{Binding HideWindowCommand}"/>
+            <Button Content="X" Grid.Column="3"
+                    Command="{Binding CloseWindowCommand}"/>
+
+        </Grid>
+
+        <Grid x:Name="LeftBar" Background="#AE6BDE" Grid.Row="1">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Настройки"
+            <Button Content="Настройки"
                     Width="100"
                     Height="25"
                     IsEnabled="{Binding IsSettingsEnable}"
-                    Command="{Binding SettingsCommand}" />
+                    Command="{Binding SettingsCommand}"
+                    Style="{StaticResource LeftBarButtons}"
+                    Template="{StaticResource LeftBarButtonsTemplate}"/>
         </Grid>
 
-        <Grid Grid.Column="1"
+        <Grid x:Name="Center"
+              Background="#720BBD"
+              Grid.Column="1"
               Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="217*"/>
-                <ColumnDefinition Width="118*"/>
-                <ColumnDefinition Width="277*"/>
+                <ColumnDefinition Width="267*"/>
+                <ColumnDefinition Width="340*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="49*"/>
-                <RowDefinition Height="61*"/>
-                <RowDefinition Height="52*"/>
-                <RowDefinition Height="54*"/>
-                <RowDefinition Height="55*"/>
-                <RowDefinition Height="307*"/>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="45*"/>
+                <RowDefinition Height="161*"/>
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
 
-            <Image Source="pack://application:,,,/Images/pngwing.png"
-                   Grid.RowSpan="2"/>
-
             <Button Content="Подключиться"
-                    Grid.Column="2"
-                    Grid.Row="1"
+                    Grid.Column="1"
+                    Grid.Row="0"
                     Command="{Binding StartCommand}"
-                    IsEnabled="{Binding IsConnectEnable}" Margin="38,10,32,12"/>
+                    IsEnabled="{Binding IsConnectEnable}"
+                    Style="{StaticResource CenterButtons}"
+                    Template="{StaticResource CenterButtonsTemplate}"/>
 
             <Button Content="Отключиться"
-                    Grid.Row="2"
-                    Grid.Column="2"
+                    Grid.Row="1"
+                    Grid.Column="1"
                     Command="{Binding StopCommand}"
-                    IsEnabled="{Binding IsDisconnectEnable}" Margin="22,10"/>
+                    IsEnabled="{Binding IsDisconnectEnable}"
+                    Style="{StaticResource CenterButtons}"
+                    Template="{StaticResource CenterButtonsTemplate}"/>
 
-            <TextBlock Text="ищем текст" 
-                       Grid.Row="2" Margin="23,20,25,0"/>
+            <TextBlock Text="Ищем текст" Grid.Row="0"/>
 
-            <TextBox Grid.Row="3"
-                     Text="{Binding RegexPattern, Mode=OneWay}" 
-                     IsReadOnly="True" Margin="10,10,10,9"/>
+            <TextBox Grid.Row="1" Text="{Binding RegexPattern, Mode=OneWay}" 
+                     IsReadOnly="True"/>
 
             <ComboBox x:Name="comboBox"
                       Grid.Row="3"
-                      Grid.Column="2"
+                      Grid.Column="0"
                       DisplayMemberPath="Value.Title"
                       ItemsSource="{Binding ChatsList}"
-                      SelectedItem="{Binding SelectedChannelData}" Margin="16,10,22,10"/>
+                      SelectedItem="{Binding SelectedChannelData}"/>
 
-            <TextBlock Text="в канале" 
-                       Grid.Row="3"
-                       Grid.Column="1" Margin="40,20,0,0"/>
+            <TextBlock Text="в канале" Grid.Row="2" Grid.Column="0"/>
 
-            <TextBlock Grid.Row="4" Margin="38,21,40,10">
-                Дополнительная инфа
+            <TextBlock Grid.Row="3" Grid.Column="1"> После выбора канала, поиск указанного текста будет производиться
+                автоматически. Проверка истории сообщений проверяет только последние 100 сообщений.
             </TextBlock>
 
             <Button Content="Проверить историю сообщений"
-                    Grid.Row="4"
-                    Grid.Column="2"
+                    Grid.Row="2"
+                    Grid.Column="1"
                     Command="{Binding CheckMsgHistoryCommand}"
-                    IsEnabled="{Binding IsCheckMsgHistoryEnable}" Margin="32,5,10,5"/>
+                    IsEnabled="{Binding IsCheckMsgHistoryEnable}"
+                    Style="{StaticResource CenterButtons}"
+                    Template="{StaticResource CenterButtonsTemplate}"/>
 
-            <TextBox Grid.Row="5"
-                     Grid.ColumnSpan="3"
-                     x:Name="loger"
+            <TextBox x:Name="loger"
+                     Grid.Row="4"
+                     Grid.ColumnSpan="2"
                      IsReadOnly="True"
                      Text="{Binding Log, Mode=OneWay}"/>
 
-            <StatusBar Grid.Row="6"
-                       Grid.ColumnSpan="3">
-
+            <StatusBar Grid.Row="5" Grid.ColumnSpan="2">
                 <StatusBarItem>
-                    <TextBlock Text="Статус:"/>
+                    <TextBlock Text="Статус:" Foreground="Black"/>
                 </StatusBarItem>
-
                 <StatusBarItem>
-                    <Image Width="30" Height="20"
-                           Source= "{Binding IsOnline}"/>
+                    <Image Width="30" Height="20" Source= "{Binding IsOnline}"/>
                 </StatusBarItem>
-
                 <Separator/>
-
                 <StatusBarItem>
-                    <TextBlock Text="Пользователь:"/>
+                    <TextBlock Text="Пользователь:" Foreground="Black"/>
                 </StatusBarItem>
-
                 <StatusBarItem>
                     <TextBlock Text="{Binding User}" Width="40"/>
                 </StatusBarItem>
-
                 <Separator/>
-
                 <StatusBarItem>
-                    <TextBlock Text="Кол-во пересланных сообщений:"/>
+                    <TextBlock Text="Кол-во пересланных сообщений:" Foreground="Black"/>
                 </StatusBarItem>
-
                 <StatusBarItem>
-                    <TextBlock Text="{Binding CountOfForwardedMsg}" Width="25"/>
+                    <TextBlock Text="{Binding CountOfForwardedMsg}" Foreground="Black"/>
                 </StatusBarItem>
-
             </StatusBar>
         </Grid>
     </Grid>
