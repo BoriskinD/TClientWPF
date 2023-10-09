@@ -1,22 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Drawing;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Forms;
-using System.ComponentModel;
 using TClientWPF.ViewModel;
-using System.IO;
 
 namespace TClientWPF
 {
@@ -29,6 +13,12 @@ namespace TClientWPF
         {
             InitializeComponent();
             DataContext = new MainViewModel();
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
     }
 }
