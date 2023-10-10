@@ -220,7 +220,7 @@
                     <TextBlock Text="Пользователь:" Foreground="White"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <TextBlock Text="{Binding User}" Width="40"/>
+                    <TextBlock Text="{Binding User}" Width="40" Foreground="White"/>
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>

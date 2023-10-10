@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Forms;
 using TClientWPF.Model;
 using TClientWPF.Services;
 
@@ -19,10 +16,15 @@ namespace TClientWPF.ViewModels
         private IDialog dialogService;
         private RelayCommand openCommand;
         private RelayCommand saveCommand;
-        private RelayCommand checkBoxCheckCommand;
-        private RelayCommand navigateUri;
-        private bool twoStatements;
+        private RelayCommand<string> navigateUri;
+        private bool isChecked;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public bool IsChecked
+        {
+            get => isChecked;
+            set => isChecked = value;
+        }
 
         public RelayCommand SaveCommand
         {
@@ -36,13 +38,7 @@ namespace TClientWPF.ViewModels
             set => openCommand = value;
         }
 
-        public RelayCommand CheckBoxCheckCommand
-        {
-            get => checkBoxCheckCommand;
-            set => checkBoxCheckCommand = value;
-        }
-
-        public RelayCommand NavigateCommand
+        public RelayCommand<string> NavigateCommand
         {
             get => navigateUri;
             set => navigateUri = value;
@@ -63,11 +59,14 @@ namespace TClientWPF.ViewModels
             get => Settings.RegexPattern;
             set
             {
-                if (twoStatements)
+                if (isChecked)
                 {
                     string[] parts = value.Split(' ');
-                    Settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
-                                            "\\w*" + parts[1] + "\\w*";
+                    if (parts.Length >= 2)
+                    {
+                        Settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
+                                                "\\w*" + parts[1] + "\\w*";
+                    }
                 }
                 else
                 {
@@ -122,17 +121,12 @@ namespace TClientWPF.ViewModels
             Settings = settings;
             SaveCommand = new RelayCommand(Save);
             OpenCommand = new RelayCommand(Open);
-            CheckBoxCheckCommand = new RelayCommand(CheckChanged);
-            NavigateCommand = new RelayCommand(NavigateUri);
+            NavigateCommand = new RelayCommand<string>(NavigateUri);
             fileService = new JsonFileService();
             dialogService = new DefaultDialogService();
         }
 
-        private void NavigateUri()
-        {
-            //if (obj is string uri)
-            //    Process.Start(new ProcessStartInfo(uri));
-        }
+        private void NavigateUri(string uri) => Process.Start(new ProcessStartInfo(uri));
                      
         private void Save()
         {
@@ -141,12 +135,12 @@ namespace TClientWPF.ViewModels
                 if (dialogService.SaveFileDialog())
                 {
                     fileService.Save(dialogService.FilePath, settings);
-                    dialogService.ShowMessage("File Saved", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dialogService.ShowMessage("Файл сохранён", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                dialogService.ShowMessage(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -157,18 +151,13 @@ namespace TClientWPF.ViewModels
                 if (dialogService.OpenFileDialog())
                 {
                     Settings = fileService.Open(dialogService.FilePath);
-                    dialogService.ShowMessage("File opened", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dialogService.ShowMessage("Файл открыт", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                dialogService.ShowMessage(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-
-        private void CheckChanged()
-        {
-            //twoStatements = (bool)obj;
         }
 
         private void UpdateView()

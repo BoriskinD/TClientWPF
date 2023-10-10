@@ -6,71 +6,115 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:TClientWPF.Views" 
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="450.88" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="Settings" Height="370" Width="350" 
+        WindowStyle="None" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="HeaderButtons" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="27"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="1">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#BCBEE8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="Desc" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5,5,0,5"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="EnterFields" TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+
+        <Style x:Name="BottomButtons" TargetType="Button">
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid Background="#720BBD">
         <Grid.RowDefinitions>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="70*"/>
-            <RowDefinition Height="70*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="177*"/>
-            <ColumnDefinition Width="268*"/>
-        </Grid.ColumnDefinitions>
+        <Grid x:Name="TopBar" MouseDown="OnMouseDown"
+              Background="#9C41DE">
 
-        <TextBlock Grid.Row="0" Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Height="28" Margin="25,22,17,10" Width="135">ID приложения (Api ID)</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" 
-                   Height="21" Margin="61,22,44,17" Width="72">Хэш приложения (Api Hash)</TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Height="22" Margin="51,22,34,17" Width="92">Номер телефона (Phone number)</TextBlock>
-      
-        <TextBlock Grid.Row="4" Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Height="29" Margin="51,21,34,10" Width="92">Что ищем?</TextBlock>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-        <TextBox Name="ApiId" Text="{Binding Api_id, Mode=TwoWay}"
-                 Grid.Column="1" Grid.Row="0"/>
-        <TextBox Name="ApiHash" Text="{Binding Api_hash, Mode=TwoWay}"
-                 Grid.Column="1" Grid.Row="1" Margin="0,0,0,58" Grid.RowSpan="2"/>
-        <TextBox Name="PhoneNumber" Text="{Binding Phone_Number, Mode=TwoWay}"
-                 Grid.Column="1" Grid.Row="2" Margin="0,0,0,58" Grid.RowSpan="2"/>
-        <TextBox x:Name="WTSeek" Text="{Binding RegexPattern, Mode=TwoWay}"
-                 Grid.Column="1" Grid.Row="4" Margin="0,1"/>
+            <TextBlock x:Name="WindowName" Foreground="White"
+                       FontSize="15">Настройки</TextBlock>
 
-        <CheckBox x:Name="IsTwoStatement" Content="Использовать 2 выражения"
-                  Grid.Column="1" Grid.Row="5"
-                  Command="{Binding CheckBoxCheckCommand}"
-                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
-                  Margin="11,4,10,40"/>
+            <Button x:Name="Close" Content="X"
+                    Grid.Column="3"
+                    Style="{StaticResource HeaderButtons}"/>
+        </Grid>
 
-        <TextBlock Grid.Row="5" Grid.Column="1"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Height="19" Margin="4,25,0,16" Width="264"> 
-                   Для получения Api Hash и Api ID тебе
+        <StackPanel x:Name="CenterBar" Grid.Row="1">
+            <TextBlock x:Name="Id" Style="{StaticResource Desc}">ID приложения (Api ID)</TextBlock>
+            <TextBox x:Name="IdTbox" Text="{Binding Api_id, Mode=TwoWay}"
+                     Style="{StaticResource EnterFields}"/>
+
+            <TextBlock x:Name="Hash" Style="{StaticResource Desc}">Хэш приложения (Api Hash)</TextBlock>
+            <TextBox Name="HashTbox" Text="{Binding Api_hash, Mode=TwoWay}"
+                     Style="{StaticResource EnterFields}" />
+
+            <TextBlock x:Name="PhoneNumber" Style="{StaticResource Desc}">Номер телефона (Phone number)</TextBlock>
+            <TextBox Name="PhoneNumberTbox" Text="{Binding Phone_Number, Mode=TwoWay}"
+                     Style="{StaticResource EnterFields}"/>
+
+            <TextBlock x:Name="SearchExpression" Style="{StaticResource Desc}">Что ищем?</TextBlock>
+            <TextBox x:Name="SearchExpressionTbox" Text="{Binding RegexPattern, Mode=TwoWay}"
+                     Style="{StaticResource EnterFields}"/>
+
+            <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
+                      Height="15" IsChecked="{Binding IsChecked, Mode=OneWayToSource}"
+                      HorizontalAlignment="Center" Margin="0,5,0,0"
+                      ToolTip="Позволяет искать 2 фразы одновременно. Важно: Они должны быть разделены пробелом. Если указано больше 2-х фраз, возьмутся
+                      только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
+
+            <TextBlock x:Name="Info" Height="18" Style="{StaticResource Desc}"
+                       TextWrapping="Wrap" Margin="31,5,26,5"> 
+                    Получить ID и Hash можно
                    <Hyperlink NavigateUri="https://my.telegram.org/apps"
                               Command="{Binding NavigateCommand}"
-                              CommandParameter="https://my.telegram.org/apps">
-                        сюда
+                              CommandParameter="https://my.telegram.org/apps"
+                              Foreground="AntiqueWhite">
+                    здесь
                    </Hyperlink>
-        </TextBlock>
+            </TextBlock>
+        </StackPanel>
 
-
-        <Button Content="Экспорт в файл" Command="{Binding SaveCommand}" Grid.Row="6"/>
-        <Button Content="Импорт из файла" Command="{Binding OpenCommand}" Grid.Row="6"
-                Grid.Column="1"/>
+        <StackPanel x:Name="BottomBar" Orientation="Horizontal"
+                    Grid.Row="2">
+            <Button x:Name="Export" Content="Экспорт в файл" Command="{Binding SaveCommand}"
+                     Margin="35,5,0,0"/>
+            <Button x:Name="Import" Content="Импорт из файла" Command="{Binding OpenCommand}"
+                    Margin="35,5,0,0"/>
+        </StackPanel>
     </Grid>
 </Window>

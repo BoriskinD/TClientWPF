@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using TClientWPF.Model;
 using TClientWPF.Services;
 using TClientWPF.ViewModels;
@@ -20,6 +21,12 @@ namespace TClientWPF.Views
             InitializeComponent();
             settingsViewModel = new SettingsViewModel(settings);
             DataContext = settingsViewModel;
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
         }
     }
 }

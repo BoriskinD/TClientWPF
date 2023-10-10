@@ -168,12 +168,7 @@ namespace TClientWPF.ViewModel
         public int CountOfForwardedMsg => client?.CountOfForwardedMsg ?? 0;
 
         public MainViewModel()
-        {
-            iconPath = "../../Images/TClient.ico";
-            notifyIconWrapper = new NotifyIconWrapper(iconPath);
-            notifyIconWrapper.ShowWindowRequested += (sender, e) => ShowWindow();
-            notifyIconWrapper.ExitRequested += (sender, e) => CloseProgramm();
-
+        { 
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
@@ -232,6 +227,14 @@ namespace TClientWPF.ViewModel
         //Закрытие на крестик приложения
         private void CloseWindow()
         {
+            if (notifyIconWrapper == null)
+            {
+                iconPath = "../../Images/TClient.ico";
+                notifyIconWrapper = new NotifyIconWrapper(iconPath);
+                notifyIconWrapper.ShowWindowRequested += (sender, e) => ShowWindow();
+                notifyIconWrapper.ExitRequested += (sender, e) => CloseProgramm();
+            }
+
             WindowState = WindowState.Minimized;
             ShowInTaskbar = false;
         }
