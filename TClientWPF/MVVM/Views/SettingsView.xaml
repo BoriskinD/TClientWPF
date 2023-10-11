@@ -11,7 +11,8 @@
     <Window.Resources>
         <Style x:Key="HeaderButtons" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Width" Value="27"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -38,7 +39,7 @@
         </Style>
 
         <Style x:Key="EnterFields" TargetType="TextBox">
-            <Setter Property="Width" Value="200"/>
+            <Setter Property="Width" Value="220"/>
             <Setter Property="Height" Value="25"/>
         </Style>
 
@@ -46,6 +47,20 @@
             <Setter Property="Width" Value="125"/>
             <Setter Property="Height" Value="25"/>
             <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style TargetType="ToolTip">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding}"
+                                       Width="340"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
     </Window.Resources>
@@ -67,11 +82,12 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock x:Name="WindowName" Foreground="White"
-                       FontSize="15">Настройки</TextBlock>
+                       FontSize="20">Настройки</TextBlock>
 
             <Button x:Name="Close" Content="X"
                     Grid.Column="3"
-                    Style="{StaticResource HeaderButtons}"/>
+                    Style="{StaticResource HeaderButtons}"
+                    Command="{Binding CloseWindowCommand}"/>
         </Grid>
 
         <StackPanel x:Name="CenterBar" Grid.Row="1">
@@ -94,9 +110,11 @@
             <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
                       Height="15" IsChecked="{Binding IsChecked, Mode=OneWayToSource}"
                       HorizontalAlignment="Center" Margin="0,5,0,0"
-                      ToolTip="Позволяет искать 2 фразы одновременно. Важно: Они должны быть разделены пробелом. Если указано больше 2-х фраз, возьмутся
-                      только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
-
+                      ToolTipService.ShowDuration="5000"
+                      ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
+            
+            <!--&#xa;-->
+            
             <TextBlock x:Name="Info" Height="18" Style="{StaticResource Desc}"
                        TextWrapping="Wrap" Margin="31,5,26,5"> 
                     Получить ID и Hash можно

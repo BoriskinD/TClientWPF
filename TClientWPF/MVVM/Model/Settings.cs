@@ -39,7 +39,6 @@ namespace TClientWPF.Model
             set => phone_number = value;
         }
 
-        [JsonIgnore]
         public long ObservedChannel
         {
             get => channelToWatch;
@@ -48,15 +47,6 @@ namespace TClientWPF.Model
                 channelToWatch = value;
                 OnPropertyChanged();
             } 
-        }
-
-        public Settings()
-        {
-            //Api_id = "757557";
-            //Api_hash = "brlkwjeh43";
-            //Phone_Number = "+2222";
-            //ObservedChannel = 3268472694;
-            //RegexPattern = "dasd";
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>

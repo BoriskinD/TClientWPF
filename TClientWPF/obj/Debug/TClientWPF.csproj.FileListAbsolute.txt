@@ -44,3 +44,5 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\System.ComponentModel.Annotations.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.xml
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Newtonsoft.Json.dll
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Newtonsoft.Json.xml

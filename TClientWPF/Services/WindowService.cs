@@ -7,7 +7,7 @@ namespace TClientWPF.Services
 {
     class WindowService : IWindow
     {
-        public void ShowWindow(Settings settings, Action<Settings> callback)
+        public void ShowSettingsWindow(Settings settings, Action<Settings> callback)
         {
             SettingsView settingsView = new (settings);
 
@@ -18,6 +18,7 @@ namespace TClientWPF.Services
                 settingsView.Closed -= eventHandler;
             };
             settingsView.Closed += eventHandler;
+            settingsView.settingsViewModel.CloseWindowAction = () => settingsView.Close();
 
             settingsView.ShowDialog();
         }

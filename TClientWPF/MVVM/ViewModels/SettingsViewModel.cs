@@ -17,13 +17,21 @@ namespace TClientWPF.ViewModels
         private RelayCommand openCommand;
         private RelayCommand saveCommand;
         private RelayCommand<string> navigateUri;
+        private RelayCommand closeWindowCommand;
         private bool isChecked;
+        public Action CloseWindowAction;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public bool IsChecked
         {
             get => isChecked;
             set => isChecked = value;
+        }
+
+        public RelayCommand CloseWindowCommand
+        {
+            get => closeWindowCommand;
+            set => closeWindowCommand = value;
         }
 
         public RelayCommand SaveCommand
@@ -122,9 +130,12 @@ namespace TClientWPF.ViewModels
             SaveCommand = new RelayCommand(Save);
             OpenCommand = new RelayCommand(Open);
             NavigateCommand = new RelayCommand<string>(NavigateUri);
+            CloseWindowCommand = new RelayCommand(CloseWindow);
             fileService = new JsonFileService();
             dialogService = new DefaultDialogService();
         }
+
+        private void CloseWindow() => CloseWindowAction?.Invoke();
 
         private void NavigateUri(string uri) => Process.Start(new ProcessStartInfo(uri));
                      

@@ -5,6 +5,6 @@ namespace TClientWPF.Interfaces
 {
     interface IWindow
     {
-        void ShowWindow(Settings settings, Action<Settings> callback);
+        void ShowSettingsWindow(Settings settings, Action<Settings> callback);
     }
 }

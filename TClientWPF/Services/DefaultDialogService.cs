@@ -10,6 +10,10 @@ namespace TClientWPF.Services
         public bool OpenFileDialog()
         {
             OpenFileDialog openFileDialog = new();
+            openFileDialog.Title = "Открыть файл";
+            openFileDialog.DefaultExt = ".json";
+            openFileDialog.Filter = "Файл настроек |*.json";
+
             if (openFileDialog.ShowDialog() == true)
             {
                 FilePath = openFileDialog.FileName;
@@ -21,6 +25,10 @@ namespace TClientWPF.Services
         public bool SaveFileDialog()
         {
             SaveFileDialog saveFileDialog = new();
+            saveFileDialog.FileName = "Настройки.json";
+            saveFileDialog.Filter = "Файл настроек |*.json";
+            saveFileDialog.Title = "Сохранить файл";
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 FilePath = saveFileDialog.FileName;

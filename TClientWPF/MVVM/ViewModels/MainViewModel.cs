@@ -247,7 +247,7 @@ namespace TClientWPF.ViewModel
                 settings = new Settings();
                 
 
-            window.ShowWindow(settings, newSettings =>
+            window.ShowSettingsWindow(settings, newSettings =>
             {
                 settings = newSettings;
                 RegexPattern = settings.RegexPattern;
