@@ -63,9 +63,25 @@
             </Setter>
         </Style>
 
+        <Style x:Key="BottomButtons" TargetType="Button">
+            <Setter Property="Background" Value="#FFE373"/>
+            <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="120" Height="25" CornerRadius="18"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+      
     </Window.Resources>
 
-    <Grid Background="#720BBD">
+    <Grid Background="#052F6D">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -73,7 +89,7 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="TopBar" MouseDown="OnMouseDown"
-              Background="#9C41DE">
+              Background="#0F4DA8">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -110,7 +126,7 @@
             <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
                       Height="15" IsChecked="{Binding IsChecked, Mode=OneWayToSource}"
                       HorizontalAlignment="Center" Margin="0,5,0,0"
-                      ToolTipService.ShowDuration="5000"
+                      ToolTipService.ShowDuration="10000"
                       ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
             
             <!--&#xa;-->
@@ -130,9 +146,9 @@
         <StackPanel x:Name="BottomBar" Orientation="Horizontal"
                     Grid.Row="2">
             <Button x:Name="Export" Content="Экспорт в файл" Command="{Binding SaveCommand}"
-                     Margin="35,5,0,0"/>
+                     Margin="35,5,0,0" Style="{StaticResource BottomButtons}"/>
             <Button x:Name="Import" Content="Импорт из файла" Command="{Binding OpenCommand}"
-                    Margin="35,5,0,0"/>
+                    Margin="35,5,0,0" Style="{StaticResource BottomButtons}"/>
         </StackPanel>
     </Grid>
 </Window>

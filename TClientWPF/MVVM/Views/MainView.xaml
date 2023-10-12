@@ -8,47 +8,56 @@
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
         WindowStyle="None"
-        Title="TClient" Height="423" Width="738" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="TClient" Height="423" Width="738"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
-
         <Style x:Key="CenterButtons" TargetType="Button">
-            <Setter Property="Background" Value="#FF7F50"/>
+            <Setter Property="Background" Value="#FFE373"/>
             <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="210" Height="25" CornerRadius="18"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="#A66000"/>
+                    <Setter Property="Background" Value="#A68400"/> 
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FF9400"/>
+                    <Setter Property="Background" Value="#FFCB00"/> 
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <ControlTemplate TargetType="Button" x:Key="CenterButtonsTemplate">
-            <Border Width="210" Height="25" CornerRadius="18"
-                    Background="{TemplateBinding Background}">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-            </Border>
-        </ControlTemplate>
 
         <Style x:Key="LeftBarButtons" TargetType="Button">
-            <Setter Property="Background" Value="#7CFC00"/>
+            <Setter Property="Background" Value="#FF8B40"/>
             <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="100" Height="25" CornerRadius="15"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#00FF00"/>
+                    <Setter Property="Background" Value="#FF6400	"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#BF6830"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
-
-        <ControlTemplate TargetType="Button" x:Key="LeftBarButtonsTemplate">
-            <Border Width="100" Height="25" CornerRadius="15"
-                    Background="{TemplateBinding Background}">
-                <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-            </Border>
-        </ControlTemplate>
 
         <Style x:Key="CenterTextBlock" TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
@@ -71,14 +80,12 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#BCBEE8"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
-
     </Window.Resources>
 
     <Grid x:Name="Parent">
@@ -92,7 +99,7 @@
             <RowDefinition Height="186*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="TopBar" Background="#9C41DE"
+        <Grid x:Name="TopBar" Background="#0F4DA8" 
               Grid.ColumnSpan="2" MouseDown="OnMouseDown">
 
             <Grid.ColumnDefinitions>
@@ -102,10 +109,9 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="TelegramWatcher"
-                       Foreground="White"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center" Height="16" Margin="16,4,18,4" Width="92"/>
+            <TextBlock Text="TelegramWatcher" Foreground="White"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
+                       Height="16" Margin="16,4,18,4" Width="92"/>
 
             <Button Content="-" Grid.Column="2"
                     Command="{Binding HideWindowCommand}"
@@ -117,26 +123,20 @@
 
         </Grid>
 
-        <Grid x:Name="LeftBar" Background="#AE6BDE" Grid.Row="1">
-
+        <Grid x:Name="LeftBar" Background="#284B7E" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Button Content="Настройки"
-                    Width="100"
-                    Height="25"
+            <Button Content="Настройки" Width="100" Height="25"
                     IsEnabled="{Binding IsSettingsEnable}"
                     Command="{Binding SettingsCommand}"
-                    Style="{StaticResource LeftBarButtons}"
-                    Template="{StaticResource LeftBarButtonsTemplate}"/>
+                    Style="{StaticResource LeftBarButtons}"/>
         </Grid>
 
-        <Grid x:Name="Center"
-              Background="#720BBD"
-              Grid.Column="1"
-              Grid.Row="1">
+        <Grid x:Name="Center" Background="#052F6D"
+              Grid.Column="1" Grid.Row="1">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="269*"/>
@@ -153,21 +153,15 @@
                 <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Подключиться"
-                    Grid.Column="1"
-                    Grid.Row="0"
+            <Button Content="Подключиться" Grid.Column="1" Grid.Row="0"
                     Command="{Binding StartCommand}"
                     IsEnabled="{Binding IsConnectEnable}"
-                    Style="{StaticResource CenterButtons}"
-                    Template="{StaticResource CenterButtonsTemplate}" Grid.ColumnSpan="2"/>
+                    Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
 
-            <Button Content="Отключиться"
-                    Grid.Row="1"
-                    Grid.Column="1"
+            <Button Content="Отключиться" Grid.Row="1" Grid.Column="1"
                     Command="{Binding StopCommand}"
                     IsEnabled="{Binding IsDisconnectEnable}"
-                    Style="{StaticResource CenterButtons}"
-                    Template="{StaticResource CenterButtonsTemplate}" Grid.ColumnSpan="2"/>
+                    Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
 
             <TextBlock Text="Ищем текст" Grid.Row="0"
                        Style="{StaticResource CenterTextBlock}" Margin="102,14,102,13"/>
@@ -177,10 +171,8 @@
                      HorizontalAlignment="Center" Width="200"
                      Height="26" Margin="34,9,35,9"/>
 
-            <ComboBox x:Name="comboBox"
-                      Grid.Row="3"
-                      Grid.Column="0"
-                      DisplayMemberPath="Value.Title"
+            <ComboBox x:Name="comboBox" Grid.Row="3"
+                      Grid.Column="0" DisplayMemberPath="Value.Title"
                       ItemsSource="{Binding ChatsList}"
                       SelectedItem="{Binding SelectedChannelData}"
                       Width="200" Height="25" Margin="34,14,35,14"/>
@@ -193,18 +185,13 @@
                 автоматически. Проверка истории сообщений проверяет только последние 100 сообщений.
             </TextBlock>
 
-            <Button Content="Проверить историю сообщений"
-                    Grid.Row="2"
-                    Grid.Column="1"
+            <Button Content="Проверить историю сообщений" Grid.Row="2" Grid.Column="1"
                     Command="{Binding CheckMsgHistoryCommand}"
                     IsEnabled="{Binding IsCheckMsgHistoryEnable}"
-                    Style="{StaticResource CenterButtons}"
-                    Template="{StaticResource CenterButtonsTemplate}" Grid.ColumnSpan="2"/>
+                    Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
 
-            <TextBox x:Name="loger"
-                     Grid.Row="4"
-                     Grid.ColumnSpan="3"
-                     IsReadOnly="True"
+            <TextBox x:Name="loger" Grid.Row="4"
+                     Grid.ColumnSpan="3" IsReadOnly="True"
                      Text="{Binding Log, Mode=OneWay}"/>
 
             <StatusBar Grid.Row="5" Grid.ColumnSpan="3"

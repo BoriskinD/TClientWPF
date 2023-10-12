@@ -157,7 +157,15 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public Dictionary<long, ChatBase> ChatsList => client?.ChatsList;
+        public Dictionary<long, ChatBase> ChatsList
+        {
+            get => client?.ChatsList;
+            set
+            {
+                client.ChatsList = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string User => client?.User.first_name;
 
@@ -286,6 +294,8 @@ namespace TClientWPF.ViewModel
             IsConnectEnable = true;
             IsSettingsEnable = true;
             IsCheckMsgHistoryEnable = false;
+
+            ChatsList = null;
 
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
