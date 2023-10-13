@@ -247,6 +247,7 @@ namespace TClientWPF.Model
             users = null;
             favoritesMsgs = null;
             IsOnline = false;
+            CountOfForwardedMsg = 0;
         }
     }
 }

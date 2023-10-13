@@ -19,7 +19,7 @@ namespace TClientWPF.Services
                 Visible = true,
                 BalloonTipIcon = ToolTipIcon.Info,
                 BalloonTipTitle = "TelegramWatcher",
-                BalloonTipText = "Программа свернута в трей. Нажмите ПКМ для вызова меню.",
+                BalloonTipText = "Программа свернута в трей. Нажмите ПКМ для вызова меню."
             };
             notifyIcon.ShowBalloonTip(3000);
 

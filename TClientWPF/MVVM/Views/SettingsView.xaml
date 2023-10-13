@@ -49,20 +49,6 @@
             <Setter Property="FontSize" Value="15"/>
         </Style>
 
-        <Style TargetType="ToolTip">
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding}"
-                                       Width="340"
-                                       TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <Style x:Key="BottomButtons" TargetType="Button">
             <Setter Property="Background" Value="#FFE373"/>
             <Setter Property="FontFamily" Value="Verdana"/>
@@ -119,25 +105,13 @@
             <TextBox Name="PhoneNumberTbox" Text="{Binding Phone_Number, Mode=TwoWay}"
                      Style="{StaticResource EnterFields}"/>
 
-            <TextBlock x:Name="SearchExpression" Style="{StaticResource Desc}">Что ищем?</TextBlock>
-            <TextBox x:Name="SearchExpressionTbox" Text="{Binding RegexPattern, Mode=TwoWay}"
-                     Style="{StaticResource EnterFields}"/>
-
-            <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
-                      Height="15" IsChecked="{Binding IsChecked, Mode=OneWayToSource}"
-                      HorizontalAlignment="Center" Margin="0,5,0,0"
-                      ToolTipService.ShowDuration="10000"
-                      ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
-            
-            <!--&#xa;-->
-            
             <TextBlock x:Name="Info" Height="18" Style="{StaticResource Desc}"
                        TextWrapping="Wrap" Margin="31,5,26,5"> 
                     Получить ID и Hash можно
                    <Hyperlink NavigateUri="https://my.telegram.org/apps"
                               Command="{Binding NavigateCommand}"
                               CommandParameter="https://my.telegram.org/apps"
-                              Foreground="AntiqueWhite">
+                              Foreground="Red">
                     здесь
                    </Hyperlink>
             </TextBlock>

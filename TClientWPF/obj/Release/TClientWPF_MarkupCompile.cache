@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\
 TClientWPF
 none
 false
-DEBUG;TRACE
+TRACE
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\App.xaml
 2580329172
 1-857110408

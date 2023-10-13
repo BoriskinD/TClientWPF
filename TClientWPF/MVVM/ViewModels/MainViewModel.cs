@@ -31,7 +31,7 @@ namespace TClientWPF.ViewModel
         private string onlineImagePath, offlineImagePath;
         private string iconPath;
         private string regexPattern;
-        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable;
+        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable, isChecked;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public KeyValuePair<long, ChatBase> SelectedChannelData
@@ -147,12 +147,31 @@ namespace TClientWPF.ViewModel
             }
         }
 
+
+        public bool IsChecked
+        {
+            get => isChecked;
+            set => isChecked = value;
+        }
+
         public string RegexPattern
         {
-            get => regexPattern;
+            get => settings?.RegexPattern;
             set
             {
-                regexPattern = value;
+                if (isChecked)
+                {
+                    string[] parts = value.Split(' ');
+                    if (parts.Length >= 2)
+                    {
+                        settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
+                                                "\\w*" + parts[1] + "\\w*";
+                    }
+                }
+                else
+                {
+                    settings.RegexPattern = value;
+                }
                 OnPropertyChanged();
             }
         }
@@ -186,7 +205,7 @@ namespace TClientWPF.ViewModel
             CloseWindowCommand = new RelayCommand(CloseWindow);
             ShowWindowCommand = new RelayCommand(ShowWindow);
             CheckMsgHistoryCommand = new RelayCommand(CheckMessageHistory);
-            
+
 
             onlineImagePath = "pack://application:,,,/Images/Online.png";
             offlineImagePath = "pack://application:,,,/Images/Offline.png";
@@ -237,7 +256,7 @@ namespace TClientWPF.ViewModel
         {
             if (notifyIconWrapper == null)
             {
-                iconPath = "../../Images/TClient.ico";
+                iconPath = "Images/TClient.ico";
                 notifyIconWrapper = new NotifyIconWrapper(iconPath);
                 notifyIconWrapper.ShowWindowRequested += (sender, e) => ShowWindow();
                 notifyIconWrapper.ExitRequested += (sender, e) => CloseProgramm();
@@ -258,7 +277,7 @@ namespace TClientWPF.ViewModel
             window.ShowSettingsWindow(settings, newSettings =>
             {
                 settings = newSettings;
-                RegexPattern = settings.RegexPattern;
+                OnPropertyChanged("RegexPattern");
             });
 
             IsConnectEnable = true;

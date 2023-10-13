@@ -18,15 +18,8 @@ namespace TClientWPF.ViewModels
         private RelayCommand saveCommand;
         private RelayCommand<string> navigateUri;
         private RelayCommand closeWindowCommand;
-        private bool isChecked;
         public Action CloseWindowAction;
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public bool IsChecked
-        {
-            get => isChecked;
-            set => isChecked = value;
-        }
 
         public RelayCommand CloseWindowCommand
         {
@@ -59,28 +52,6 @@ namespace TClientWPF.ViewModels
             {
                 settings = value;
                 UpdateView();
-            }
-        }
-
-        public string RegexPattern
-        {
-            get => Settings.RegexPattern;
-            set
-            {
-                if (isChecked)
-                {
-                    string[] parts = value.Split(' ');
-                    if (parts.Length >= 2)
-                    {
-                        Settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
-                                                "\\w*" + parts[1] + "\\w*";
-                    }
-                }
-                else
-                {
-                    Settings.RegexPattern = value;
-                }
-                OnPropertyChanged();
             }
         }
 
