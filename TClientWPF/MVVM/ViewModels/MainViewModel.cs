@@ -16,6 +16,7 @@ namespace TClientWPF.ViewModel
         private IWindow window;
         private IDialog dialogService;
         private Settings settings;
+        private PatternMatching patternMatching;
         private TClient client;
         private RelayCommand startCommand;
         private RelayCommand stopCommand;
@@ -30,7 +31,6 @@ namespace TClientWPF.ViewModel
         private bool showInTaskbar;
         private string onlineImagePath, offlineImagePath;
         private string iconPath;
-        private string regexPattern;
         private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable, isChecked;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -40,7 +40,7 @@ namespace TClientWPF.ViewModel
             set 
             {
                 selectedChannelData = value;
-                settings.ObservedChannel = selectedChannelData.Key;
+                client.ChannelID = selectedChannelData.Key;
                 IsCheckMsgHistoryEnable = true;
             }
         }
@@ -147,7 +147,6 @@ namespace TClientWPF.ViewModel
             }
         }
 
-
         public bool IsChecked
         {
             get => isChecked;
@@ -156,7 +155,6 @@ namespace TClientWPF.ViewModel
 
         public string RegexPattern
         {
-            get => settings?.RegexPattern;
             set
             {
                 if (isChecked)
@@ -164,15 +162,11 @@ namespace TClientWPF.ViewModel
                     string[] parts = value.Split(' ');
                     if (parts.Length >= 2)
                     {
-                        settings.RegexPattern = @"\w*" + parts[0] + "\\w|" +
-                                                "\\w*" + parts[1] + "\\w*";
+                        patternMatching.Expression = "\\w*" + parts[0] + "\\w|" +
+                                                     "\\w*" + parts[1] + "\\w*";
                     }
                 }
-                else
-                {
-                    settings.RegexPattern = value;
-                }
-                OnPropertyChanged();
+                else patternMatching.Expression = "\\w*" + value + "\\w";
             }
         }
 
@@ -195,7 +189,8 @@ namespace TClientWPF.ViewModel
         public int CountOfForwardedMsg => client?.CountOfForwardedMsg ?? 0;
 
         public MainViewModel()
-        { 
+        {
+            patternMatching = new PatternMatching();
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
@@ -277,7 +272,6 @@ namespace TClientWPF.ViewModel
             window.ShowSettingsWindow(settings, newSettings =>
             {
                 settings = newSettings;
-                OnPropertyChanged("RegexPattern");
             });
 
             IsConnectEnable = true;
@@ -285,7 +279,7 @@ namespace TClientWPF.ViewModel
 
         private async void StartWorking()
         {
-            client = new TClient(settings);
+            client = new TClient(settings, patternMatching);
             client.PropertyChanged += OnTClientChanged;
 
             try

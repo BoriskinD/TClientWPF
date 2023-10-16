@@ -21,16 +21,22 @@ namespace TClientWPF.Model
         private List<string> favoritesMsgs;
         private InputPeer favorites;
         private Client client;
-        private PatternMatching pattern;
         private Settings currentSettings;
         private FileStream sessionFileStream;
+        private PatternMatching patternMatching;
         private User user;
         private string sessionFilePath;
-        private long groupToWatch;
+        private long channelID;
         private string log;
         private bool online;
         private int countOfForwardedMsg;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public long ChannelID
+        {
+            get => channelID;
+            set => channelID = value;
+        }
 
         public Dictionary<long, ChatBase> ChatsList
         {
@@ -82,10 +88,10 @@ namespace TClientWPF.Model
             }
         }
 
-        public TClient(Settings settings)
+        public TClient(Settings settings, PatternMatching patternMatching)
         {
+            this.patternMatching = patternMatching;
             currentSettings = settings;
-            currentSettings.PropertyChanged += (sender, e) => groupToWatch = currentSettings.ObservedChannel;
             IsOnline = false;
 
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
@@ -102,10 +108,9 @@ namespace TClientWPF.Model
             myChats = new Dictionary<long, ChatBase>();
             favoritesMsgs = new List<string>();
             favorites = InputPeer.Self;
-            groupToWatch = currentSettings.ObservedChannel;
             countOfForwardedMsg = 0;
+            channelID = 0;
 
-            pattern = new PatternMatching(currentSettings.RegexPattern);
             client = new Client(Config, sessionFileStream);
             client.OnUpdate += Client_OnUpdate;
             client.OnOther += Client_OnOther;
@@ -125,7 +130,7 @@ namespace TClientWPF.Model
                 case "phone_number":
                     return currentSettings.Phone_Number;
                 case "verification_code":
-                    return Interaction.InputBox("You need to enter Verification Code that has been sent via app");
+                    return Interaction.InputBox("Введите проверочный код который был выслан вам в Telegram");
                 default:
                     return null;
             }
@@ -168,7 +173,7 @@ namespace TClientWPF.Model
             {
                 switch (update)
                 {
-                    case UpdateNewMessage unm when unm.message.Peer.ID == groupToWatch:
+                    case UpdateNewMessage unm when unm.message.Peer.ID == channelID:
                         await ForwardMessage(unm.message);
                         break;
                 }
@@ -203,15 +208,15 @@ namespace TClientWPF.Model
         {
             if (messageBase is Message currentMsg)
             {
-                if (favoritesMsgs.Contains(currentMsg.message))
+                if (favoritesMsgs.Contains(currentMsg.message) || string.IsNullOrEmpty(patternMatching.Expression))
                     return;
 
-                bool IsMatch = pattern.IsMatch(currentMsg.message);
+                bool IsMatch = patternMatching.IsMatch(currentMsg.message);
                 if (IsMatch)
                 {
                     favoritesMsgs.Add(currentMsg.message);
                     Messages_Dialogs allDialogs = await client.Messages_GetAllDialogs();
-                    ChatBase fromChat = allDialogs.chats[groupToWatch];
+                    ChatBase fromChat = allDialogs.chats[channelID];
                     await client.Messages_ForwardMessages(fromChat, new[] { currentMsg.ID }, new[] { Helpers.RandomLong() }, favorites);
                     CountOfForwardedMsg++;
                 }
@@ -229,7 +234,7 @@ namespace TClientWPF.Model
         public async Task CheckOldMessages()
         {
             Messages_Dialogs allDialogs = await client.Messages_GetAllDialogs();
-            InputPeer tdPeer = allDialogs.chats[groupToWatch];
+            InputPeer tdPeer = allDialogs.chats[channelID];
             Messages_MessagesBase messages = await client.Messages_GetHistory(tdPeer);
             foreach (MessageBase tmp in messages.Messages)
                 await ForwardMessage(tmp);

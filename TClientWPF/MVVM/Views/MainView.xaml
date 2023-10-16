@@ -182,7 +182,7 @@
 
             
             <StackPanel Grid.Row="1" Grid.Column="0">
-                <TextBox Grid.Row="1" Text="{Binding RegexPattern, Mode=TwoWay}" 
+                <TextBox Grid.Row="1" Text="{Binding RegexPattern, Mode=OneWayToSource}" 
                      VerticalAlignment="Center"
                      HorizontalAlignment="Center" Width="200"
                      Height="20"/>
@@ -206,7 +206,7 @@
 
             <TextBlock Grid.Row="3" Grid.Column="1"
                        Style="{StaticResource CenterTextBlock}" Grid.ColumnSpan="2" Margin="12,3,11,2"> После выбора канала, поиск указанного текста будет производиться
-                автоматически. Проверка истории сообщений проверяет только последние 100 сообщений.
+                автоматически.
             </TextBlock>
 
             <Button Content="Проверить историю сообщений" Grid.Row="2" Grid.Column="1"

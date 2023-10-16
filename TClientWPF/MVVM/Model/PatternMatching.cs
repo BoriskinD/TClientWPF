@@ -4,16 +4,14 @@ namespace TClientWPF.Model
 {
     class PatternMatching
     {
-        private Regex expression;
+        private string expression;
 
-        public PatternMatching(string pattern) =>
-               expression = new Regex(pattern, RegexOptions.IgnoreCase);
-
-        public bool IsMatch(string text)
+        public string Expression
         {
-            MatchCollection matches = expression.Matches(text);
-            if (matches.Count != 0) return true;
-            else return false;
+            get => expression;
+            set => expression = value;
         }
+
+        public bool IsMatch(string text) => Regex.Match(text, expression).Success;
     }
 }

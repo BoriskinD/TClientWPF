@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:TClientWPF.Views" 
         mc:Ignorable="d"
-        Title="Settings" Height="370" Width="350" 
+        Title="Settings" Height="340" Width="350" 
         WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="HeaderButtons" TargetType="Button">
@@ -64,14 +64,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-      
+
     </Window.Resources>
 
     <Grid Background="#052F6D">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="TopBar" MouseDown="OnMouseDown"
@@ -92,20 +91,31 @@
                     Command="{Binding CloseWindowCommand}"/>
         </Grid>
 
-        <StackPanel x:Name="CenterBar" Grid.Row="1">
-            <TextBlock x:Name="Id" Style="{StaticResource Desc}">ID приложения (Api ID)</TextBlock>
-            <TextBox x:Name="IdTbox" Text="{Binding Api_id, Mode=TwoWay}"
+        <GroupBox x:Name="groupBox" Header="Подключение к Telegram"
+                  Grid.Row="1" HorizontalAlignment="Center" 
+                  Height="280" Foreground="White"
+                  VerticalAlignment="Top" Width="300">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="220*"/>
+                    <RowDefinition Height="60*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel x:Name="CenterBar">
+                    <TextBlock x:Name="Id" Style="{StaticResource Desc}">ID приложения (Api ID)</TextBlock>
+                    <TextBox x:Name="IdTbox" Text="{Binding Api_id, Mode=TwoWay}"
                      Style="{StaticResource EnterFields}"/>
 
-            <TextBlock x:Name="Hash" Style="{StaticResource Desc}">Хэш приложения (Api Hash)</TextBlock>
-            <TextBox Name="HashTbox" Text="{Binding Api_hash, Mode=TwoWay}"
+                    <TextBlock x:Name="Hash" Style="{StaticResource Desc}">Хэш приложения (Api Hash)</TextBlock>
+                    <TextBox Name="HashTbox" Text="{Binding Api_hash, Mode=TwoWay}"
                      Style="{StaticResource EnterFields}" />
 
-            <TextBlock x:Name="PhoneNumber" Style="{StaticResource Desc}">Номер телефона (Phone number)</TextBlock>
-            <TextBox Name="PhoneNumberTbox" Text="{Binding Phone_Number, Mode=TwoWay}"
+                    <TextBlock x:Name="PhoneNumber" Style="{StaticResource Desc}">Номер телефона (Phone number)</TextBlock>
+                    <TextBox Name="PhoneNumberTbox" Text="{Binding Phone_Number, Mode=TwoWay}"
                      Style="{StaticResource EnterFields}"/>
 
-            <TextBlock x:Name="Info" Height="18" Style="{StaticResource Desc}"
+                    <TextBlock x:Name="Info" Height="18" Style="{StaticResource Desc}"
                        TextWrapping="Wrap" Margin="31,5,26,5"> 
                     Получить ID и Hash можно
                    <Hyperlink NavigateUri="https://my.telegram.org/apps"
@@ -114,15 +124,17 @@
                               Foreground="Red">
                     здесь
                    </Hyperlink>
-            </TextBlock>
-        </StackPanel>
+                    </TextBlock>
+                </StackPanel>
 
-        <StackPanel x:Name="BottomBar" Orientation="Horizontal"
-                    Grid.Row="2">
-            <Button x:Name="Export" Content="Экспорт в файл" Command="{Binding SaveCommand}"
-                     Margin="35,5,0,0" Style="{StaticResource BottomButtons}"/>
-            <Button x:Name="Import" Content="Импорт из файла" Command="{Binding OpenCommand}"
-                    Margin="35,5,0,0" Style="{StaticResource BottomButtons}"/>
-        </StackPanel>
+                <StackPanel x:Name="BottomBar" Orientation="Horizontal"
+                            Grid.Row="1">
+                    <Button x:Name="Export" Content="Экспорт в файл" Command="{Binding SaveCommand}"
+                            Margin="15,5,0,0" Style="{StaticResource BottomButtons}"/>
+                    <Button x:Name="Import" Content="Импорт из файла" Command="{Binding OpenCommand}"
+                            Margin="15,5,0,0" Style="{StaticResource BottomButtons}"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>

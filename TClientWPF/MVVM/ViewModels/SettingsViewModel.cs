@@ -85,16 +85,6 @@ namespace TClientWPF.ViewModels
             }
         }
 
-        public long ObservedChannel
-        {
-            get => Settings.ObservedChannel;
-            set
-            {
-                Settings.ObservedChannel = value;
-                OnPropertyChanged();
-            }
-        }
-
         public SettingsViewModel(Settings settings)
         {
             Settings = settings;
@@ -117,7 +107,7 @@ namespace TClientWPF.ViewModels
                 if (dialogService.SaveFileDialog())
                 {
                     fileService.Save(dialogService.FilePath, settings);
-                    dialogService.ShowMessage("Файл сохранён", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dialogService.ShowMessage("Настройки сохранены", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
@@ -133,7 +123,7 @@ namespace TClientWPF.ViewModels
                 if (dialogService.OpenFileDialog())
                 {
                     Settings = fileService.Open(dialogService.FilePath);
-                    dialogService.ShowMessage("Файл открыт", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dialogService.ShowMessage("Настройки загружены успешно", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
@@ -144,11 +134,9 @@ namespace TClientWPF.ViewModels
 
         private void UpdateView()
         {
-            OnPropertyChanged("RegexPattern");
             OnPropertyChanged("Api_id");
             OnPropertyChanged("Api_hash");
             OnPropertyChanged("Phone_Number");
-            OnPropertyChanged("ObservedChannel");
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
