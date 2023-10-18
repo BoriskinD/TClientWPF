@@ -161,12 +161,9 @@ namespace TClientWPF.ViewModel
                 {
                     string[] parts = value.Split(' ');
                     if (parts.Length >= 2)
-                    {
-                        patternMatching.Expression = "\\w*" + parts[0] + "\\w|" +
-                                                     "\\w*" + parts[1] + "\\w*";
-                    }
+                        patternMatching.Expression = parts[0] + "|" + parts[1];
                 }
-                else patternMatching.Expression = "\\w*" + value + "\\w";
+                else patternMatching.Expression = value;
             }
         }
 
@@ -186,7 +183,7 @@ namespace TClientWPF.ViewModel
 
         public string IsOnline => (client?.IsOnline ?? false) ? onlineImagePath : offlineImagePath;
 
-        public int CountOfForwardedMsg => client?.CountOfForwardedMsg ?? 0;
+        public int CountOfForwardedMsg => client?.CountOfGeneralFWDMessages ?? 0;
 
         public MainViewModel()
         {
@@ -213,6 +210,8 @@ namespace TClientWPF.ViewModel
 
         private async void CheckMessageHistory()
         {
+            IsCheckMsgHistoryEnable = false;
+
             try
             {
                 await client.MonitorChannel();
@@ -222,9 +221,12 @@ namespace TClientWPF.ViewModel
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            finally { IsCheckMsgHistoryEnable = true; }
 
-            dialogService.ShowMessage($"Сообщения в канале '{SelectedChannelData.Value.Title}' проверены, было переслано {client.CountOfForwardedMsg} сообщений.",
+            dialogService.ShowMessage($"Сообщения в канале \"{SelectedChannelData.Value.Title}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
                                       "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            client.CountOfHistoryFWDMessages = 0;
         }
 
         private void CloseProgramm()
@@ -290,6 +292,7 @@ namespace TClientWPF.ViewModel
             catch (Exception ex)
             {
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                client.Log = string.Empty;
                 client.Dispose();
                 return;
             }

@@ -1,3 +1,4 @@
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Images\TClient.ico
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\TClientWPF.exe.config
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\TClientWPF.exe
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\TClientWPF.pdb
@@ -36,6 +37,7 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\MVVM\Views\MainView.bam
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\MVVM\Views\MainView.g.cs
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\MVVM\Views\SettingsView.g.cs
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\App.g.cs
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF_Content.g.cs
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF_MarkupCompile.cache
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF_MarkupCompile.lref
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\MVVM\Views\SettingsView.baml
@@ -46,5 +48,3 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF.csproj.CoreC
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF.csproj.CopyComplete
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF.exe
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF.pdb
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Images\TClient.ico
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Release\TClientWPF_Content.g.cs

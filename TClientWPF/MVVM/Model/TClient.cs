@@ -29,7 +29,8 @@ namespace TClientWPF.Model
         private long channelID;
         private string log;
         private bool online;
-        private int countOfForwardedMsg;
+        private int countOfGeneralFWDMessages;  
+        private int checkHistoryFWDMessages;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public long ChannelID
@@ -51,19 +52,25 @@ namespace TClientWPF.Model
         public User User
         {
             get => user;
-            set 
+            private set 
             {
                 user = value;
                 OnPropertyChanged();
             }
         }
 
-        public int CountOfForwardedMsg
+        public int CountOfHistoryFWDMessages
         {
-            get => countOfForwardedMsg;
-            set 
+            get => checkHistoryFWDMessages;
+            set => checkHistoryFWDMessages = value;
+        }
+
+        public int CountOfGeneralFWDMessages
+        {
+            get => countOfGeneralFWDMessages;
+            private set 
             {
-                countOfForwardedMsg = value;
+                countOfGeneralFWDMessages = value;
                 OnPropertyChanged();
             }
         }
@@ -71,7 +78,7 @@ namespace TClientWPF.Model
         public bool IsOnline
         {
             get => online;
-            set
+            private set
             {
                 online = value;
                 OnPropertyChanged();
@@ -95,7 +102,6 @@ namespace TClientWPF.Model
             IsOnline = false;
 
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
-            sessionFileStream = new FileStream(sessionFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n";
 
             SetTimer();
@@ -108,16 +114,14 @@ namespace TClientWPF.Model
             myChats = new Dictionary<long, ChatBase>();
             favoritesMsgs = new List<string>();
             favorites = InputPeer.Self;
-            countOfForwardedMsg = 0;
+            countOfGeneralFWDMessages = 0;
             channelID = 0;
 
+            sessionFileStream = new FileStream(sessionFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             client = new Client(Config, sessionFileStream);
             client.OnUpdate += Client_OnUpdate;
             client.OnOther += Client_OnOther;
         }
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
-                                      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private string Config(string what)
         {
@@ -185,6 +189,7 @@ namespace TClientWPF.Model
         {
             if (arg is ReactorError)
             {
+                IsOnline = false;
                 Dispose();
                 timer.Start();
             }
@@ -204,7 +209,7 @@ namespace TClientWPF.Model
             await LoginAndStartWorking();
         }
 
-        private async Task ForwardMessage(MessageBase messageBase)
+        private async Task ForwardMessage(MessageBase messageBase, [CallerMemberName] string memberName = "")
         {
             if (messageBase is Message currentMsg)
             {
@@ -218,7 +223,13 @@ namespace TClientWPF.Model
                     Messages_Dialogs allDialogs = await client.Messages_GetAllDialogs();
                     ChatBase fromChat = allDialogs.chats[channelID];
                     await client.Messages_ForwardMessages(fromChat, new[] { currentMsg.ID }, new[] { Helpers.RandomLong() }, favorites);
-                    CountOfForwardedMsg++;
+
+                    if (memberName.Equals("CheckOldMessages"))
+                    {
+                        CountOfHistoryFWDMessages++;
+                        CountOfGeneralFWDMessages++;
+                    }
+                    else CountOfGeneralFWDMessages++;
                 }
             }
         }
@@ -249,10 +260,13 @@ namespace TClientWPF.Model
             favoritesMsgs?.Clear();
             client = null;
             chats = null;
+            sessionFileStream = null;
             users = null;
             favoritesMsgs = null;
-            IsOnline = false;
-            CountOfForwardedMsg = 0;
+            CountOfGeneralFWDMessages = 0;
         }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
+                                      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

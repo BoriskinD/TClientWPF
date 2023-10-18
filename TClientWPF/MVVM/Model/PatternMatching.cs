@@ -12,6 +12,6 @@ namespace TClientWPF.Model
             set => expression = value;
         }
 
-        public bool IsMatch(string text) => Regex.Match(text, expression).Success;
+        public bool IsMatch(string text) => Regex.IsMatch(text, Expression, RegexOptions.IgnoreCase);
     }
 }
