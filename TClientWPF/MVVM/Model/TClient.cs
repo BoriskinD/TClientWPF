@@ -32,6 +32,7 @@ namespace TClientWPF.Model
         private int countOfGeneralFWDMessages;  
         private int checkHistoryFWDMessages;
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler ConnectionStatusChanged;
 
         public long ChannelID
         {
@@ -104,7 +105,7 @@ namespace TClientWPF.Model
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
             Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n";
 
-            SetTimer();
+            //SetTimer();
         }
 
         public void Initialize()
@@ -142,26 +143,28 @@ namespace TClientWPF.Model
 
         public async Task LoginAndStartWorking()
         {
-            try
-            {
-                User = await client.LoginUserIfNeeded();
-                IsOnline = true;
-                await GetChats();
-            }
-            catch (SocketException)
-            {
-                Dispose();
-                timer.Start();
-            }
+            User = await client.LoginUserIfNeeded();
+            await GetUserChats();
+            IsOnline = true;
+
+            //try
+            //{
+            //}
+            //catch (ArgumentException)
+            //{
+            //    Dispose();
+            //    timer.Start();
+            //    return;
+            //}
         }
 
-        public async Task MonitorChannel()
+        public async Task CheckHistory()
         {
             await FillFavoritesList();
             await CheckOldMessages();
         }
 
-        private async Task GetChats()
+        private async Task GetUserChats()
         {
             Messages_Chats messagesChats = await client.Messages_GetAllChats();
             ChatsList = messagesChats.chats;
@@ -191,23 +194,23 @@ namespace TClientWPF.Model
             {
                 IsOnline = false;
                 Dispose();
-                timer.Start();
+                ConnectionStatusChanged?.Invoke(this, EventArgs.Empty);
             }
             return Task.CompletedTask;
         }
 
-        private void SetTimer()
-        {
-            timer = new Timer(3000);
-            timer.Elapsed += OnTimer_Elapsed;
-        }
+        //private void SetTimer()
+        //{
+        //    timer = new Timer(3000);
+        //    timer.Elapsed += OnTimer_Elapsed;
+        //}
 
-        private async void OnTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            timer.Stop();
-            Initialize();
-            await LoginAndStartWorking();
-        }
+        //private async void OnTimer_Elapsed(object sender, ElapsedEventArgs e)
+        //{
+        //    timer.Stop();
+        //    Initialize();
+        //    await LoginAndStartWorking();
+        //}
 
         private async Task ForwardMessage(MessageBase messageBase, [CallerMemberName] string memberName = "")
         {
@@ -264,6 +267,7 @@ namespace TClientWPF.Model
             users = null;
             favoritesMsgs = null;
             CountOfGeneralFWDMessages = 0;
+            IsOnline = false;
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
