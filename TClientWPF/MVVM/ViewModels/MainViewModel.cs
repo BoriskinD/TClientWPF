@@ -208,27 +208,6 @@ namespace TClientWPF.ViewModel
             ShowInTaskbar = true;
         }
 
-        private async void CheckMessageHistory()
-        {
-            IsCheckMsgHistoryEnable = false;
-
-            try
-            {
-                await client.MonitorChannel();
-            }
-            catch (Exception ex)
-            {
-                dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            finally { IsCheckMsgHistoryEnable = true; }
-
-            dialogService.ShowMessage($"Сообщения в канале \"{SelectedChannelData.Value.Title}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
-                                      "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            client.CountOfHistoryFWDMessages = 0;
-        }
-
         private void CloseProgramm()
         {
             notifyIconWrapper.Dispose();
@@ -263,13 +242,10 @@ namespace TClientWPF.ViewModel
             ShowInTaskbar = false;
         }
 
-        private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
-
         private void ShowSettings()
         {
             if (settings == null)
-                settings = new Settings();
-                
+                settings = new Settings();        
 
             window.ShowSettingsWindow(settings, newSettings =>
             {
@@ -279,27 +255,59 @@ namespace TClientWPF.ViewModel
             IsConnectEnable = true;
         }
 
+        private async void CheckMessageHistory()
+        {
+            IsCheckMsgHistoryEnable = false;
+
+            try
+            {
+                await client.CheckHistory();
+            }
+            catch (Exception ex)
+            {
+                dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            finally { IsCheckMsgHistoryEnable = true; }
+
+            dialogService.ShowMessage($"Сообщения в канале \"{SelectedChannelData.Value.Title}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
+                                      "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            client.CountOfHistoryFWDMessages = 0;
+        }
+
         private async void StartWorking()
         {
             client = new TClient(settings, patternMatching);
             client.PropertyChanged += OnTClientChanged;
+            client.ConnectionStatusChanged += OnConnectionStatusChanged;
+            client.Initialize();
+            IsConnectEnable = false;
 
             try
             {
-                client.Initialize();
                 await client.LoginAndStartWorking();
             }
             catch (Exception ex)
             {
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                client.Log = string.Empty;
                 client.Dispose();
+                IsConnectEnable = true;
                 return;
             }
 
-            IsConnectEnable = false;
             IsSettingsEnable = false;
             IsDisconnectEnable = true;
+        }
+
+        //Возникает когда инет упал во время активного подключения
+        private void OnConnectionStatusChanged(object sender, EventArgs e)
+        {
+            IsConnectEnable = true;
+            IsSettingsEnable = true;
+            IsDisconnectEnable = false;
+            IsCheckMsgHistoryEnable = false;
+            ChatsList = null;
         }
 
         private void StopWorking()
@@ -310,11 +318,12 @@ namespace TClientWPF.ViewModel
             IsConnectEnable = true;
             IsSettingsEnable = true;
             IsCheckMsgHistoryEnable = false;
-
             ChatsList = null;
 
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
                      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
