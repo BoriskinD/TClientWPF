@@ -8,6 +8,7 @@ using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
 using TL;
+using System.Text.RegularExpressions;
 
 namespace TClientWPF.ViewModel
 {
@@ -31,7 +32,8 @@ namespace TClientWPF.ViewModel
         private bool showInTaskbar;
         private string onlineImagePath, offlineImagePath;
         private string iconPath;
-        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable, isChecked;
+        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable, isDoubleStatement;
+        private bool checkingHistoryInProgress;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public KeyValuePair<long, ChatBase> SelectedChannelData
@@ -41,7 +43,8 @@ namespace TClientWPF.ViewModel
             {
                 selectedChannelData = value;
                 client.ChannelID = selectedChannelData.Key;
-                IsCheckMsgHistoryEnable = true;
+                if(!checkingHistoryInProgress)
+                    IsCheckMsgHistoryEnable = true;
             }
         }
 
@@ -147,23 +150,26 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public bool IsChecked
+        public bool IsDoubleStatementChecked
         {
-            get => isChecked;
-            set => isChecked = value;
+            get => isDoubleStatement;
+            set => isDoubleStatement = value;
         }
 
         public string RegexPattern
         {
             set
             {
-                if (isChecked)
+                if (Regex.IsMatch(value, "^[а-я А-Я a-z A-Z 0-9]*$"))
                 {
-                    string[] parts = value.Split(' ');
-                    if (parts.Length >= 2)
-                        patternMatching.Expression = parts[0] + "|" + parts[1];
+                    if (IsDoubleStatementChecked)
+                    {
+                        string[] parts = value.Split(' ');
+                        if (parts.Length >= 2)
+                            patternMatching.Expression = parts[0] + "|" + parts[1];
+                    }
+                    else patternMatching.Expression = value;
                 }
-                else patternMatching.Expression = value;
             }
         }
 
@@ -183,7 +189,7 @@ namespace TClientWPF.ViewModel
 
         public string IsOnline => (client?.IsOnline ?? false) ? onlineImagePath : offlineImagePath;
 
-        public int CountOfForwardedMsg => client?.CountOfGeneralFWDMessages ?? 0;
+        public int CountOfGeneralFWDMessages => client?.CountOfGeneralFWDMessages ?? 0;
 
         public MainViewModel()
         {
@@ -257,7 +263,9 @@ namespace TClientWPF.ViewModel
 
         private async void CheckMessageHistory()
         {
+            checkingHistoryInProgress = true;
             IsCheckMsgHistoryEnable = false;
+            string selectedChannelName = SelectedChannelData.Value.Title;
 
             try
             {
@@ -268,9 +276,13 @@ namespace TClientWPF.ViewModel
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            finally { IsCheckMsgHistoryEnable = true; }
+            finally
+            {
+                checkingHistoryInProgress = false;
+                IsCheckMsgHistoryEnable = true;
+            }
 
-            dialogService.ShowMessage($"Сообщения в канале \"{SelectedChannelData.Value.Title}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
+            dialogService.ShowMessage($"Сообщения в канале \"{selectedChannelName}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
                                       "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
 
             client.CountOfHistoryFWDMessages = 0;
