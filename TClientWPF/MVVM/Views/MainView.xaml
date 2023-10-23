@@ -27,10 +27,10 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="#A68400"/> 
+                    <Setter Property="Background" Value="#A68400"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FFCB00"/> 
+                    <Setter Property="Background" Value="#FFCB00"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -154,8 +154,8 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="269*"/>
-                <ColumnDefinition Width="46*"/>
-                <ColumnDefinition Width="297*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="294*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -178,34 +178,34 @@
                     Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
 
             <TextBlock Text="Ищем текст" Grid.Row="0"
-                       Style="{StaticResource CenterTextBlock}" Margin="102,14,102,13"/>
+                       Style="{StaticResource CenterTextBlock}" Margin="102,14,103,14" Height="16" Width="64"/>
 
-            
+
             <StackPanel Grid.Row="1" Grid.Column="0">
-                <TextBox Grid.Row="1" Text="{Binding RegexPattern, Mode=OneWayToSource}" 
+                <TextBox Grid.Row="1" Text="{Binding RegexPattern, Mode=OneWayToSource}"
+                     PreviewTextInput="TextBox_PreviewTextInput"
                      VerticalAlignment="Center" MaxLength="25"
                      HorizontalAlignment="Center" Width="200"
                      Height="20"/>
 
                 <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
-                      Height="15" IsChecked="{Binding IsChecked, Mode=OneWayToSource}"
+                      Height="15" IsChecked="{Binding IsDoubleStatementChecked, Mode=OneWayToSource}"
                       HorizontalAlignment="Center" Margin="0,5,0,0"
                       ToolTipService.ShowDuration="10000"
                       ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
             </StackPanel>
-            
+
 
             <ComboBox x:Name="comboBox" Grid.Row="3"
                       Grid.Column="0" DisplayMemberPath="Value.Title"
                       ItemsSource="{Binding ChatsList}"
-                      SelectedItem="{Binding SelectedChannelData}"
-                      Width="200" Height="25" Margin="34,14,35,14"/>
+                      SelectedItem="{Binding SelectedChannelData}" Margin="34,14,35,14"/>
 
             <TextBlock Text="в канале" Grid.Row="2" Grid.Column="0"
-                       Style="{StaticResource CenterTextBlock}" Margin="111,14,110,14"/>
+                       Style="{StaticResource CenterTextBlock}" Margin="112,14,103,14" Height="16" Width="54"/>
 
             <TextBlock Grid.Row="3" Grid.Column="1"
-                       Style="{StaticResource CenterTextBlock}" Grid.ColumnSpan="2" Margin="12,3,11,2"> После выбора канала, поиск указанного текста будет производиться
+                       Style="{StaticResource CenterTextBlock}" Grid.ColumnSpan="2" Margin="25,11,24,10" Height="32" Width="294"> После выбора канала, поиск указанного текста будет производиться
                 автоматически.
             </TextBlock>
 
@@ -239,7 +239,7 @@
                     <TextBlock Text="Кол-во пересланных сообщений:" Foreground="White"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <TextBlock Text="{Binding CountOfForwardedMsg}" Foreground="White"/>
+                    <TextBlock Text="{Binding CountOfGeneralFWDMessages}" Foreground="White"/>
                 </StatusBarItem>
             </StatusBar>
         </Grid>
