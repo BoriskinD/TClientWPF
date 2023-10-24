@@ -99,7 +99,6 @@ namespace TClientWPF.Model
         {
             this.patternMatching = patternMatching;
             currentSettings = settings;
-            IsOnline = false;
 
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
             Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n";
@@ -121,6 +120,7 @@ namespace TClientWPF.Model
             client = new Client(Config, sessionFileStream);
             client.OnUpdate += Client_OnUpdate;
             client.OnOther += Client_OnOther;
+            IsOnline = !client.Disconnected;
         }
 
         private string Config(string what)
@@ -143,8 +143,8 @@ namespace TClientWPF.Model
         public async Task LoginAndStartWorking()
         {
             User = await client.LoginUserIfNeeded();
+            IsOnline = !client.Disconnected;
             await GetUserChats();
-            IsOnline = true;
 
             //try
             //{
@@ -191,7 +191,6 @@ namespace TClientWPF.Model
         {
             if (arg is ReactorError)
             {
-                IsOnline = false;
                 Dispose();
                 ConnectionStatusChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -238,6 +237,7 @@ namespace TClientWPF.Model
 
         private async Task FillFavoritesList()
         {
+            favoritesMsgs.Clear();
             Messages_MessagesBase messageBaseList = await client.Messages_GetHistory(favorites);
             foreach (MessageBase favoriteMsg in messageBaseList.Messages)
                 if (favoriteMsg is Message currentMsg)
@@ -257,6 +257,7 @@ namespace TClientWPF.Model
         {
             sessionFileStream?.Close();
             client?.Dispose();
+            IsOnline = !client.Disconnected;
             users?.Clear();
             chats?.Clear();
             favoritesMsgs?.Clear();
