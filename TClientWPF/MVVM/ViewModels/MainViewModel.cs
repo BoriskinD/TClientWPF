@@ -39,11 +39,11 @@ namespace TClientWPF.ViewModel
         public KeyValuePair<long, ChatBase> SelectedChannelData
         {
             get => selectedChannelData;
-            set 
+            set
             {
                 selectedChannelData = value;
                 client.ChannelID = selectedChannelData.Key;
-                if(!checkingHistoryInProgress)
+                if (!checkingHistoryInProgress)
                     IsCheckMsgHistoryEnable = true;
             }
         }
@@ -251,13 +251,9 @@ namespace TClientWPF.ViewModel
         private void ShowSettings()
         {
             if (settings == null)
-                settings = new Settings();        
+                settings = new Settings();
 
-            window.ShowSettingsWindow(settings, newSettings =>
-            {
-                settings = newSettings;
-            });
-
+            window.ShowSettingsWindow(settings, newSettings => { settings = newSettings; });
             IsConnectEnable = true;
         }
 
@@ -279,7 +275,8 @@ namespace TClientWPF.ViewModel
             finally
             {
                 checkingHistoryInProgress = false;
-                IsCheckMsgHistoryEnable = true;
+                if (client.IsOnline)
+                    IsCheckMsgHistoryEnable = true;
             }
 
             dialogService.ShowMessage($"Сообщения в канале \"{selectedChannelName}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
@@ -308,6 +305,7 @@ namespace TClientWPF.ViewModel
                 return;
             }
 
+            checkingHistoryInProgress = false;
             IsSettingsEnable = false;
             IsDisconnectEnable = true;
         }
@@ -325,13 +323,11 @@ namespace TClientWPF.ViewModel
         private void StopWorking()
         {
             client.Dispose();
-
             IsDisconnectEnable = false;
             IsConnectEnable = true;
             IsSettingsEnable = true;
             IsCheckMsgHistoryEnable = false;
             ChatsList = null;
-
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
