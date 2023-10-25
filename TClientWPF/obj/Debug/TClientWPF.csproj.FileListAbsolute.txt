@@ -48,3 +48,5 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.AssemblyReference.cache
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Images\TClient.ico
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF_Content.g.cs
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\NLog.dll
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\NLog.xml

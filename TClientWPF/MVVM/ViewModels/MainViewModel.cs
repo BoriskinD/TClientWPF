@@ -14,11 +14,12 @@ namespace TClientWPF.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private Logger logger;
         private IWindow window;
         private IDialog dialogService;
         private Settings settings;
         private PatternMatching patternMatching;
-        private TClient client;
+        private TClient telegramClientWrapper;
         private RelayCommand startCommand;
         private RelayCommand stopCommand;
         private RelayCommand settingsCommand;
@@ -36,13 +37,14 @@ namespace TClientWPF.ViewModel
         private bool checkingHistoryInProgress;
         public event PropertyChangedEventHandler PropertyChanged;
 
+
         public KeyValuePair<long, ChatBase> SelectedChannelData
         {
             get => selectedChannelData;
             set
             {
                 selectedChannelData = value;
-                client.ChannelID = selectedChannelData.Key;
+                telegramClientWrapper.ChannelID = selectedChannelData.Key;
                 if (!checkingHistoryInProgress)
                     IsCheckMsgHistoryEnable = true;
             }
@@ -175,24 +177,28 @@ namespace TClientWPF.ViewModel
 
         public Dictionary<long, ChatBase> ChatsList
         {
-            get => client?.ChatsList;
+            get => telegramClientWrapper?.ChatsList;
             set
             {
-                client.ChatsList = value;
+                telegramClientWrapper.ChatsList = value;
                 OnPropertyChanged();
             }
         }
 
-        public string User => client?.User.first_name;
+        public string User => telegramClientWrapper?.User.first_name;
 
-        public string Log => client?.Log;
+        //public string Log => telegramClientWrapper?.Log;
 
-        public string IsOnline => (client?.IsOnline ?? false) ? onlineImagePath : offlineImagePath;
+        public string Log => logger.Log;
 
-        public int CountOfGeneralFWDMessages => client?.CountOfGeneralFWDMessages ?? 0;
+        public string IsOnline => (telegramClientWrapper?.IsOnline ?? false) ? onlineImagePath : offlineImagePath;
+
+        public int CountOfGeneralFWDMessages => telegramClientWrapper?.CountOfGeneralFWDMessages ?? 0;
 
         public MainViewModel()
         {
+            logger = new Logger();
+            logger.PropertyChanged += (sender, e) => OnPropertyChanged("Log");
             patternMatching = new PatternMatching();
             dialogService = new DefaultDialogService();
             window = new WindowService();
@@ -203,7 +209,6 @@ namespace TClientWPF.ViewModel
             CloseWindowCommand = new RelayCommand(CloseWindow);
             ShowWindowCommand = new RelayCommand(ShowWindow);
             CheckMsgHistoryCommand = new RelayCommand(CheckMessageHistory);
-
 
             onlineImagePath = "pack://application:,,,/Images/Online.png";
             offlineImagePath = "pack://application:,,,/Images/Offline.png";
@@ -254,6 +259,7 @@ namespace TClientWPF.ViewModel
                 settings = new Settings();
 
             window.ShowSettingsWindow(settings, newSettings => { settings = newSettings; });
+            logger.AddText($"INFO: Настройки успешно загружены.");
             IsConnectEnable = true;
         }
 
@@ -261,57 +267,62 @@ namespace TClientWPF.ViewModel
         {
             checkingHistoryInProgress = true;
             IsCheckMsgHistoryEnable = false;
-            string selectedChannelName = SelectedChannelData.Value.Title;
+            string channelName = SelectedChannelData.Value.Title;
 
+            logger.AddText($"INFO: Начинаем проверку истории сообщений в канале {channelName}...");
             try
             {
-                await client.CheckHistory();
+                await telegramClientWrapper.CheckHistory();
             }
             catch (Exception ex)
             {
+                logger.AddText($"ERROR: Ошибка проверки истории сообщений - {ex.Message}");
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             finally
             {
                 checkingHistoryInProgress = false;
-                if (client.IsOnline)
+                if (telegramClientWrapper.IsOnline)
                     IsCheckMsgHistoryEnable = true;
             }
 
-            dialogService.ShowMessage($"Сообщения в канале \"{selectedChannelName}\" проверены, было переслано {client.CountOfHistoryFWDMessages} сообщений.",
+            logger.AddText($"INFO: История сообщений успешно проверена. Найдено {telegramClientWrapper.CountOfHistoryFWDMessages} сообщений.");
+            dialogService.ShowMessage($"Сообщения в канале \"{channelName}\" проверены, было переслано {telegramClientWrapper.CountOfHistoryFWDMessages} сообщений.",
                                       "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            client.CountOfHistoryFWDMessages = 0;
+            telegramClientWrapper.CountOfHistoryFWDMessages = 0;
         }
 
         private async void StartWorking()
         {
-            client = new TClient(settings, patternMatching);
-            client.PropertyChanged += OnTClientChanged;
-            client.ConnectionStatusChanged += OnConnectionStatusChanged;
-            client.Initialize();
+            telegramClientWrapper = new TClient(settings, patternMatching);
+            telegramClientWrapper.PropertyChanged += OnTClientChanged;
+            telegramClientWrapper.ConnectionStatusChanged += OnConnectionDropped;
+            telegramClientWrapper.Initialize();
             IsConnectEnable = false;
 
+            logger.AddText($"INFO: Пытаемся подключиться к серверам Telegram...");
             try
             {
-                await client.LoginAndStartWorking();
+                await telegramClientWrapper.LoginAndStartWorking();
             }
             catch (Exception ex)
             {
+                logger.AddText($"ERROR: Во время подключения возникла ошибка - {ex.Message}.");
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                client.Dispose();
+                telegramClientWrapper.Dispose();
                 IsConnectEnable = true;
                 return;
             }
-
+            logger.AddText($"INFO: Подключение выполнено успешно.");
+            logger.AddText($"INFO: Мониторим сообщения...");
             checkingHistoryInProgress = false;
             IsSettingsEnable = false;
             IsDisconnectEnable = true;
         }
 
-        //Возникает когда инет упал во время активного подключения
-        private void OnConnectionStatusChanged(object sender, EventArgs e)
+        private void OnConnectionDropped(object sender, EventArgs e)
         {
             IsConnectEnable = true;
             IsSettingsEnable = true;
@@ -322,12 +333,14 @@ namespace TClientWPF.ViewModel
 
         private void StopWorking()
         {
-            client.Dispose();
+            logger.AddText($"INFO: Отключаемся от сервера...");
+            telegramClientWrapper.Dispose();
             IsDisconnectEnable = false;
             IsConnectEnable = true;
             IsSettingsEnable = true;
             IsCheckMsgHistoryEnable = false;
             ChatsList = null;
+            logger.AddText($"INFO: Отключение прошло успешно.");
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

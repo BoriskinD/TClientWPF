@@ -8,11 +8,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualBasic;
 using System.IO;
+using System.Text;
 
 namespace TClientWPF.Model
 {
     class TClient : INotifyPropertyChanged
     {
+        private StreamWriter wTelegramLogs;
         private Timer timer;
         private Dictionary<long, User> users;
         private Dictionary<long, ChatBase> chats;
@@ -101,7 +103,8 @@ namespace TClientWPF.Model
             currentSettings = settings;
 
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
-            Helpers.Log = (lvl, str) => Log = $"{DateTime.Now:dd-MM-yyyy HH:mm:ss} {str}\n";
+            wTelegramLogs = new ("TClient.log", true, Encoding.UTF8) { AutoFlush = true };
+            Helpers.Log = (lvl, str) => wTelegramLogs.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
 
             //SetTimer();
         }
