@@ -9,20 +9,22 @@ using System.Runtime.CompilerServices;
 using Microsoft.VisualBasic;
 using System.IO;
 using System.Text;
+using TClientWPF.Services;
 
 namespace TClientWPF.Model
 {
     class TClient : INotifyPropertyChanged
     {
+        private Logger logger;
         private StreamWriter wTelegramLogs;
-        private Timer timer;
+        private Timer reconnectionTimer;
         private Dictionary<long, User> users;
         private Dictionary<long, ChatBase> chats;
         private Dictionary<long, ChatBase> myChats;
         private List<string> favoritesMsgs;
         private InputPeer favorites;
         private Client client;
-        private Settings currentSettings;
+        private Settings settings;
         private FileStream sessionFileStream;
         private PatternMatching patternMatching;
         private User user;
@@ -30,10 +32,12 @@ namespace TClientWPF.Model
         private long channelID;
         private string log;
         private bool online;
+        private bool autoreconnect;
         private int countOfGeneralFWDMessages;  
         private int checkHistoryFWDMessages;
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler ConnectionStatusChanged;
+        public event EventHandler ConnectionDropped;
+        public event EventHandler ConnectionRestored;
 
         public long ChannelID
         {
@@ -49,6 +53,12 @@ namespace TClientWPF.Model
                 myChats = value;
                 OnPropertyChanged();
             }
+        }
+
+        public bool Autoreconnect
+        {
+            get => autoreconnect;
+            set => autoreconnect = value;
         }
 
         public User User
@@ -100,13 +110,13 @@ namespace TClientWPF.Model
         public TClient(Settings settings, PatternMatching patternMatching)
         {
             this.patternMatching = patternMatching;
-            currentSettings = settings;
+            this.settings = settings;
+            logger = Logger.GetInstance();
 
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
-            wTelegramLogs = new ("TClient.log", true, Encoding.UTF8) { AutoFlush = true };
-            Helpers.Log = (lvl, str) => wTelegramLogs.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
+            Helpers.Log = (lvl, str) => wTelegramLogs?.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
 
-            //SetTimer();
+            SetReconnectionTimer();
         }
 
         public void Initialize()
@@ -119,11 +129,24 @@ namespace TClientWPF.Model
             countOfGeneralFWDMessages = 0;
             channelID = 0;
 
+            wTelegramLogs = new ("TClient.log", true, Encoding.UTF8) { AutoFlush = true };
             sessionFileStream = new FileStream(sessionFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             client = new Client(Config, sessionFileStream);
             client.OnUpdate += Client_OnUpdate;
             client.OnOther += Client_OnOther;
+            IsOnline = client.Disconnected;
+        }
+
+        public async Task Connect()
+        {
+            User = await client.LoginUserIfNeeded();
             IsOnline = !client.Disconnected;
+        }
+
+        public async Task GetUserChats()
+        {
+            Messages_Chats messagesChats = await client.Messages_GetAllChats();
+            ChatsList = messagesChats.chats;
         }
 
         private string Config(string what)
@@ -131,33 +154,16 @@ namespace TClientWPF.Model
             switch (what)
             {
                 case "api_id":
-                    return currentSettings.Api_id;
+                    return settings.Api_id;
                 case "api_hash":
-                    return currentSettings.Api_hash;
+                    return settings.Api_hash;
                 case "phone_number":
-                    return currentSettings.Phone_Number;
+                    return settings.Phone_Number;
                 case "verification_code":
                     return Interaction.InputBox("Введите проверочный код который был выслан вам в Telegram");
                 default:
                     return null;
             }
-        }
-
-        public async Task LoginAndStartWorking()
-        {
-            User = await client.LoginUserIfNeeded();
-            IsOnline = !client.Disconnected;
-            await GetUserChats();
-
-            //try
-            //{
-            //}
-            //catch (ArgumentException)
-            //{
-            //    Dispose();
-            //    timer.Start();
-            //    return;
-            //}
         }
 
         public async Task CheckHistory()
@@ -166,17 +172,8 @@ namespace TClientWPF.Model
             await CheckOldMessages();
         }
 
-        private async Task GetUserChats()
+        private async Task Client_OnUpdate(UpdatesBase updates)
         {
-            Messages_Chats messagesChats = await client.Messages_GetAllChats();
-            ChatsList = messagesChats.chats;
-        }
-
-        private async Task<object> Client_OnUpdate(IObject arg)
-        {
-            if (arg is not UpdatesBase updates)
-                return null;
-
             updates.CollectUsersChats(users, chats);
             foreach (Update update in updates.UpdateList)
             {
@@ -187,31 +184,44 @@ namespace TClientWPF.Model
                         break;
                 }
             }
-            return null;
         }
 
-        private async Task<Task> Client_OnOther(IObject arg)
+        private Task Client_OnOther(IObject arg)
         {
             if (arg is ReactorError)
             {
                 Dispose();
-                ConnectionStatusChanged?.Invoke(this, EventArgs.Empty);
+                ConnectionDropped?.Invoke(this, EventArgs.Empty);
+                if (Autoreconnect) reconnectionTimer.Start();
             }
-            return Task.CompletedTask;
+            return null;
         }
 
-        //private void SetTimer()
-        //{
-        //    timer = new Timer(3000);
-        //    timer.Elapsed += OnTimer_Elapsed;
-        //}
+        private async void OnTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            reconnectionTimer.Stop();
+            Initialize();
+            logger.AddText($"WARNING: Пытаемся переподключиться к Telegram...");
+            try
+            {
+                await Connect();
+                await GetUserChats();
+                logger.AddText($"INFO: Переподключение выполнено успешно.");
+                ConnectionRestored?.Invoke(this, EventArgs.Empty);
+            }
+            catch (ArgumentException aEx)
+            {
+                logger.AddText($"ERROR: Во время переподключения возникла ошибка - {aEx.Message}");
+                Dispose();
+                if (Autoreconnect) reconnectionTimer.Start();
+            }
+        }
 
-        //private async void OnTimer_Elapsed(object sender, ElapsedEventArgs e)
-        //{
-        //    timer.Stop();
-        //    Initialize();
-        //    await LoginAndStartWorking();
-        //}
+        private void SetReconnectionTimer()
+        {
+            reconnectionTimer = new Timer(3000);
+            reconnectionTimer.Elapsed += OnTimer_Elapsed;
+        }
 
         private async Task ForwardMessage(MessageBase messageBase, [CallerMemberName] string memberName = "")
         {
@@ -258,6 +268,8 @@ namespace TClientWPF.Model
 
         public void Dispose()
         {
+            wTelegramLogs?.Close();
+            wTelegramLogs = null;
             sessionFileStream?.Close();
             client?.Dispose();
             IsOnline = !client.Disconnected;
