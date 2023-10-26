@@ -4,7 +4,6 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\TClientWPF.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\IndexRange.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Microsoft.Xaml.Behaviors.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Newtonsoft.Json.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\System.Buffers.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\System.ComponentModel.Annotations.dll
@@ -19,8 +18,6 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\WTelegramClient.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\CommunityToolkit.Mvvm.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Microsoft.Xaml.Behaviors.pdb
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Microsoft.Xaml.Behaviors.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Newtonsoft.Json.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\System.Buffers.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\System.Memory.xml
@@ -48,5 +45,3 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.AssemblyReference.cache
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\Images\TClient.ico
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF_Content.g.cs
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\NLog.dll
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Debug\NLog.xml
