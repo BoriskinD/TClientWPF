@@ -154,8 +154,8 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="269*"/>
-                <ColumnDefinition Width="49*"/>
-                <ColumnDefinition Width="294*"/>
+                <ColumnDefinition Width="116*"/>
+                <ColumnDefinition Width="227*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -195,6 +195,12 @@
                       ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
             </StackPanel>
 
+            <CheckBox x:Name="IsAutoreconnect" Content="Переподключаться атоматически" 
+                      Grid.Row="0" Grid.Column="1"
+                      IsChecked="{Binding IsAutoreconnect, Mode=OneWayToSource}"
+                      HorizontalAlignment="Center" Foreground="White"
+                      ToolTipService.ShowDuration="5000"
+                      ToolTipService.ToolTip="Автоматически пытается переподключиться к серверам Telegram в случае проблем с Интернетом." Margin="11,14" Width="94"/>
 
             <ComboBox x:Name="comboBox" Grid.Row="3"
                       Grid.Column="0" DisplayMemberPath="Value.Title"
