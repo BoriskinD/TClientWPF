@@ -668,3 +668,993 @@
 2023-10-26 13:59:50 [I] Connecting to 149.154.167.41:443...
 2023-10-26 14:00:11 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
 2023-10-26 14:00:11 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:29:54 [I] Loaded previous session
+2023-10-30 12:29:55 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:29:55 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:29:55 [D] 2>Sending   InvokeWithLayer`1                        #A324
+2023-10-30 12:29:55 [W] 2>Server salt has changed: 50E567A8F212B82B -> EA47B297DAEB1A6B
+2023-10-30 12:29:55 [D] 2>Receiving BadServerSalt                            2023-10-30 09:29:55Z (svc) 
+2023-10-30 12:29:55 [I] BadMsgNotification 48 for msg #A324
+2023-10-30 12:29:55 [D] 2>Sending   InvokeWithLayer`1                        #A76A
+2023-10-30 12:29:55 [D] 2>Receiving MsgContainer                             2023-10-30 09:29:55Z (svc)
+2023-10-30 12:29:55 [D]             → NewSessionCreated                      2023-10-30 09:29:55Z  
+2023-10-30 12:29:55 [D]             → MsgsAck                                2023-10-30 09:29:55Z (svc) 
+2023-10-30 12:29:55 [D] 2>Receiving RpcResult                                2023-10-30 09:29:55Z
+2023-10-30 12:29:55 [D]              → Config                                #A76A
+2023-10-30 12:29:55 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:29:55 [D] 2>Sending   MsgContainer                             2023-10-30 09:29:55Z (svc)
+2023-10-30 12:29:55 [D]             → Users_GetUsers                         #9A72
+2023-10-30 12:29:55 [D]             → MsgsAck                               
+2023-10-30 12:29:55 [D] 2>Receiving RpcResult                                2023-10-30 09:29:55Z
+2023-10-30 12:29:55 [D]              → UserBase[]                            #9A72
+2023-10-30 12:29:55 [D] 2>Sending   MsgContainer                             2023-10-30 09:29:55Z (svc)
+2023-10-30 12:29:55 [D]             → Messages_GetDialogs                    #78D2
+2023-10-30 12:29:55 [D]             → MsgsAck                               
+2023-10-30 12:29:56 [D] 2>Receiving RpcResult                                2023-10-30 09:29:55Z
+2023-10-30 12:29:56 [D]              → Messages_Dialogs                      #78D2
+2023-10-30 12:30:00 [D] 2>Sending   MsgContainer                             2023-10-30 09:29:59Z (svc)
+2023-10-30 12:30:00 [D]             → GetFutureSalts                         #0F4A
+2023-10-30 12:30:00 [D]             → MsgsAck                               
+2023-10-30 12:30:00 [D] 2>Receiving FutureSalts                              2023-10-30 09:30:00Z (svc) 
+2023-10-30 12:30:36 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 12:30:42 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:31:03 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:31:03 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:31:52 [I] Loaded previous session
+2023-10-30 12:31:52 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:31:52 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:31:52 [D] 2>Sending   InvokeWithLayer`1                        #7E57
+2023-10-30 12:31:52 [D] 2>Receiving MsgContainer                             2023-10-30 09:31:52Z (svc)
+2023-10-30 12:31:52 [D]             → UpdateShort                            2023-10-30 09:31:36Z  
+2023-10-30 12:31:52 [D]             → UpdateShortMessage                     2023-10-30 09:31:50Z  
+2023-10-30 12:31:52 [D]             → MsgsAck                                2023-10-30 09:31:52Z (svc) 
+2023-10-30 12:31:52 [D] 2>Receiving RpcResult                                2023-10-30 09:31:52Z
+2023-10-30 12:31:52 [D]              → Config                                #7E57
+2023-10-30 12:31:52 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:31:52 [D] 2>Sending   MsgContainer                             2023-10-30 09:31:52Z (svc)
+2023-10-30 12:31:52 [D]             → Users_GetUsers                         #7E53
+2023-10-30 12:31:52 [D]             → MsgsAck                               
+2023-10-30 12:31:53 [D] 2>Receiving RpcResult                                2023-10-30 09:31:52Z
+2023-10-30 12:31:53 [D]              → UserBase[]                            #7E53
+2023-10-30 12:31:53 [D] 2>Sending   MsgContainer                             2023-10-30 09:31:52Z (svc)
+2023-10-30 12:31:53 [D]             → Messages_GetDialogs                    #7E47
+2023-10-30 12:31:53 [D]             → MsgsAck                               
+2023-10-30 12:31:53 [D] 2>Receiving RpcResult                                2023-10-30 09:31:53Z
+2023-10-30 12:31:53 [D]              → Messages_Dialogs                      #7E47
+2023-10-30 12:32:52 [I] Loaded previous session
+2023-10-30 12:32:52 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:32:52 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:32:52 [D] 2>Sending   InvokeWithLayer`1                        #D64A
+2023-10-30 12:32:52 [D] 2>Receiving MsgContainer                             2023-10-30 09:32:52Z (svc)
+2023-10-30 12:32:52 [D]             → UpdateShort                            2023-10-30 09:32:17Z  
+2023-10-30 12:32:52 [D]             → Updates                                2023-10-30 09:32:17Z  
+2023-10-30 12:32:52 [D]             → MsgDetailedInfo                        2023-10-30 09:32:52Z (svc) 
+2023-10-30 12:32:52 [D]             → MsgNewDetailedInfo                     2023-10-30 09:32:52Z (svc) 
+2023-10-30 12:32:52 [D]             → MsgsAck                                2023-10-30 09:32:52Z (svc) 
+2023-10-30 12:32:52 [D] 2>Receiving UpdateShort                              2023-10-30 09:32:52Z  
+2023-10-30 12:32:52 [D] 2>Receiving Updates                                  2023-10-30 09:32:52Z  
+2023-10-30 12:32:52 [D] 2>Receiving Updates                                  2023-10-30 09:32:52Z  
+2023-10-30 12:32:52 [D] 2>Receiving Updates                                  2023-10-30 09:32:52Z  
+2023-10-30 12:32:52 [D] 2>Receiving RpcResult                                2023-10-30 09:32:52Z
+2023-10-30 12:32:52 [D]              → Config                                #D64A
+2023-10-30 12:32:52 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:32:52 [D] 2>Sending   MsgContainer                             2023-10-30 09:32:52Z (svc)
+2023-10-30 12:32:52 [D]             → Users_GetUsers                         #03DF
+2023-10-30 12:32:52 [D]             → MsgsAck                               
+2023-10-30 12:32:52 [D] 2>Receiving RpcResult                                2023-10-30 09:32:52Z
+2023-10-30 12:32:52 [D]              → UserBase[]                            #03DF
+2023-10-30 12:32:52 [D] 2>Sending   MsgContainer                             2023-10-30 09:32:52Z (svc)
+2023-10-30 12:32:52 [D]             → Messages_GetDialogs                    #77E3
+2023-10-30 12:32:52 [D]             → MsgsAck                               
+2023-10-30 12:32:52 [D] 2>Receiving RpcResult                                2023-10-30 09:32:52Z
+2023-10-30 12:32:52 [D]              → Messages_Dialogs                      #77E3
+2023-10-30 12:33:01 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 12:33:07 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:33:28 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:33:28 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:33:31 [I] Loaded previous session
+2023-10-30 12:33:31 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:33:31 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:33:52 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:33:52 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:33:55 [I] Loaded previous session
+2023-10-30 12:33:55 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:33:55 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:34:16 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:34:16 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:34:19 [I] Loaded previous session
+2023-10-30 12:34:19 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:34:19 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:34:40 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:34:40 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:34:43 [I] Loaded previous session
+2023-10-30 12:34:43 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:34:43 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:35:04 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:35:04 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:38:21 [I] Loaded previous session
+2023-10-30 12:38:21 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:38:21 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:38:21 [D] 2>Sending   InvokeWithLayer`1                        #2344
+2023-10-30 12:38:21 [D] 2>Receiving MsgContainer                             2023-10-30 09:38:21Z (svc)
+2023-10-30 12:38:21 [D]             → UpdateShort                            2023-10-30 09:38:19Z  
+2023-10-30 12:38:21 [D]             → UpdateShort                            2023-10-30 09:38:19Z  
+2023-10-30 12:38:21 [D]             → UpdateShort                            2023-10-30 09:38:21Z  
+2023-10-30 12:38:21 [D]             → MsgNewDetailedInfo                     2023-10-30 09:38:21Z (svc) 
+2023-10-30 12:38:21 [D]             → MsgDetailedInfo                        2023-10-30 09:38:21Z (svc) 
+2023-10-30 12:38:21 [D]             → MsgDetailedInfo                        2023-10-30 09:38:21Z (svc) 
+2023-10-30 12:38:21 [D]             → MsgsAck                                2023-10-30 09:38:21Z (svc) 
+2023-10-30 12:38:21 [D] 2>Receiving RpcResult                                2023-10-30 09:38:21Z
+2023-10-30 12:38:21 [D]              → Config                                #2344
+2023-10-30 12:38:21 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:38:21 [D] 2>Sending   MsgContainer                             2023-10-30 09:38:21Z (svc)
+2023-10-30 12:38:21 [D]             → Users_GetUsers                         #2340
+2023-10-30 12:38:21 [D]             → MsgsAck                               
+2023-10-30 12:38:21 [D] 2>Receiving RpcResult                                2023-10-30 09:38:21Z
+2023-10-30 12:38:21 [D]              → UserBase[]                            #2340
+2023-10-30 12:38:21 [D] 2>Sending   MsgContainer                             2023-10-30 09:38:21Z (svc)
+2023-10-30 12:38:21 [D]             → Messages_GetDialogs                    #3214
+2023-10-30 12:38:21 [D]             → MsgsAck                               
+2023-10-30 12:38:22 [D] 2>Receiving RpcResult                                2023-10-30 09:38:22Z
+2023-10-30 12:38:22 [D]              → Messages_Dialogs                      #3214
+2023-10-30 12:40:42 [I] Loaded previous session
+2023-10-30 12:40:42 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:40:42 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:40:42 [D] 2>Sending   InvokeWithLayer`1                        #1604
+2023-10-30 12:40:42 [D] 2>Receiving MsgContainer                             2023-10-30 09:40:42Z (svc)
+2023-10-30 12:40:42 [D]             → UpdateShort                            2023-10-30 09:38:46Z  
+2023-10-30 12:40:42 [D]             → UpdateShort                            2023-10-30 09:38:46Z  
+2023-10-30 12:40:42 [D]             → UpdateShort                            2023-10-30 09:38:53Z  
+2023-10-30 12:40:42 [D]             → UpdateShort                            2023-10-30 09:40:25Z  
+2023-10-30 12:40:42 [D]             → UpdateShort                            2023-10-30 09:40:25Z  
+2023-10-30 12:40:42 [D]             → UpdateShort                            2023-10-30 09:40:25Z  
+2023-10-30 12:40:42 [D]             → MsgNewDetailedInfo                     2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgDetailedInfo                        2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgDetailedInfo                        2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgDetailedInfo                        2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgNewDetailedInfo                     2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgNewDetailedInfo                     2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgNewDetailedInfo                     2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D]             → MsgsAck                                2023-10-30 09:40:42Z (svc) 
+2023-10-30 12:40:42 [D] 2>Receiving RpcResult                                2023-10-30 09:40:42Z
+2023-10-30 12:40:42 [D]              → Config                                #1604
+2023-10-30 12:40:42 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:40:42 [D] 2>Sending   MsgContainer                             2023-10-30 09:40:42Z (svc)
+2023-10-30 12:40:42 [D]             → Users_GetUsers                         #E5E5
+2023-10-30 12:40:42 [D]             → MsgsAck                               
+2023-10-30 12:40:42 [D] 2>Receiving RpcResult                                2023-10-30 09:40:42Z
+2023-10-30 12:40:42 [D]              → UserBase[]                            #E5E5
+2023-10-30 12:40:42 [D] 2>Sending   MsgContainer                             2023-10-30 09:40:42Z (svc)
+2023-10-30 12:40:42 [D]             → Messages_GetDialogs                    #08FD
+2023-10-30 12:40:42 [D]             → MsgsAck                               
+2023-10-30 12:40:43 [D] 2>Receiving RpcResult                                2023-10-30 09:40:43Z
+2023-10-30 12:40:43 [D]              → Messages_Dialogs                      #08FD
+2023-10-30 12:40:48 [D] 2>Receiving UpdateShort                              2023-10-30 09:40:48Z  
+2023-10-30 12:40:56 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 12:41:02 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:41:23 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:41:23 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:42:01 [I] Loaded previous session
+2023-10-30 12:42:01 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:42:01 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:42:22 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:42:22 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:42:28 [I] Loaded previous session
+2023-10-30 12:42:28 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:42:28 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:42:28 [D] 2>Sending   InvokeWithLayer`1                        #12B7
+2023-10-30 12:42:29 [D] 2>Receiving MsgContainer                             2023-10-30 09:42:29Z (svc)
+2023-10-30 12:42:29 [D]             → UpdateShort                            2023-10-30 09:40:49Z  
+2023-10-30 12:42:29 [D]             → UpdateShort                            2023-10-30 09:41:21Z  
+2023-10-30 12:42:29 [D]             → UpdateShort                            2023-10-30 09:41:23Z  
+2023-10-30 12:42:29 [D]             → UpdateShortMessage                     2023-10-30 09:42:10Z  
+2023-10-30 12:42:29 [D]             → MsgNewDetailedInfo                     2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgDetailedInfo                        2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgDetailedInfo                        2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgNewDetailedInfo                     2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgDetailedInfo                        2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgNewDetailedInfo                     2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgNewDetailedInfo                     2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgDetailedInfo                        2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D]             → MsgsAck                                2023-10-30 09:42:29Z (svc) 
+2023-10-30 12:42:29 [D] 2>Receiving Updates                                  2023-10-30 09:42:29Z  
+2023-10-30 12:42:29 [D] 2>Receiving RpcResult                                2023-10-30 09:42:30Z
+2023-10-30 12:42:29 [D]              → Config                                #12B7
+2023-10-30 12:42:29 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:42:29 [D] 2>Sending   MsgContainer                             2023-10-30 09:42:29Z (svc)
+2023-10-30 12:42:29 [D]             → Users_GetUsers                         #12BB
+2023-10-30 12:42:29 [D]             → MsgsAck                               
+2023-10-30 12:42:29 [D] 2>Receiving RpcResult                                2023-10-30 09:42:30Z
+2023-10-30 12:42:29 [D]              → UserBase[]                            #12BB
+2023-10-30 12:42:29 [D] 2>Sending   MsgContainer                             2023-10-30 09:42:29Z (svc)
+2023-10-30 12:42:29 [D]             → Messages_GetDialogs                    #12A7
+2023-10-30 12:42:29 [D]             → MsgsAck                               
+2023-10-30 12:42:29 [D] 2>Receiving MsgsAck                                  2023-10-30 09:42:30Z (svc) 
+2023-10-30 12:42:29 [D] 2>Receiving Updates                                  2023-10-30 09:42:30Z  
+2023-10-30 12:42:29 [D] 2>Receiving RpcResult                                2023-10-30 09:42:30Z
+2023-10-30 12:42:29 [D]              → Messages_Dialogs                      #12A7
+2023-10-30 12:43:09 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 12:43:15 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:43:36 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:43:36 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:43:39 [I] Loaded previous session
+2023-10-30 12:43:39 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:43:39 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:44:00 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:44:00 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:44:03 [I] Loaded previous session
+2023-10-30 12:44:03 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:44:03 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:49:56 [I] Loaded previous session
+2023-10-30 12:49:56 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:49:56 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:49:57 [D] 2>Sending   InvokeWithLayer`1                        #7D9E
+2023-10-30 12:49:57 [D] 2>Receiving MsgContainer                             2023-10-30 09:49:57Z (svc)
+2023-10-30 12:49:57 [D]             → UpdateShort                            2023-10-30 09:44:42Z  
+2023-10-30 12:49:57 [D]             → UpdateShort                            2023-10-30 09:44:42Z  
+2023-10-30 12:49:57 [D]             → UpdateShort                            2023-10-30 09:44:48Z  
+2023-10-30 12:49:57 [D]             → MsgNewDetailedInfo                     2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgDetailedInfo                        2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgDetailedInfo                        2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgNewDetailedInfo                     2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgDetailedInfo                        2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgDetailedInfo                        2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgNewDetailedInfo                     2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgNewDetailedInfo                     2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgNewDetailedInfo                     2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgNewDetailedInfo                     2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgDetailedInfo                        2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D]             → MsgsAck                                2023-10-30 09:49:57Z (svc) 
+2023-10-30 12:49:57 [D] 2>Receiving Updates                                  2023-10-30 09:49:57Z  
+2023-10-30 12:49:57 [D] 2>Receiving Updates                                  2023-10-30 09:49:57Z  
+2023-10-30 12:49:57 [D] 2>Receiving Updates                                  2023-10-30 09:49:57Z  
+2023-10-30 12:49:57 [D] 2>Receiving Updates                                  2023-10-30 09:49:57Z  
+2023-10-30 12:49:57 [D] 2>Receiving RpcResult                                2023-10-30 09:49:57Z
+2023-10-30 12:49:57 [D]              → Config                                #7D9E
+2023-10-30 12:49:57 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:49:57 [D] 2>Sending   MsgContainer                             2023-10-30 09:49:57Z (svc)
+2023-10-30 12:49:57 [D]             → Users_GetUsers                         #37D4
+2023-10-30 12:49:57 [D]             → MsgsAck                               
+2023-10-30 12:49:57 [D] 2>Receiving RpcResult                                2023-10-30 09:49:57Z
+2023-10-30 12:49:57 [D]              → UserBase[]                            #37D4
+2023-10-30 12:49:57 [D] 2>Sending   MsgContainer                             2023-10-30 09:49:57Z (svc)
+2023-10-30 12:49:57 [D]             → Messages_GetDialogs                    #D06C
+2023-10-30 12:49:57 [D]             → MsgsAck                               
+2023-10-30 12:49:57 [D] 2>Receiving RpcResult                                2023-10-30 09:49:57Z
+2023-10-30 12:49:57 [D]              → Messages_Dialogs                      #D06C
+2023-10-30 12:50:21 [I] Loaded previous session
+2023-10-30 12:50:21 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:50:21 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:50:22 [D] 2>Sending   InvokeWithLayer`1                        #D6A8
+2023-10-30 12:50:22 [D] 2>Receiving MsgContainer                             2023-10-30 09:50:22Z (svc)
+2023-10-30 12:50:22 [D]             → MsgNewDetailedInfo                     2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgDetailedInfo                        2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgDetailedInfo                        2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgNewDetailedInfo                     2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgDetailedInfo                        2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgDetailedInfo                        2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgDetailedInfo                        2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgNewDetailedInfo                     2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgNewDetailedInfo                     2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgNewDetailedInfo                     2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgNewDetailedInfo                     2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgDetailedInfo                        2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D]             → MsgsAck                                2023-10-30 09:50:22Z (svc) 
+2023-10-30 12:50:22 [D] 2>Receiving RpcResult                                2023-10-30 09:50:22Z
+2023-10-30 12:50:22 [D]              → Config                                #D6A8
+2023-10-30 12:50:22 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:50:22 [D] 2>Sending   MsgContainer                             2023-10-30 09:50:22Z (svc)
+2023-10-30 12:50:22 [D]             → Users_GetUsers                         #FDB5
+2023-10-30 12:50:22 [D]             → MsgsAck                               
+2023-10-30 12:50:22 [D] 2>Receiving RpcResult                                2023-10-30 09:50:22Z
+2023-10-30 12:50:22 [D]              → UserBase[]                            #FDB5
+2023-10-30 12:50:22 [D] 2>Sending   MsgContainer                             2023-10-30 09:50:22Z (svc)
+2023-10-30 12:50:22 [D]             → Messages_GetDialogs                    #F075
+2023-10-30 12:50:22 [D]             → MsgsAck                               
+2023-10-30 12:50:22 [D] 2>Receiving RpcResult                                2023-10-30 09:50:22Z
+2023-10-30 12:50:22 [D]              → Messages_Dialogs                      #F075
+2023-10-30 12:50:36 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 12:50:42 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:51:03 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:51:03 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:58:19 [I] Loaded previous session
+2023-10-30 12:58:19 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:58:19 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:58:19 [D] 2>Sending   InvokeWithLayer`1                        #4156
+2023-10-30 12:58:19 [D] 2>Receiving MsgContainer                             2023-10-30 09:58:19Z (svc)
+2023-10-30 12:58:19 [D]             → MsgNewDetailedInfo                     2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgNewDetailedInfo                     2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgNewDetailedInfo                     2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgNewDetailedInfo                     2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgNewDetailedInfo                     2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgNewDetailedInfo                     2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → MsgDetailedInfo                        2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D]             → UpdateShort                            2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D]             → Updates                                2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D]             → MsgsAck                                2023-10-30 09:58:19Z (svc) 
+2023-10-30 12:58:19 [D] 2>Receiving Updates                                  2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D] 2>Receiving Updates                                  2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D] 2>Receiving Updates                                  2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D] 2>Receiving Updates                                  2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D] 2>Receiving Updates                                  2023-10-30 09:58:19Z  
+2023-10-30 12:58:19 [D] 2>Receiving RpcResult                                2023-10-30 09:58:19Z
+2023-10-30 12:58:19 [D]              → Config                                #4156
+2023-10-30 12:58:19 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 12:58:19 [D] 2>Sending   MsgContainer                             2023-10-30 09:58:19Z (svc)
+2023-10-30 12:58:19 [D]             → Users_GetUsers                         #416A
+2023-10-30 12:58:19 [D]             → MsgsAck                               
+2023-10-30 12:58:20 [D] 2>Receiving RpcResult                                2023-10-30 09:58:19Z
+2023-10-30 12:58:20 [D]              → UserBase[]                            #416A
+2023-10-30 12:58:20 [D] 2>Sending   MsgContainer                             2023-10-30 09:58:19Z (svc)
+2023-10-30 12:58:20 [D]             → Messages_GetDialogs                    #4166
+2023-10-30 12:58:20 [D]             → MsgsAck                               
+2023-10-30 12:58:20 [D] 2>Receiving RpcResult                                2023-10-30 09:58:20Z
+2023-10-30 12:58:20 [D]              → Messages_Dialogs                      #4166
+2023-10-30 12:58:46 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 12:58:52 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:59:13 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:59:13 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:59:16 [I] Loaded previous session
+2023-10-30 12:59:16 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:59:16 [I] Connecting to 149.154.167.41:443...
+2023-10-30 12:59:37 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 12:59:37 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 12:59:40 [I] Loaded previous session
+2023-10-30 12:59:40 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 12:59:40 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:00:01 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:00:01 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:00:04 [I] Loaded previous session
+2023-10-30 13:00:04 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:00:04 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:00:25 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:00:25 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:04:05 [I] Loaded previous session
+2023-10-30 13:04:05 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:04:05 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:04:05 [D] 2>Sending   InvokeWithLayer`1                        #F3BB
+2023-10-30 13:04:05 [D] 2>Receiving MsgContainer                             2023-10-30 10:04:05Z (svc)
+2023-10-30 13:04:05 [D]             → UpdateShort                            2023-10-30 10:01:47Z  
+2023-10-30 13:04:05 [D]             → UpdateShort                            2023-10-30 10:01:47Z  
+2023-10-30 13:04:05 [D]             → UpdateShort                            2023-10-30 10:01:47Z  
+2023-10-30 13:04:05 [D]             → UpdateShort                            2023-10-30 10:01:47Z  
+2023-10-30 13:04:05 [D]             → UpdateShort                            2023-10-30 10:03:26Z  
+2023-10-30 13:04:05 [D]             → UpdateShort                            2023-10-30 10:03:57Z  
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgsAck                                2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D] 2>Receiving MsgContainer                             2023-10-30 10:04:05Z (svc)
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D]             → MsgDetailedInfo                        2023-10-30 10:04:05Z (svc) 
+2023-10-30 13:04:05 [D] 2>Receiving RpcResult                                2023-10-30 10:04:05Z
+2023-10-30 13:04:05 [D]              → Config                                #F3BB
+2023-10-30 13:04:05 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:04:05 [D] 2>Sending   MsgContainer                             2023-10-30 10:04:05Z (svc)
+2023-10-30 13:04:05 [D]             → Users_GetUsers                         #DF4C
+2023-10-30 13:04:05 [D]             → MsgsAck                               
+2023-10-30 13:04:06 [D] 2>Receiving RpcResult                                2023-10-30 10:04:05Z
+2023-10-30 13:04:06 [D]              → UserBase[]                            #DF4C
+2023-10-30 13:04:06 [D] 2>Sending   MsgContainer                             2023-10-30 10:04:05Z (svc)
+2023-10-30 13:04:06 [D]             → Messages_GetDialogs                    #C248
+2023-10-30 13:04:06 [D]             → MsgsAck                               
+2023-10-30 13:04:06 [D] 2>Receiving RpcResult                                2023-10-30 10:04:06Z
+2023-10-30 13:04:06 [D]              → Messages_Dialogs                      #C248
+2023-10-30 13:04:07 [D] 2>Receiving UpdateShort                              2023-10-30 10:04:07Z  
+2023-10-30 13:04:10 [D] 2>Receiving UpdateShort                              2023-10-30 10:04:10Z  
+2023-10-30 13:04:54 [I] Loaded previous session
+2023-10-30 13:04:54 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:04:54 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:04:54 [D] 2>Sending   InvokeWithLayer`1                        #C038
+2023-10-30 13:04:54 [D] 2>Receiving MsgContainer                             2023-10-30 10:04:54Z (svc)
+2023-10-30 13:04:54 [D]             → UpdateShort                            2023-10-30 10:04:07Z  
+2023-10-30 13:04:54 [D]             → UpdateShort                            2023-10-30 10:04:10Z  
+2023-10-30 13:04:54 [D]             → UpdateShort                            2023-10-30 10:04:17Z  
+2023-10-30 13:04:54 [D]             → Updates                                2023-10-30 10:04:17Z  
+2023-10-30 13:04:54 [D]             → UpdateShort                            2023-10-30 10:04:17Z  
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgsAck                                2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D] 2>Receiving MsgContainer                             2023-10-30 10:04:54Z (svc)
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgNewDetailedInfo                     2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D]             → MsgDetailedInfo                        2023-10-30 10:04:54Z (svc) 
+2023-10-30 13:04:54 [D] 2>Receiving RpcResult                                2023-10-30 10:04:54Z
+2023-10-30 13:04:54 [D]              → Config                                #C038
+2023-10-30 13:04:54 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:04:54 [D] 2>Sending   MsgContainer                             2023-10-30 10:04:54Z (svc)
+2023-10-30 13:04:54 [D]             → Users_GetUsers                         #6C89
+2023-10-30 13:04:54 [D]             → MsgsAck                               
+2023-10-30 13:04:54 [D] 2>Receiving RpcResult                                2023-10-30 10:04:54Z
+2023-10-30 13:04:54 [D]              → UserBase[]                            #6C89
+2023-10-30 13:04:54 [D] 2>Sending   MsgContainer                             2023-10-30 10:04:54Z (svc)
+2023-10-30 13:04:54 [D]             → Messages_GetDialogs                    #5435
+2023-10-30 13:04:54 [D]             → MsgsAck                               
+2023-10-30 13:04:54 [D] 2>Receiving RpcResult                                2023-10-30 10:04:54Z
+2023-10-30 13:04:54 [D]              → Messages_Dialogs                      #5435
+2023-10-30 13:05:15 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 13:05:21 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:05:42 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:05:42 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:06:29 [I] Loaded previous session
+2023-10-30 13:06:29 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:06:29 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:06:29 [D] 2>Sending   InvokeWithLayer`1                        #CAF4
+2023-10-30 13:06:30 [D] 2>Receiving MsgContainer                             2023-10-30 10:06:30Z (svc)
+2023-10-30 13:06:30 [D]             → UpdateShortMessage                     2023-10-30 10:06:29Z  
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgsAck                                2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D] 2>Receiving MsgContainer                             2023-10-30 10:06:30Z (svc)
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgNewDetailedInfo                     2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D]             → MsgDetailedInfo                        2023-10-30 10:06:30Z (svc) 
+2023-10-30 13:06:30 [D] 2>Receiving RpcResult                                2023-10-30 10:06:30Z
+2023-10-30 13:06:30 [D]              → Config                                #CAF4
+2023-10-30 13:06:30 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:06:30 [D] 2>Sending   MsgContainer                             2023-10-30 10:06:30Z (svc)
+2023-10-30 13:06:30 [D]             → Users_GetUsers                         #A929
+2023-10-30 13:06:30 [D]             → MsgsAck                               
+2023-10-30 13:06:30 [D] 2>Receiving RpcResult                                2023-10-30 10:06:30Z
+2023-10-30 13:06:30 [D]              → UserBase[]                            #A929
+2023-10-30 13:06:30 [D] 2>Sending   MsgContainer                             2023-10-30 10:06:30Z (svc)
+2023-10-30 13:06:30 [D]             → Messages_GetDialogs                    #F031
+2023-10-30 13:06:30 [D]             → MsgsAck                               
+2023-10-30 13:06:30 [D] 2>Receiving RpcResult                                2023-10-30 10:06:30Z
+2023-10-30 13:06:30 [D]              → Messages_Dialogs                      #F031
+2023-10-30 13:07:22 [I] Loaded previous session
+2023-10-30 13:07:22 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:07:22 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:07:22 [D] 2>Sending   InvokeWithLayer`1                        #7859
+2023-10-30 13:07:22 [D] 2>Receiving MsgContainer                             2023-10-30 10:07:22Z (svc)
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgNewDetailedInfo                     2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgDetailedInfo                        2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D]             → MsgsAck                                2023-10-30 10:07:22Z (svc) 
+2023-10-30 13:07:22 [D] 2>Receiving RpcResult                                2023-10-30 10:07:22Z
+2023-10-30 13:07:23 [D]              → Config                                #7859
+2023-10-30 13:07:23 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:07:23 [D] 2>Sending   MsgContainer                             2023-10-30 10:07:22Z (svc)
+2023-10-30 13:07:23 [D]             → Users_GetUsers                         #785D
+2023-10-30 13:07:23 [D]             → MsgsAck                               
+2023-10-30 13:07:23 [D] 2>Receiving RpcResult                                2023-10-30 10:07:23Z
+2023-10-30 13:07:23 [D]              → UserBase[]                            #785D
+2023-10-30 13:07:23 [D] 2>Sending   MsgContainer                             2023-10-30 10:07:22Z (svc)
+2023-10-30 13:07:23 [D]             → Messages_GetDialogs                    #7829
+2023-10-30 13:07:23 [D]             → MsgsAck                               
+2023-10-30 13:07:23 [D] 2>Receiving RpcResult                                2023-10-30 10:07:23Z
+2023-10-30 13:07:23 [D]              → Messages_Dialogs                      #7829
+2023-10-30 13:07:30 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 13:07:36 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:07:57 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:07:57 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:08:00 [I] Loaded previous session
+2023-10-30 13:08:00 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:08:00 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:08:21 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:08:21 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:08:24 [I] Loaded previous session
+2023-10-30 13:08:24 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:08:24 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:08:45 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:08:45 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:08:48 [I] Loaded previous session
+2023-10-30 13:08:48 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:08:48 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:09:09 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:09:09 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:09:12 [I] Loaded previous session
+2023-10-30 13:09:12 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:09:12 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:09:33 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:09:33 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:09:36 [I] Loaded previous session
+2023-10-30 13:09:36 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:09:36 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:09:57 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:09:57 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:10:00 [I] Loaded previous session
+2023-10-30 13:10:00 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:10:00 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:10:21 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:10:21 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:10:24 [I] Loaded previous session
+2023-10-30 13:10:24 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:10:24 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:10:45 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:10:45 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:10:48 [I] Loaded previous session
+2023-10-30 13:10:48 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:10:48 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:11:09 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:11:09 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:11:13 [I] Loaded previous session
+2023-10-30 13:11:13 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:11:13 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:11:13 [D] 2>Sending   InvokeWithLayer`1                        #794F
+2023-10-30 13:11:13 [D] 2>Receiving MsgContainer                             2023-10-30 10:11:13Z (svc)
+2023-10-30 13:11:13 [D]             → UpdateShortMessage                     2023-10-30 10:10:59Z  
+2023-10-30 13:11:13 [D]             → UpdateShort                            2023-10-30 10:10:59Z  
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgsAck                                2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D] 2>Receiving MsgContainer                             2023-10-30 10:11:13Z (svc)
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgDetailedInfo                        2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D]             → MsgNewDetailedInfo                     2023-10-30 10:11:13Z (svc) 
+2023-10-30 13:11:13 [D] 2>Receiving RpcResult                                2023-10-30 10:11:13Z
+2023-10-30 13:11:13 [D]              → Config                                #794F
+2023-10-30 13:11:13 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:11:13 [D] 2>Sending   MsgContainer                             2023-10-30 10:11:13Z (svc)
+2023-10-30 13:11:13 [D]             → Users_GetUsers                         #4E5C
+2023-10-30 13:11:13 [D]             → MsgsAck                               
+2023-10-30 13:11:13 [D] 2>Receiving RpcResult                                2023-10-30 10:11:13Z
+2023-10-30 13:11:13 [D]              → UserBase[]                            #4E5C
+2023-10-30 13:11:13 [D] 2>Sending   MsgContainer                             2023-10-30 10:11:13Z (svc)
+2023-10-30 13:11:13 [D]             → Messages_GetDialogs                    #05CC
+2023-10-30 13:11:13 [D]             → MsgsAck                               
+2023-10-30 13:11:13 [D] 2>Receiving RpcResult                                2023-10-30 10:11:13Z
+2023-10-30 13:11:13 [D]              → Messages_Dialogs                      #05CC
+2023-10-30 13:11:59 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 13:12:06 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:12:27 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:12:27 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:12:30 [I] Loaded previous session
+2023-10-30 13:12:30 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:12:30 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:14:19 [I] Loaded previous session
+2023-10-30 13:14:19 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:14:19 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:14:19 [D] 2>Sending   InvokeWithLayer`1                        #E302
+2023-10-30 13:14:19 [D] 2>Receiving MsgContainer                             2023-10-30 10:14:19Z (svc)
+2023-10-30 13:14:19 [D]             → UpdateShort                            2023-10-30 10:13:57Z  
+2023-10-30 13:14:19 [D]             → Updates                                2023-10-30 10:13:57Z  
+2023-10-30 13:14:19 [D]             → Updates                                2023-10-30 10:13:57Z  
+2023-10-30 13:14:19 [D]             → UpdateShort                            2023-10-30 10:13:57Z  
+2023-10-30 13:14:19 [D]             → UpdateShort                            2023-10-30 10:14:16Z  
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgsAck                                2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D] 2>Receiving MsgContainer                             2023-10-30 10:14:19Z (svc)
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgDetailedInfo                        2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D] 2>Receiving MsgContainer                             2023-10-30 10:14:19Z (svc)
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:19Z (svc) 
+2023-10-30 13:14:19 [D] 2>Receiving RpcResult                                2023-10-30 10:14:19Z
+2023-10-30 13:14:19 [D]              → Config                                #E302
+2023-10-30 13:14:19 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:14:19 [D] 2>Sending   MsgContainer                             2023-10-30 10:14:19Z (svc)
+2023-10-30 13:14:19 [D]             → Users_GetUsers                         #E306
+2023-10-30 13:14:19 [D]             → MsgsAck                               
+2023-10-30 13:14:19 [D] 2>Receiving RpcResult                                2023-10-30 10:14:19Z
+2023-10-30 13:14:19 [D]              → UserBase[]                            #E306
+2023-10-30 13:14:19 [D] 2>Sending   MsgContainer                             2023-10-30 10:14:19Z (svc)
+2023-10-30 13:14:19 [D]             → Messages_GetDialogs                    #E312
+2023-10-30 13:14:19 [D]             → MsgsAck                               
+2023-10-30 13:14:20 [D] 2>Receiving RpcResult                                2023-10-30 10:14:20Z
+2023-10-30 13:14:20 [D]              → Messages_Dialogs                      #E312
+2023-10-30 13:14:26 [I] Loaded previous session
+2023-10-30 13:14:26 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:14:26 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:14:26 [D] 2>Sending   InvokeWithLayer`1                        #5990
+2023-10-30 13:14:26 [D] 2>Receiving MsgContainer                             2023-10-30 10:14:26Z (svc)
+2023-10-30 13:14:26 [D]             → UpdateShort                            2023-10-30 10:14:23Z  
+2023-10-30 13:14:26 [D]             → UpdateShort                            2023-10-30 10:14:24Z  
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgsAck                                2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D] 2>Receiving MsgContainer                             2023-10-30 10:14:26Z (svc)
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgDetailedInfo                        2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D]             → MsgNewDetailedInfo                     2023-10-30 10:14:26Z (svc) 
+2023-10-30 13:14:26 [D] 2>Receiving RpcResult                                2023-10-30 10:14:26Z
+2023-10-30 13:14:26 [D]              → Config                                #5990
+2023-10-30 13:14:26 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:14:26 [D] 2>Sending   MsgContainer                             2023-10-30 10:14:26Z (svc)
+2023-10-30 13:14:26 [D]             → Users_GetUsers                         #D33D
+2023-10-30 13:14:26 [D]             → MsgsAck                               
+2023-10-30 13:14:26 [D] 2>Receiving RpcResult                                2023-10-30 10:14:26Z
+2023-10-30 13:14:26 [D]              → UserBase[]                            #D33D
+2023-10-30 13:14:26 [D] 2>Sending   MsgContainer                             2023-10-30 10:14:26Z (svc)
+2023-10-30 13:14:26 [D]             → Messages_GetDialogs                    #5EF5
+2023-10-30 13:14:26 [D]             → MsgsAck                               
+2023-10-30 13:14:26 [D] 2>Receiving RpcResult                                2023-10-30 10:14:26Z
+2023-10-30 13:14:26 [D]              → Messages_Dialogs                      #5EF5
+2023-10-30 13:14:32 [!] 2>An exception occured in the reactor: System.IO.IOException: Не удается прочитать данные из транспортного соединения: Сделана попытка выполнить операцию на сокете при отключенной сети. ---> System.Net.Sockets.SocketException: Сделана попытка выполнить операцию на сокете при отключенной сети
+   в System.Net.Sockets.Socket.EndReceive(IAsyncResult asyncResult)
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Net.Sockets.NetworkStream.EndRead(IAsyncResult asyncResult)
+   в System.IO.Stream.<>c.<BeginEndReadAsync>b__43_1(Stream stream, IAsyncResult asyncResult)
+   в System.Threading.Tasks.TaskFactory`1.FromAsyncTrimPromise`1.Complete(TInstance thisRef, Func`3 endMethod, IAsyncResult asyncResult, Boolean requiresSynchronization)
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Helpers.<FullReadAsync>d__9.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в WTelegram.Client.<Reactor>d__90.MoveNext()
+2023-10-30 13:14:38 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:14:59 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:14:59 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:15:02 [I] Loaded previous session
+2023-10-30 13:15:02 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:15:02 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:15:23 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:15:23 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:15:27 [I] Loaded previous session
+2023-10-30 13:15:27 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:15:27 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:15:48 [E] SocketException TimedOut (10060): Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера 149.154.167.41:443
+2023-10-30 13:15:48 [I] Connecting to [2001:67c:4e8:f002::a]:443...
+2023-10-30 13:17:28 [I] Loaded previous session
+2023-10-30 13:17:28 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-10-30 13:17:28 [I] Connecting to 149.154.167.41:443...
+2023-10-30 13:17:28 [D] 2>Sending   InvokeWithLayer`1                        #AA37
+2023-10-30 13:17:28 [D] 2>Receiving MsgContainer                             2023-10-30 10:17:28Z (svc)
+2023-10-30 13:17:28 [D]             → UpdateShortMessage                     2023-10-30 10:15:47Z  
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgsAck                                2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D] 2>Receiving MsgContainer                             2023-10-30 10:17:28Z (svc)
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgDetailedInfo                        2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D]             → MsgNewDetailedInfo                     2023-10-30 10:17:28Z (svc) 
+2023-10-30 13:17:28 [D] 2>Receiving RpcResult                                2023-10-30 10:17:28Z
+2023-10-30 13:17:28 [D]              → Config                                #AA37
+2023-10-30 13:17:28 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-10-30 13:17:28 [D] 2>Sending   MsgContainer                             2023-10-30 10:17:28Z (svc)
+2023-10-30 13:17:28 [D]             → Users_GetUsers                         #AA33
+2023-10-30 13:17:28 [D]             → MsgsAck                               
+2023-10-30 13:17:28 [D] 2>Receiving RpcResult                                2023-10-30 10:17:28Z
+2023-10-30 13:17:28 [D]              → UserBase[]                            #AA33
+2023-10-30 13:17:29 [D] 2>Sending   MsgContainer                             2023-10-30 10:17:28Z (svc)
+2023-10-30 13:17:29 [D]             → Messages_GetDialogs                    #3B6F
+2023-10-30 13:17:29 [D]             → MsgsAck                               
+2023-10-30 13:17:29 [D] 2>Receiving RpcResult                                2023-10-30 10:17:29Z
+2023-10-30 13:17:29 [D]              → Messages_Dialogs                      #3B6F
+2023-11-02 13:38:41 [I] Loaded previous session
+2023-11-02 13:38:41 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-11-02 13:38:41 [I] Connecting to 149.154.167.41:443...
+2023-11-02 13:38:41 [D] 2>Sending   InvokeWithLayer`1                        #99F3
+2023-11-02 13:38:41 [W] 2>Server salt has changed: 4E33C714A3216947 -> E3A01D0F72CB7203
+2023-11-02 13:38:41 [D] 2>Receiving BadServerSalt                            2023-11-02 10:38:41Z (svc) 
+2023-11-02 13:38:41 [I] BadMsgNotification 48 for msg #99F3
+2023-11-02 13:38:41 [D] 2>Sending   InvokeWithLayer`1                        #747F
+2023-11-02 13:38:42 [D] 2>Receiving MsgContainer                             2023-11-02 10:38:41Z (svc)
+2023-11-02 13:38:42 [D]             → NewSessionCreated                      2023-11-02 10:38:41Z  
+2023-11-02 13:38:42 [D]             → MsgsAck                                2023-11-02 10:38:41Z (svc) 
+2023-11-02 13:38:42 [D] 2>Receiving RpcResult                                2023-11-02 10:38:41Z
+2023-11-02 13:38:42 [D]              → Config                                #747F
+2023-11-02 13:38:42 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-11-02 13:38:42 [D] 2>Sending   MsgContainer                             2023-11-02 10:38:41Z (svc)
+2023-11-02 13:38:42 [D]             → Users_GetUsers                         #B87F
+2023-11-02 13:38:42 [D]             → MsgsAck                               
+2023-11-02 13:38:42 [D] 2>Receiving RpcResult                                2023-11-02 10:38:41Z
+2023-11-02 13:38:42 [D]              → UserBase[]                            #B87F
+2023-11-02 13:38:42 [D] 2>Sending   MsgContainer                             2023-11-02 10:38:41Z (svc)
+2023-11-02 13:38:42 [D]             → Messages_GetDialogs                    #EAEF
+2023-11-02 13:38:42 [D]             → MsgsAck                               
+2023-11-02 13:38:42 [D] 2>Receiving RpcResult                                2023-11-02 10:38:42Z
+2023-11-02 13:38:42 [D]              → Messages_Dialogs                      #EAEF
+2023-11-02 13:38:46 [D] 2>Sending   MsgContainer                             2023-11-02 10:38:45Z (svc)
+2023-11-02 13:38:46 [D]             → GetFutureSalts                         #8F97
+2023-11-02 13:38:46 [D]             → MsgsAck                               
+2023-11-02 13:38:46 [D] 2>Receiving FutureSalts                              2023-11-02 10:38:46Z (svc) 
+2023-11-02 13:38:46 [D] 2>Receiving Updates                                  2023-11-02 10:38:46Z  
+2023-11-02 13:58:11 [I] Loaded previous session
+2023-11-02 13:58:11 [D] WTelegramClient 3.5.6 running under .NET Framework 4.8.4180.0
+2023-11-02 13:58:11 [I] Connecting to 149.154.167.41:443...
+2023-11-02 13:58:11 [D] 2>Sending   InvokeWithLayer`1                        #CB7C
+2023-11-02 13:58:11 [D] 2>Receiving MsgContainer                             2023-11-02 10:58:11Z (svc)
+2023-11-02 13:58:11 [D]             → NewSessionCreated                      2023-11-02 10:58:11Z  
+2023-11-02 13:58:11 [D]             → MsgsAck                                2023-11-02 10:58:11Z (svc) 
+2023-11-02 13:58:11 [D] 2>Receiving RpcResult                                2023-11-02 10:58:11Z
+2023-11-02 13:58:11 [D]              → Config                                #CB7C
+2023-11-02 13:58:11 [I] Connected to DC 2... default_p2p_contacts, revoke_pm_inbox
+2023-11-02 13:58:11 [D] 2>Sending   MsgContainer                             2023-11-02 10:58:11Z (svc)
+2023-11-02 13:58:11 [D]             → Users_GetUsers                         #0C19
+2023-11-02 13:58:11 [D]             → MsgsAck                               
+2023-11-02 13:58:11 [D] 2>Receiving RpcResult                                2023-11-02 10:58:11Z
+2023-11-02 13:58:11 [D]              → UserBase[]                            #0C19
+2023-11-02 13:58:11 [D] 2>Sending   MsgContainer                             2023-11-02 10:58:11Z (svc)
+2023-11-02 13:58:11 [D]             → Messages_GetDialogs                    #E499
+2023-11-02 13:58:11 [D]             → MsgsAck                               
+2023-11-02 13:58:12 [D] 2>Receiving RpcResult                                2023-11-02 10:58:12Z
+2023-11-02 13:58:12 [D]              → Messages_Dialogs                      #E499

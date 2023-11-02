@@ -8,7 +8,7 @@
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
         WindowStyle="None"
-        Title="TClient" Height="423" Width="738"
+        Title="TClient" Height="450" Width="838"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="CenterButtons" TargetType="Button">
@@ -104,8 +104,8 @@
 
     <Grid x:Name="Parent">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="125*"/>
-            <ColumnDefinition Width="608*"/>
+            <ColumnDefinition Width="69*"/>
+            <ColumnDefinition Width="350*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -144,7 +144,7 @@
             </Grid.RowDefinitions>
 
             <Button Content="Настройки" Width="100" Height="25"
-                    IsEnabled="{Binding IsSettingsEnable}"
+                    IsEnabled="{Binding IsSettingsButtonEnable}"
                     Command="{Binding SettingsCommand}"
                     Style="{StaticResource LeftBarButtons}"/>
         </Grid>
@@ -153,80 +153,105 @@
               Grid.Column="1" Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="269*"/>
-                <ColumnDefinition Width="116*"/>
-                <ColumnDefinition Width="227*"/>
+                <ColumnDefinition Width="240*"/>
+                <ColumnDefinition Width="240*"/>
+                <ColumnDefinition Width="240*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="37*"/>
-                <RowDefinition Height="37*"/>
-                <RowDefinition Height="37*"/>
-                <RowDefinition Height="45*"/>
-                <RowDefinition Height="161*"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="66*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="261*"/>
+                <RowDefinition Height="26*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Подключиться" Grid.Column="1" Grid.Row="0"
-                    Command="{Binding StartCommand}"
-                    IsEnabled="{Binding IsConnectEnable}"
-                    Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
+            <!--ПОИСК ИНФОРМАЦИИ-->
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" Height="60" Margin="72,2,71.667,4" Width="558">
 
-            <Button Content="Отключиться" Grid.Row="1" Grid.Column="1"
-                    Command="{Binding StopCommand}"
-                    IsEnabled="{Binding IsDisconnectEnable}"
-                    Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
+                <TextBlock Text="Ищем текст:" Grid.Row="0"
+                       Style="{StaticResource CenterTextBlock}"
+                       Height="16" Width="74"/>
 
-            <TextBlock Text="Ищем текст" Grid.Row="0"
-                       Style="{StaticResource CenterTextBlock}" Margin="102,14,103,14" Height="16" Width="64"/>
+                <StackPanel Grid.Row="0" Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Margin="10,20,0,0">
 
+                    <TextBox Text="{Binding RegexPattern, Mode=OneWayToSource}"
+                         PreviewTextInput="TextBox_PreviewTextInput"
+                         VerticalAlignment="Center" MaxLength="25"
+                         HorizontalAlignment="Center" Width="200"
+                         Height="20"/>
 
-            <StackPanel Grid.Row="1" Grid.Column="0">
-                <TextBox Grid.Row="1" Text="{Binding RegexPattern, Mode=OneWayToSource}"
-                     PreviewTextInput="TextBox_PreviewTextInput"
-                     VerticalAlignment="Center" MaxLength="25"
-                     HorizontalAlignment="Center" Width="200"
-                     Height="20"/>
+                    <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
+                          Height="15" IsChecked="{Binding IsDoubleStatementChecked, Mode=OneWayToSource}"
+                          HorizontalAlignment="Center" Margin="0,5,0,0"
+                          ToolTipService.ShowDuration="10000"
+                          ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
+                </StackPanel>
 
-                <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
-                      Height="15" IsChecked="{Binding IsDoubleStatementChecked, Mode=OneWayToSource}"
-                      HorizontalAlignment="Center" Margin="0,5,0,0"
-                      ToolTipService.ShowDuration="10000"
-                      ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
+                <TextBlock Text="в канале" Margin="10,0,0,0" 
+                       Style="{StaticResource CenterTextBlock}" 
+                       Height="16" Width="50"/>
+
+                <ComboBox x:Name="comboBox" Margin="15,0,0,0"
+                          DisplayMemberPath="Value.Title"
+                          ItemsSource="{Binding ChatsList}"
+                          SelectedItem="{Binding SelectedChannelData}"
+                          Width="200" Height="20"/>
             </StackPanel>
 
-            <CheckBox x:Name="IsAutoreconnect" Content="Переподключаться атоматически" 
-                      Grid.Row="0" Grid.Column="1"
+            <!--КНОПКИ-->
+            <StackPanel Grid.Row="1" Grid.Column="0"
+                        Margin="10,15,233.667,0" Grid.ColumnSpan="2">
+                <Button Content="Подключиться"
+                    Command="{Binding StartCommand}"
+                    IsEnabled="{Binding IsConnectButtonEnable}"
+                    Style="{StaticResource CenterButtons}"/>
+
+                <CheckBox x:Name="IsAutoreconnect" Content="Автопереподключение"
                       IsChecked="{Binding IsAutoreconnect, Mode=OneWayToSource}"
+                      IsEnabled="{Binding IsAutoreconnectCheckBoxEnable}"
                       HorizontalAlignment="Center" Foreground="White"
-                      ToolTipService.ShowDuration="5000"
-                      ToolTipService.ToolTip="Автоматически пытается переподключиться к серверам Telegram в случае проблем с Интернетом." Margin="11,14" Width="94"/>
+                      ToolTipService.ShowDuration="5000" Width="160"
+                      Margin="0,5,0,0"
+                      ToolTipService.ToolTip="Автоматически пытается переподключиться к серверам Telegram в случае проблем с Интернетом."/>
+            </StackPanel>
 
-            <ComboBox x:Name="comboBox" Grid.Row="3"
-                      Grid.Column="0" DisplayMemberPath="Value.Title"
-                      ItemsSource="{Binding ChatsList}"
-                      SelectedItem="{Binding SelectedChannelData}" Margin="34,14,35,14"/>
-
-            <TextBlock Text="в канале" Grid.Row="2" Grid.Column="0"
-                       Style="{StaticResource CenterTextBlock}" Margin="112,14,103,14" Height="16" Width="54"/>
-
-            <TextBlock Grid.Row="3" Grid.Column="1"
-                       Style="{StaticResource CenterTextBlock}" Grid.ColumnSpan="2" Margin="25,11,24,10" Height="32" Width="294"> После выбора канала, поиск указанного текста будет производиться
-                автоматически.
-            </TextBlock>
-
-            <Button Content="Проверить историю сообщений" Grid.Row="2" Grid.Column="1"
-                    Command="{Binding CheckMsgHistoryCommand}"
-                    IsEnabled="{Binding IsCheckMsgHistoryEnable}"
+            <Button Content="Отключиться" Grid.Row="1" Grid.Column="1"
+                    Command="{Binding StopCommand}" Margin="0.333,3,233.667,17"
+                    IsEnabled="{Binding IsDisconnectButtonEnable}"
                     Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
 
-            <TextBox x:Name="loger" Grid.Row="4"
-                     Grid.ColumnSpan="3" IsReadOnly="True"
-                     VerticalScrollBarVisibility="Visible"
-                     Text="{Binding Log, Mode=OneWay}"/>
+            <Button Content="Проверить историю сообщений" Grid.Column="1"
+                    Command="{Binding CheckMsgHistoryCommand}"
+                    IsEnabled="{Binding IsCheckMsgHistoryButtonEnable}"
+                    Style="{StaticResource CenterButtons}" Margin="233.333,56,0.667,5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
-            <StatusBar Grid.Row="5" Grid.ColumnSpan="3"
-                       Background="Transparent">
+            <!--ДОП ИНФА-->
+            <!--<TextBlock Grid.Row="2" Grid.Column="0"
+                       Style="{StaticResource CenterTextBlock}" Grid.ColumnSpan="3"
+                       Height="64" Width="681" Margin="10,4,10.667,9">
+                       Для начала работы неоходимо:
+                       1. Подключиться к Telegram заполнив предварительно данные в окне "Настройки"
+                       2. Ввести желаемый текст/слово/часть слова для поиска.
+                       3. Указать канал из выпадающего списка в котором будет производиться мониторинг указанного текста в НОВЫХ публикуемых сообщениях выбранного канала.
+            </TextBlock>-->
+
+            <!--ЛОГ-->
+            <GroupBox Grid.Row="3" Grid.ColumnSpan="3"
+                      Header="Лог" Foreground="White" Margin="5,0,4.667,0">
+                <TextBox x:Name="loger" IsReadOnly="True"
+                         VerticalScrollBarVisibility="Visible"
+                         Text="{Binding Log, Mode=OneWay}"/>
+            </GroupBox>
+
+            <!--СТАТУС БАР-->
+            <StatusBar Grid.Row="4" Grid.ColumnSpan="3"
+                       Background="Transparent" Margin="0,0,-0.333,0">
                 <StatusBarItem>
                     <TextBlock Text="Статус:" Foreground="White"/>
                 </StatusBarItem>

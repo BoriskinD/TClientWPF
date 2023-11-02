@@ -34,7 +34,7 @@ namespace TClientWPF.ViewModel
         private string onlineImagePath, offlineImagePath;
         private string iconPath;
         private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable, isDoubleStatement;
-        private bool isAutoreconnect;
+        private bool isAutoreconnect, isAutoreconnectEnable;
         private bool checkingHistoryInProgress;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,7 +47,7 @@ namespace TClientWPF.ViewModel
                 selectedChannelData = value;
                 telegramClientWrapper.ChannelID = selectedChannelData.Key;
                 if (!checkingHistoryInProgress)
-                    IsCheckMsgHistoryEnable = true;
+                    IsCheckMsgHistoryButtonEnable = true;
             }
         }
 
@@ -113,7 +113,7 @@ namespace TClientWPF.ViewModel
             set => stopCommand = value;
         }
 
-        public bool IsCheckMsgHistoryEnable
+        public bool IsCheckMsgHistoryButtonEnable
         {
             get => isCheckMsgHistoryEnable;
             set
@@ -123,7 +123,7 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public bool IsSettingsEnable
+        public bool IsSettingsButtonEnable
         {
             get => isSettingsEnable;
             set
@@ -133,7 +133,7 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public bool IsConnectEnable
+        public bool IsConnectButtonEnable
         {
             get => isConnectEnable;
             set
@@ -143,7 +143,7 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public bool IsDisconnectEnable
+        public bool IsDisconnectButtonEnable
         {
             get => isDisconnectEnable;
             set
@@ -168,6 +168,16 @@ namespace TClientWPF.ViewModel
         {
             get => isDoubleStatement;
             set => isDoubleStatement = value;
+        }
+
+        public bool IsAutoreconnectCheckBoxEnable
+        {
+            get => isAutoreconnectEnable;
+            set
+            {
+                isAutoreconnectEnable = value;
+                OnPropertyChanged();
+            }
         }
 
         public string RegexPattern
@@ -197,9 +207,7 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public string User => telegramClientWrapper?.User.first_name;
-
-        //public string Log => telegramClientWrapper?.Log;
+        public string User => telegramClientWrapper.User?.first_name;
 
         public string Log => logger.Log;
 
@@ -212,23 +220,28 @@ namespace TClientWPF.ViewModel
             logger = Logger.GetInstance();
             logger.PropertyChanged += (sender, e) => OnPropertyChanged("Log");
             patternMatching = new PatternMatching();
+            telegramClientWrapper = new TClient();
+            telegramClientWrapper.PropertyChanged += OnTClientChanged;
+            telegramClientWrapper.ConnectionDropped += OnConnectionDropped;
+            telegramClientWrapper.ConnectionRestored += (sender, e) => { IsDisconnectButtonEnable = true; };
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
-            StartCommand = new RelayCommand(StartWorking);
-            StopCommand = new RelayCommand(StopWorking);
+            StartCommand = new RelayCommand(Connect);
+            StopCommand = new RelayCommand(Disconnect);
             HideWindowCommand = new RelayCommand(HideWindow);
             CloseWindowCommand = new RelayCommand(CloseWindow);
             ShowWindowCommand = new RelayCommand(ShowWindow);
-            CheckMsgHistoryCommand = new RelayCommand(CheckMessageHistory);
+            CheckMsgHistoryCommand = new RelayCommand(CheckHistory);
 
             onlineImagePath = "pack://application:,,,/Images/Online.png";
             offlineImagePath = "pack://application:,,,/Images/Offline.png";
-            IsSettingsEnable = true;
-            IsConnectEnable = false;
-            IsDisconnectEnable = false;
-            IsCheckMsgHistoryEnable = false;
+            IsSettingsButtonEnable = true;
+            IsAutoreconnectCheckBoxEnable = true;
             ShowInTaskbar = true;
+            IsConnectButtonEnable = false;
+            IsDisconnectButtonEnable = false;
+            IsCheckMsgHistoryButtonEnable = false;
         }
 
         private void CloseProgramm()
@@ -271,14 +284,14 @@ namespace TClientWPF.ViewModel
                 settings = new Settings();
 
             window.ShowSettingsWindow(settings, newSettings => { settings = newSettings; });
-            logger.AddText($"WARNING: Настройки успешно загружены.");
-            IsConnectEnable = true;
+            IsConnectButtonEnable = true;
+            logger.AddText($"WARNING: Настройки загружены.");
         }
 
-        private async void CheckMessageHistory()
+        private async void CheckHistory()
         {
             checkingHistoryInProgress = true;
-            IsCheckMsgHistoryEnable = false;
+            IsCheckMsgHistoryButtonEnable = false;
             string channelName = SelectedChannelData.Value.Title;
 
             logger.AddText($"WARNING: Начинаем проверку истории сообщений в канале {channelName}...");
@@ -296,7 +309,7 @@ namespace TClientWPF.ViewModel
             {
                 checkingHistoryInProgress = false;
                 if (telegramClientWrapper.IsOnline)
-                    IsCheckMsgHistoryEnable = true;
+                    IsCheckMsgHistoryButtonEnable = true;
             }
 
             logger.AddText($"INFO: История сообщений успешно проверена. Найдено {telegramClientWrapper.CountOfHistoryFWDMessages} сообщений.");
@@ -306,56 +319,60 @@ namespace TClientWPF.ViewModel
             telegramClientWrapper.CountOfHistoryFWDMessages = 0;
         }
 
-        private async void StartWorking()
+        private async void Connect()
         {
-            telegramClientWrapper = new TClient(settings, patternMatching);
-            telegramClientWrapper.PropertyChanged += OnTClientChanged;
-            telegramClientWrapper.ConnectionDropped += OnConnectionDropped;
-            telegramClientWrapper.ConnectionRestored += (sender, e) => { IsDisconnectEnable = true; };
-            telegramClientWrapper.Initialize();
-            IsConnectEnable = false;
+            telegramClientWrapper.Settings = settings;
+            telegramClientWrapper.PatternMatching = patternMatching;
+            IsConnectButtonEnable = false;
 
             logger.AddText($"WARNING: Пытаемся подключиться к серверам Telegram...");
             try
             {
+                telegramClientWrapper.Initialize();
                 await telegramClientWrapper.Connect();
                 await telegramClientWrapper.GetUserChats();
             }
             catch (Exception ex)
             {
-                logger.AddText($"ERROR: Во время подключения возникла ошибка - {ex.Message}.");
+                IsConnectButtonEnable = true;
+                logger.AddText($"ERROR: Ошибка подключения - {ex.Message}.");
                 dialogService.ShowMessage(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 telegramClientWrapper.Dispose();
-                IsConnectEnable = true;
                 return;
             }
-            logger.AddText($"INFO: Подключение выполнено успешно.");
+            logger.AddText($"INFO: Подключено!");
             logger.AddText($"INFO: Мониторим сообщения...");
+
             checkingHistoryInProgress = false;
-            IsSettingsEnable = false;
-            IsDisconnectEnable = true;
+            IsSettingsButtonEnable = false;
+            IsDisconnectButtonEnable = true;
+            IsAutoreconnectCheckBoxEnable = true;
         }
 
         private void OnConnectionDropped(object sender, EventArgs e)
         {
             logger.AddText($"WARNING: Проблемы с интернет соединением. ВЫ были отключены от Telegram.");
-            if (!IsAutoreconnect) IsConnectEnable = true;
-            IsSettingsEnable = true;
-            IsDisconnectEnable = false;
-            IsCheckMsgHistoryEnable = false;
             ChatsList = null;
+            if (!IsAutoreconnect)
+            {
+                IsAutoreconnectCheckBoxEnable = false;
+                IsConnectButtonEnable = true;
+                IsSettingsButtonEnable = true;
+                IsDisconnectButtonEnable = false;
+                IsCheckMsgHistoryButtonEnable = false;
+            }
         }
 
-        private void StopWorking()
+        private void Disconnect()
         {
             logger.AddText($"INFO: Отключаемся от сервера...");
             telegramClientWrapper.Dispose();
-            IsDisconnectEnable = false;
-            IsConnectEnable = true;
-            IsSettingsEnable = true;
-            IsCheckMsgHistoryEnable = false;
+            IsDisconnectButtonEnable = false;
+            IsCheckMsgHistoryButtonEnable = false;
+            IsConnectButtonEnable = true;
+            IsSettingsButtonEnable = true;
             ChatsList = null;
-            logger.AddText($"INFO: Отключение прошло успешно.");
+            logger.AddText($"INFO: Отключено!");
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

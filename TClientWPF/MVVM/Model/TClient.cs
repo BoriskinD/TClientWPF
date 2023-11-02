@@ -39,6 +39,16 @@ namespace TClientWPF.Model
         public event EventHandler ConnectionDropped;
         public event EventHandler ConnectionRestored;
 
+        public Settings Settings
+        {
+            set => settings = value;
+        }
+
+        public PatternMatching PatternMatching
+        {
+            set => patternMatching = value;
+        }
+
         public long ChannelID
         {
             get => channelID;
@@ -107,10 +117,8 @@ namespace TClientWPF.Model
             }
         }
 
-        public TClient(Settings settings, PatternMatching patternMatching)
+        public TClient()
         {
-            this.patternMatching = patternMatching;
-            this.settings = settings;
             logger = Logger.GetInstance();
 
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
@@ -190,6 +198,7 @@ namespace TClientWPF.Model
         {
             if (arg is ReactorError)
             {
+                IsOnline = !client.Disconnected;
                 Dispose();
                 ConnectionDropped?.Invoke(this, EventArgs.Empty);
                 if (Autoreconnect) reconnectionTimer.Start();
@@ -201,7 +210,7 @@ namespace TClientWPF.Model
         {
             reconnectionTimer.Stop();
             Initialize();
-            logger.AddText($"WARNING: Пытаемся переподключиться к Telegram...");
+            logger.AddText($"WARNING: Пытаемся переподключиться...");
             try
             {
                 await Connect();
@@ -272,7 +281,6 @@ namespace TClientWPF.Model
             wTelegramLogs = null;
             sessionFileStream?.Close();
             client?.Dispose();
-            IsOnline = !client.Disconnected;
             users?.Clear();
             chats?.Clear();
             favoritesMsgs?.Clear();
