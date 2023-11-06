@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
+﻿using System.Windows;
 using System.Windows.Input;
 using TClientWPF.Model;
-using TClientWPF.Services;
 using TClientWPF.ViewModels;
 
 namespace TClientWPF.Views

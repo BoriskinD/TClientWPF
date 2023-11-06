@@ -223,7 +223,6 @@ namespace TClientWPF.ViewModel
             telegramClientWrapper = new TClient();
             telegramClientWrapper.PropertyChanged += OnTClientChanged;
             telegramClientWrapper.ConnectionDropped += OnConnectionDropped;
-            telegramClientWrapper.ConnectionRestored += (sender, e) => { IsDisconnectButtonEnable = true; };
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
@@ -340,7 +339,7 @@ namespace TClientWPF.ViewModel
                 telegramClientWrapper.Dispose();
                 return;
             }
-            logger.AddText($"INFO: Подключено!");
+            logger.AddText($"INFO: Подключено! Выполнен вход пользователя {telegramClientWrapper.User.first_name}.");
             logger.AddText($"INFO: Мониторим сообщения...");
 
             checkingHistoryInProgress = false;

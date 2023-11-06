@@ -37,7 +37,6 @@ namespace TClientWPF.Model
         private int checkHistoryFWDMessages;
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler ConnectionDropped;
-        public event EventHandler ConnectionRestored;
 
         public Settings Settings
         {
@@ -120,10 +119,8 @@ namespace TClientWPF.Model
         public TClient()
         {
             logger = Logger.GetInstance();
-
             sessionFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"WTelegram.session");
             Helpers.Log = (lvl, str) => wTelegramLogs?.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{"TDIWE!"[lvl]}] {str}");
-
             SetReconnectionTimer();
         }
 
@@ -216,7 +213,6 @@ namespace TClientWPF.Model
                 await Connect();
                 await GetUserChats();
                 logger.AddText($"INFO: Переподключение выполнено успешно.");
-                ConnectionRestored?.Invoke(this, EventArgs.Empty);
             }
             catch (ArgumentException aEx)
             {
@@ -234,26 +230,26 @@ namespace TClientWPF.Model
 
         private async Task ForwardMessage(MessageBase messageBase, [CallerMemberName] string memberName = "")
         {
-            if (messageBase is Message currentMsg)
+            if (messageBase is not Message currentMsg)
+                return;
+
+            if (favoritesMsgs.Contains(currentMsg.message) || string.IsNullOrEmpty(patternMatching.Expression))
+                return;
+
+            bool IsMatch = patternMatching.IsMatch(currentMsg.message);
+            if (IsMatch)
             {
-                if (favoritesMsgs.Contains(currentMsg.message) || string.IsNullOrEmpty(patternMatching.Expression))
-                    return;
+                Messages_Dialogs allDialogs = await client.Messages_GetAllDialogs();
+                ChatBase fromChat = allDialogs.chats[channelID];
+                await client.Messages_ForwardMessages(fromChat, new[] { currentMsg.ID }, new[] { Helpers.RandomLong() }, favorites);
+                favoritesMsgs.Add(currentMsg.message);
 
-                bool IsMatch = patternMatching.IsMatch(currentMsg.message);
-                if (IsMatch)
+                if (memberName.Equals("CheckOldMessages"))
                 {
-                    favoritesMsgs.Add(currentMsg.message);
-                    Messages_Dialogs allDialogs = await client.Messages_GetAllDialogs();
-                    ChatBase fromChat = allDialogs.chats[channelID];
-                    await client.Messages_ForwardMessages(fromChat, new[] { currentMsg.ID }, new[] { Helpers.RandomLong() }, favorites);
-
-                    if (memberName.Equals("CheckOldMessages"))
-                    {
-                        CountOfHistoryFWDMessages++;
-                        CountOfGeneralFWDMessages++;
-                    }
-                    else CountOfGeneralFWDMessages++;
+                    CountOfHistoryFWDMessages++;
+                    CountOfGeneralFWDMessages++;
                 }
+                else CountOfGeneralFWDMessages++;
             }
         }
 

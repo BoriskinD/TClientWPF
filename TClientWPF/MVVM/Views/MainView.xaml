@@ -8,7 +8,7 @@
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
         WindowStyle="None"
-        Title="TClient" Height="450" Width="838"
+        Title="TClient" Height="450" Width="813"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="CenterButtons" TargetType="Button">
@@ -160,7 +160,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="66*"/>
-                <RowDefinition Height="70*"/>
+                <RowDefinition Height="85*"/>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="261*"/>
                 <RowDefinition Height="26*"/>
@@ -170,11 +170,11 @@
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center" Height="60" Margin="72,2,71.667,4" Width="558">
+                        VerticalAlignment="Center" Height="60" Width="586">
 
                 <TextBlock Text="Ищем текст:" Grid.Row="0"
                        Style="{StaticResource CenterTextBlock}"
-                       Height="16" Width="74"/>
+                       Height="16" Width="76" Margin="0,22"/>
 
                 <StackPanel Grid.Row="0" Grid.Column="0"
                             VerticalAlignment="Center"
@@ -205,31 +205,40 @@
             </StackPanel>
 
             <!--КНОПКИ-->
-            <StackPanel Grid.Row="1" Grid.Column="0"
-                        Margin="10,15,233.667,0" Grid.ColumnSpan="2">
-                <Button Content="Подключиться"
-                    Command="{Binding StartCommand}"
-                    IsEnabled="{Binding IsConnectButtonEnable}"
-                    Style="{StaticResource CenterButtons}"/>
+            <StackPanel Grid.ColumnSpan="3" Grid.Row="1"
+                        Orientation="Vertical"
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                <CheckBox x:Name="IsAutoreconnect" Content="Автопереподключение"
-                      IsChecked="{Binding IsAutoreconnect, Mode=OneWayToSource}"
-                      IsEnabled="{Binding IsAutoreconnectCheckBoxEnable}"
-                      HorizontalAlignment="Center" Foreground="White"
-                      ToolTipService.ShowDuration="5000" Width="160"
-                      Margin="0,5,0,0"
-                      ToolTipService.ToolTip="Автоматически пытается переподключиться к серверам Telegram в случае проблем с Интернетом."/>
+                <Button Content="Проверить историю сообщений" Grid.Column="1"
+                        Command="{Binding CheckMsgHistoryCommand}"
+                        IsEnabled="{Binding IsCheckMsgHistoryButtonEnable}"
+                        Style="{StaticResource CenterButtons}"
+                        Margin="0,5,0,5"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Button Content="Подключиться"
+                                Command="{Binding StartCommand}"
+                                IsEnabled="{Binding IsConnectButtonEnable}"
+                                Style="{StaticResource CenterButtons}"
+                                Margin="5,5,5,5"/>
+
+                        <CheckBox x:Name="IsAutoreconnect" Content="Автопереподключение"
+                                  IsChecked="{Binding IsAutoreconnect, Mode=OneWayToSource}"
+                                  IsEnabled="{Binding IsAutoreconnectCheckBoxEnable}"
+                                  HorizontalAlignment="Center" Foreground="White"
+                                  ToolTipService.ShowDuration="5000" Width="160"
+                                  ToolTipService.ToolTip="Автоматически переподключаться к серверам Telegram в случае проблем с Интернетом."/>
+                    </StackPanel>
+                    <Button Content="Отключиться"
+                            Command="{Binding StopCommand}"
+                            IsEnabled="{Binding IsDisconnectButtonEnable}"
+                            Style="{StaticResource CenterButtons}"
+                            Margin="0,0,0,15"/>
+
+                </StackPanel>
             </StackPanel>
 
-            <Button Content="Отключиться" Grid.Row="1" Grid.Column="1"
-                    Command="{Binding StopCommand}" Margin="0.333,3,233.667,17"
-                    IsEnabled="{Binding IsDisconnectButtonEnable}"
-                    Style="{StaticResource CenterButtons}" Grid.ColumnSpan="2"/>
-
-            <Button Content="Проверить историю сообщений" Grid.Column="1"
-                    Command="{Binding CheckMsgHistoryCommand}"
-                    IsEnabled="{Binding IsCheckMsgHistoryButtonEnable}"
-                    Style="{StaticResource CenterButtons}" Margin="233.333,56,0.667,5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
             <!--ДОП ИНФА-->
             <!--<TextBlock Grid.Row="2" Grid.Column="0"
@@ -243,10 +252,12 @@
 
             <!--ЛОГ-->
             <GroupBox Grid.Row="3" Grid.ColumnSpan="3"
-                      Header="Лог" Foreground="White" Margin="5,0,4.667,0">
+                      Header="Лог" Foreground="White"
+                      Margin="5,0,5,0">
+                
                 <TextBox x:Name="loger" IsReadOnly="True"
                          VerticalScrollBarVisibility="Visible"
-                         Text="{Binding Log, Mode=OneWay}"/>
+                         Text="{Binding Log, Mode=OneWay}" TextWrapping="Wrap"/>
             </GroupBox>
 
             <!--СТАТУС БАР-->

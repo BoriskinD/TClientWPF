@@ -5,7 +5,6 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\TClientWPF.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\CommunityToolkit.Mvvm.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\IndexRange.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Microsoft.Xaml.Behaviors.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Newtonsoft.Json.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\System.Buffers.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\System.ComponentModel.Annotations.dll
@@ -20,8 +19,6 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\WTelegramClient.dll
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\CommunityToolkit.Mvvm.pdb
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\CommunityToolkit.Mvvm.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Microsoft.Bcl.AsyncInterfaces.xml
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Microsoft.Xaml.Behaviors.pdb
-F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Microsoft.Xaml.Behaviors.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\Newtonsoft.Json.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\System.Buffers.xml
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\bin\Release\System.Memory.xml
