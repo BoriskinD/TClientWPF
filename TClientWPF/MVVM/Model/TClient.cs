@@ -20,7 +20,7 @@ namespace TClientWPF.Model
         private Timer reconnectionTimer;
         private Dictionary<long, User> users;
         private Dictionary<long, ChatBase> chats;
-        private Dictionary<long, ChatBase> myChats;
+        private Dictionary<long, ChatBase> chatsList;
         private List<string> favoritesMsgs;
         private InputPeer favorites;
         private Client client;
@@ -33,10 +33,10 @@ namespace TClientWPF.Model
         private string log;
         private bool online;
         private bool autoreconnect;
-        private int countOfGeneralFWDMessages;  
+        private int countOfGeneralFWDMessages;
         private int checkHistoryFWDMessages;
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler ConnectionDropped;
+        public event EventHandler ConnectionDropped, ConnectionRestored;
 
         public Settings Settings
         {
@@ -56,10 +56,10 @@ namespace TClientWPF.Model
 
         public Dictionary<long, ChatBase> ChatsList
         {
-            get => myChats;
+            get => chatsList;
             set
             {
-                myChats = value;
+                chatsList = value;
                 OnPropertyChanged();
             }
         }
@@ -128,7 +128,7 @@ namespace TClientWPF.Model
         {
             users = new Dictionary<long, User>();
             chats = new Dictionary<long, ChatBase>();
-            myChats = new Dictionary<long, ChatBase>();
+            chatsList = new Dictionary<long, ChatBase>();
             favoritesMsgs = new List<string>();
             favorites = InputPeer.Self;
             countOfGeneralFWDMessages = 0;
@@ -203,7 +203,9 @@ namespace TClientWPF.Model
             return null;
         }
 
-        private async void OnTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void OnTimer_Elapsed(object sender, ElapsedEventArgs e) => Recconect();
+
+        private async void Recconect()
         {
             reconnectionTimer.Stop();
             Initialize();
@@ -212,13 +214,15 @@ namespace TClientWPF.Model
             {
                 await Connect();
                 await GetUserChats();
+                ConnectionRestored?.Invoke(this, EventArgs.Empty);
                 logger.AddText($"INFO: Переподключение выполнено успешно.");
             }
             catch (ArgumentException aEx)
             {
                 logger.AddText($"ERROR: Во время переподключения возникла ошибка - {aEx.Message}");
                 Dispose();
-                if (Autoreconnect) reconnectionTimer.Start();
+                if (Autoreconnect) 
+                    reconnectionTimer.Start();
             }
         }
 

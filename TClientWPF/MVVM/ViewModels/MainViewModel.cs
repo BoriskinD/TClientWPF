@@ -30,24 +30,40 @@ namespace TClientWPF.ViewModel
         private NotifyIconWrapper notifyIconWrapper;
         private WindowState windowState;
         private KeyValuePair<long, ChatBase> selectedChannelData;
-        private bool showInTaskbar;
-        private string onlineImagePath, offlineImagePath;
+        private string onlineImagePath;
+        private string offlineImagePath;
         private string iconPath;
-        private bool isSettingsEnable, isConnectEnable, isDisconnectEnable, isCheckMsgHistoryEnable, isDoubleStatement;
-        private bool isAutoreconnect, isAutoreconnectEnable;
+        private bool showInTaskbar;
+        private bool isSettingsEnable;
+        private bool isConnectEnable;
+        private bool isDisconnectEnable;
+        private bool isCheckMsgHistoryEnable;
+        private bool isDoubleStatement;
+        private bool isAutoreconnect;
+        private bool isAutoreconnectEnable;
         private bool checkingHistoryInProgress;
         public event PropertyChangedEventHandler PropertyChanged;
+        public KeyValuePair<long, ChatBase> oldSelectedChannelData;
 
-
-        public KeyValuePair<long, ChatBase> SelectedChannelData
+        public KeyValuePair<long, ChatBase> ComboBoxSelectedItem
         {
             get => selectedChannelData;
             set
             {
                 selectedChannelData = value;
                 telegramClientWrapper.ChannelID = selectedChannelData.Key;
-                if (!checkingHistoryInProgress)
+                if (!checkingHistoryInProgress && telegramClientWrapper.IsOnline)
                     IsCheckMsgHistoryButtonEnable = true;
+            }
+        }
+
+        public Dictionary<long, ChatBase> ChatsList
+        {
+            get => telegramClientWrapper?.ChatsList;
+            set
+            {
+                telegramClientWrapper.ChatsList = value;
+                OnPropertyChanged();
             }
         }
 
@@ -197,16 +213,6 @@ namespace TClientWPF.ViewModel
             }
         }
 
-        public Dictionary<long, ChatBase> ChatsList
-        {
-            get => telegramClientWrapper?.ChatsList;
-            set
-            {
-                telegramClientWrapper.ChatsList = value;
-                OnPropertyChanged();
-            }
-        }
-
         public string User => telegramClientWrapper.User?.first_name;
 
         public string Log => logger.Log;
@@ -291,7 +297,7 @@ namespace TClientWPF.ViewModel
         {
             checkingHistoryInProgress = true;
             IsCheckMsgHistoryButtonEnable = false;
-            string channelName = SelectedChannelData.Value.Title;
+            string channelName = ComboBoxSelectedItem.Value.Title;
 
             logger.AddText($"WARNING: Начинаем проверку истории сообщений в канале {channelName}...");
             try
@@ -351,8 +357,11 @@ namespace TClientWPF.ViewModel
         private void OnConnectionDropped(object sender, EventArgs e)
         {
             logger.AddText($"WARNING: Проблемы с интернет соединением. ВЫ были отключены от Telegram.");
-            ChatsList = null;
-            if (!IsAutoreconnect)
+            if (IsAutoreconnect)
+            {
+                IsCheckMsgHistoryButtonEnable = false;
+            }
+            else
             {
                 IsAutoreconnectCheckBoxEnable = false;
                 IsConnectButtonEnable = true;
@@ -375,6 +384,7 @@ namespace TClientWPF.ViewModel
             dialogService.ShowMessage("Отключено!", "Инфо", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        //Информирует View об изменениях в Model
         private void OnTClientChanged(object sender, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>

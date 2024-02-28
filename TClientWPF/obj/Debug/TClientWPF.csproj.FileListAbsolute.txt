@@ -44,3 +44,4 @@ F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.CoreCom
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.CopyComplete
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.exe
 F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.pdb
+F:\Projects\TClientWPF\TClientWPF\TClientWPF\obj\Debug\TClientWPF.csproj.AssemblyReference.cache

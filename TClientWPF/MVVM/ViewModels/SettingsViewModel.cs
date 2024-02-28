@@ -140,6 +140,6 @@ namespace TClientWPF.ViewModels
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
-                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                                       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
