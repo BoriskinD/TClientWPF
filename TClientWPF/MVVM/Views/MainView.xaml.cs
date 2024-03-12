@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using TClientWPF.ViewModel;
 
@@ -27,12 +26,6 @@ namespace TClientWPF
         {
             if (!Regex.IsMatch(e.Text, "^[а-я А-Я a-z A-Z 0-9]*$"))
                 e.Handled = true;
-        }
-
-        private void comboBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is ComboBox comboBox)
-                comboBox.IsDropDownOpen = !comboBox.IsDropDownOpen;
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿<Window x:Class="TClientWPF.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
+        x:Class="TClientWPF.MainWindow"
         mc:Ignorable="d"
         ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowState="{Binding WindowState}"
@@ -11,14 +11,14 @@
         Title="TClient" Height="450" Width="813"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Window.Resources>
-        <Style x:Key="CenterButtons" TargetType="Button">
+        <Style x:Key="ControlButtons" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FFE373"/>
             <Setter Property="FontFamily" Value="Verdana"/>
             <Setter Property="Width" Value="210"/>
             <Setter Property="Height" Value="25"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="{x:Type Button}">
                         <Border CornerRadius="18" Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -30,67 +30,89 @@
                     <Setter Property="Background" Value="#A68400"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FFCB00"/>
                     <Trigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="Width" To="215" Duration="0:0:0.4"/>
-                                <DoubleAnimation Storyboard.TargetProperty="Height" To="27" Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="218"
+                                                 Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="28"
+                                                 Duration="0:0:0.4"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.EnterActions>
                     <Trigger.ExitActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="Width" To="210" Duration="0:0:0.4"/>
-                                <DoubleAnimation Storyboard.TargetProperty="Height" To="25" Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="210"
+                                                 Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="25"
+                                                 Duration="0:0:0.4"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.ExitActions>
+                    <Setter Property="Background" Value="#FFCB00"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="LeftBarButtons" TargetType="Button">
+        <Style x:Key="LeftBarButtons" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FF8B40"/>
             <Setter Property="FontFamily" Value="Verdana"/>
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Height" Value="20"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Width="100" Height="25" CornerRadius="15"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="18" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF6400	"/>
-                </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="#BF6830"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="110"
+                                                 Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="25"
+                                                 Duration="0:0:0.4"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Width" To="90"
+                                                 Duration="0:0:0.4"/>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" To="20"
+                                                 Duration="0:0:0.4"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                    <Setter Property="Background" Value="#FF6400"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="CenterTextBlock" TargetType="TextBlock">
+        <Style x:Key="TextBlock" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="SearchingText" TargetType="TextBox">
+        <Style x:Key="InputText" TargetType="{x:Type TextBox}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border BorderBrush="White"
-                                BorderThickness="2"
-                                CornerRadius="7"
-                                SnapsToDevicePixels="True">
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border BorderBrush="White" BorderThickness="2"
+                                CornerRadius="7" SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Margin="0"
                                           Focusable="False"/>
                         </Border>
@@ -99,12 +121,12 @@
             </Setter>
         </Style>
 
-        <Style x:Key="HeaderButtons" TargetType="Button">
+        <Style x:Key="TopBarButtons" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="35"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="{x:Type Button}">
                         <Border Background="{TemplateBinding Background}"
                                 CornerRadius="1">
                             <ContentPresenter HorizontalAlignment="Center"
@@ -120,7 +142,7 @@
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="ToolTip">
+        <Style TargetType="{x:Type ToolTip}">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -156,33 +178,32 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="TelegramWatcher" Foreground="White"
+            <TextBlock x:Name="ProgramName" Text="TelegramWatcher"
+                       Foreground="White" Margin="16,4,18,4"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
-                       Height="16" Margin="16,4,18,4" Width="92"/>
+                       Height="16" Width="92"/>
 
-            <Button Content="-" Grid.Column="2"
+            <Button x:Name="MinimizeButton"
+                    Content="-" Grid.Column="2"
                     Command="{Binding HideWindowCommand}"
-                    Style="{StaticResource HeaderButtons}"/>
+                    Style="{StaticResource TopBarButtons}"/>
 
-            <Button Content="X" Grid.Column="3"
+            <Button x:Name="CloseButton"
+                    Content="X" Grid.Column="3"
                     Command="{Binding CloseWindowCommand}"
-                    Style="{StaticResource HeaderButtons}"/>
+                    Style="{StaticResource TopBarButtons}"/>
 
         </Grid>
 
-        <Grid x:Name="LeftBar" Background="#284B7E" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <Button Content="Настройки" Width="100" Height="25"
+        <StackPanel x:Name="LeftBar"
+                    Background="#284B7E" Grid.Row="1">
+            
+            <Button x:Name="SettingsButton" Content="Настройки"
                     IsEnabled="{Binding IsSettingsButtonEnable}"
-                    Command="{Binding SettingsCommand}"
+                    Command="{Binding SettingsCommand}" Margin="0,10,0,0"
                     Style="{StaticResource LeftBarButtons}"/>
-        </Grid>
+        </StackPanel>
 
-        <!--Background="#052F6D"-->
         <Grid x:Name="Center" Background="#052F6D"
               Grid.Column="1" Grid.Row="1">
 
@@ -193,88 +214,119 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="66*"/>
-                <RowDefinition Height="85*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="261*"/>
-                <RowDefinition Height="26*"/>
+                <RowDefinition Height="64*"/>
+                <RowDefinition Height="92*"/>
+                <RowDefinition Height="244*"/>
+                <RowDefinition Height="25*"/>
             </Grid.RowDefinitions>
 
-            <!--ПОИСК ИНФОРМАЦИИ-->
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
-                        Orientation="Horizontal"
+            <StackPanel x:Name="ParentSearchTextContainer"
+                        Grid.Row="0" Grid.Column="0"
+                        Orientation="Horizontal" Grid.ColumnSpan="3"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center" Height="60" Width="586">
+                        VerticalAlignment="Center" Height="60"
+                        Width="586" Margin="46,2,47,2">
 
-                <TextBlock Text="Ищем текст:" Grid.Row="0"
-                           Style="{StaticResource CenterTextBlock}"
+                <TextBlock x:Name="SearchText"
+                           Text="Ищем текст:" Grid.Row="0"
+                           Style="{StaticResource TextBlock}"
                            Height="16" Width="76" Margin="0,22"/>
 
-                <StackPanel Grid.Row="0" Grid.Column="0"
+                <StackPanel x:Name="ChildSearchTextContainer"
+                            Grid.Row="0" Grid.Column="0"
                             VerticalAlignment="Center"
                             Margin="10,20,0,0">
 
-                    <TextBox Text="{Binding RegexPattern, Mode=OneWayToSource}"
-                             Style="{StaticResource SearchingText}"
+                    <TextBox x:Name="TextToFind"
+                             Text="{Binding RegexPattern, Mode=OneWayToSource}"
+                             Style="{StaticResource InputText}"
                              PreviewTextInput="TextBox_PreviewTextInput"
                              VerticalAlignment="Center" MaxLength="25"
                              HorizontalAlignment="Center" Width="200"
                              Height="20"/>
 
-                    <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение" Foreground="White"
-                              Height="15" IsChecked="{Binding IsDoubleStatementChecked, Mode=OneWayToSource}"
+                    <CheckBox x:Name="IsTwoStatement" Content="Двойное выражение"
+                              Foreground="White" Height="15"
+                              IsChecked="{Binding IsDoubleStatementChecked, Mode=OneWayToSource}"
                               HorizontalAlignment="Center" Margin="0,5,0,0"
                               ToolTipService.ShowDuration="10000"
                               ToolTipService.ToolTip="Позволяет искать 2 фразы одновременно. ВАЖНО: Они должны быть разделены пробелом. Eсли указано больше 2-х фраз, то возьмутся только первые 2. Если фраз меньше двух и при этом стоит галочка, то ничего взято НЕ будет."/>
                 </StackPanel>
 
-                <TextBlock Text="в канале" Margin="10,0,0,0" 
-                           Style="{StaticResource CenterTextBlock}" 
+                <TextBlock x:Name="ChannelInfo"
+                           Text="в канале" Margin="10,0,0,0" 
+                           Style="{StaticResource TextBlock}" 
                            Height="16" Width="50"/>
-                
-                <ComboBox x:Name="comboBox" Margin="15,20,0,20"
+
+                <ComboBox x:Name="Channel" Margin="15,20,0,20"
                           ItemsSource="{Binding ChatsList}"
                           DisplayMemberPath="Value.Title"
                           SelectedItem="{Binding ComboBoxSelectedItem}"
-                          Width="200" Height="20"
-                          MouseLeftButtonDown="comboBox_MouseLeftButtonDown">
+                          Width="200" Height="20">
                     <ComboBox.Template>
-                        <ControlTemplate TargetType="ComboBox">
-                            <Border x:Name="border" BorderBrush="White" BorderThickness="2"
-                                    CornerRadius="7" SnapsToDevicePixels="True">
+                        <ControlTemplate TargetType="{x:Type ComboBox}">
+                            <Border x:Name="border" BorderBrush="White"
+                                    BorderThickness="2" CornerRadius="7"
+                                    SnapsToDevicePixels="True" Focusable="False">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="25"/>
                                     </Grid.ColumnDefinitions>
-                                    <ToggleButton x:Name="MyToggleButton" Background="Transparent"
-                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                  Grid.Column="1" Width="Auto" BorderThickness="0">
-                                        <ToggleButton.Template>
-                                            <ControlTemplate TargetType="ToggleButton">
-                                                <Path  x:Name="myArrow"
-                                                       Data="F1 M 0,0 L 2.667, 2.66665 L 5.3334,0 L 5.3334, -1.78168 L 2.6667,0.88501 L0, -1.78168 L0,0 Z"
-                                                       Stretch="Uniform"
-                                                       Height="20"
-                                                       Width="17"
-                                                       Fill="#FFE373">
 
-                                                    <Path.RenderTransform>
-                                                        <RotateTransform Angle="0"/>
-                                                    </Path.RenderTransform>
-                                                    
-                                                    <Path.RenderTransformOrigin>
-                                                        <Point X="0.5" Y="0.5"/>
-                                                    </Path.RenderTransformOrigin>
-                                                </Path>
-                                                
+                                    <ToggleButton x:Name="toggleButton"
+                                                  BorderThickness="0" BorderBrush="{TemplateBinding BorderBrush}"
+                                                  Background="Transparent"
+                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+
+                                        <ToggleButton.Template>
+                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center"
+                                                                      Content="{Binding SelectionBoxItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                                                      ContentTemplate="{Binding SelectionBoxItemTemplate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                                                      ContentTemplateSelector="{Binding ItemTemplateSelector, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBox}}}"
+                                                                      Grid.Column="0">
+                                                        <ContentPresenter.Resources>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                            </Style>
+                                                        </ContentPresenter.Resources>
+                                                    </ContentPresenter>
+
+                                                    <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent"
+                                                            SnapsToDevicePixels="true">
+                                                        <Border x:Name="splitBorder" BorderBrush="Transparent"
+                                                                BorderThickness="1" HorizontalAlignment="Right"
+                                                                Margin="0" SnapsToDevicePixels="true"
+                                                                Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                                                            <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z"
+                                                                  Fill="Yellow" HorizontalAlignment="Right" 
+                                                                  Margin="0,0,3,0" VerticalAlignment="Center" Width="10" 
+                                                                  Height="10" Stretch="Fill">
+                                                                <Path.RenderTransform>
+                                                                    <RotateTransform Angle="0"/>
+                                                                </Path.RenderTransform>
+
+                                                                <Path.RenderTransformOrigin>
+                                                                    <Point X="0.5" Y="0.5"/>
+                                                                </Path.RenderTransformOrigin>
+                                                            </Path>
+                                                        </Border>
+                                                    </Border>
+                                                </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsChecked" Value="True">
                                                         <Trigger.EnterActions>
                                                             <BeginStoryboard>
                                                                 <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="myArrow"
-                                                                                     Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                    <DoubleAnimation Storyboard.TargetName="arrow"
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                                                                      From="0" To="180" Duration="0:0:0.3"/>
                                                                 </Storyboard>
                                                             </BeginStoryboard>
@@ -282,8 +334,8 @@
                                                         <Trigger.ExitActions>
                                                             <BeginStoryboard>
                                                                 <Storyboard>
-                                                                    <DoubleAnimation Storyboard.TargetName="myArrow"
-                                                                                     Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                    <DoubleAnimation Storyboard.TargetName="arrow"
+                                                                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
                                                                                      From="180" To="0" Duration="0:0:0.3"/>
                                                                 </Storyboard>
                                                             </BeginStoryboard>
@@ -292,31 +344,15 @@
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </ToggleButton.Template>
-                                        
-                                        <ToggleButton.Style>
-                                            <Style TargetType="ToggleButton">
-                                                <Setter Property="OverridesDefaultStyle" Value="True"/>
-                                            </Style>
-                                        </ToggleButton.Style>
                                     </ToggleButton>
-
-                                    <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center"
-                                                      Content="{TemplateBinding SelectionBoxItem}"
-                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}">
-                                        <ContentPresenter.Resources>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="Foreground" Value="White"/>
-                                            </Style>
-                                        </ContentPresenter.Resources>
-                                    </ContentPresenter>
-
-                                    <Popup x:Name="Popup" IsOpen="{TemplateBinding IsDropDownOpen}"
-                                           Placement="Bottom" AllowsTransparency="True" Focusable="False" PopupAnimation="Scroll">
-
-                                        <Grid x:Name="DropDown" MinWidth="{TemplateBinding ActualWidth}" MaxHeight="{Binding Height, ElementName=Popup}">
-                                            <Border x:Name="DropDownBorder" Background="White" BorderThickness="1"
-                                                    BorderBrush="Black" CornerRadius="2">
+                                    <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsDropDownOpen}"
+                                           Placement="Bottom" AllowsTransparency="True"
+                                           Focusable="False" PopupAnimation="Scroll">
+                                        <Grid x:Name="DropDown" MinWidth="{TemplateBinding ActualWidth}"
+                                              MaxHeight="{Binding Height, ElementName=PART_Popup}">
+                                            <Border x:Name="DropDownBorder" Background="White"
+                                                    BorderThickness="1" BorderBrush="Black"
+                                                    CornerRadius="2">
                                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                                     <ItemsPresenter/>
                                                 </ScrollViewer>
@@ -330,23 +366,26 @@
                 </ComboBox>
             </StackPanel>
             
-            <!--КНОПКИ-->
-            <StackPanel Grid.ColumnSpan="3" Grid.Row="1"
-                        Orientation="Vertical"
-                        VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel x:Name="ControlButtonsContainer"
+                        Grid.ColumnSpan="3" Grid.Row="1"
+                        Orientation="Vertical" VerticalAlignment="Center"
+                        HorizontalAlignment="Center" Height="86"
+                        Margin="124,0,125,6" Width="440">
 
-                <Button Content="Проверить историю сообщений" Grid.Column="1"
+                <Button x:Name="CheckHistoryButton"
+                        Content="Проверить историю сообщений" Grid.Column="1"
                         Command="{Binding CheckMsgHistoryCommand}"
                         IsEnabled="{Binding IsCheckMsgHistoryButtonEnable}"
-                        Style="{StaticResource CenterButtons}"
+                        Style="{StaticResource ControlButtons}"
                         Margin="0,5,0,5"/>
 
-                <StackPanel Orientation="Horizontal">
+                <StackPanel x:Name="ConnectionButtonsContainer"  Orientation="Horizontal">
                     <StackPanel>
-                        <Button Content="Подключиться"
+                        <Button x:Name="ConnectButton"
+                                Content="Подключиться"
                                 Command="{Binding StartCommand}"
                                 IsEnabled="{Binding IsConnectButtonEnable}"
-                                Style="{StaticResource CenterButtons}"
+                                Style="{StaticResource ControlButtons}"
                                 Margin="5,5,5,5"/>
 
                         <CheckBox x:Name="IsAutoreconnect" Content="Автопереподключение"
@@ -356,28 +395,17 @@
                                   ToolTipService.ShowDuration="5000" Width="160"
                                   ToolTipService.ToolTip="Автоматически переподключаться к серверам Telegram в случае проблем с Интернетом."/>
                     </StackPanel>
-                    <Button Content="Отключиться"
+                    <Button x:Name="DisconnectButton"
+                            Content="Отключиться"
                             Command="{Binding StopCommand}"
                             IsEnabled="{Binding IsDisconnectButtonEnable}"
-                            Style="{StaticResource CenterButtons}"
+                            Style="{StaticResource ControlButtons}"
                             Margin="0,0,0,15"/>
-
                 </StackPanel>
             </StackPanel>
-
-
-            <!--ДОП ИНФА-->
-            <!--<TextBlock Grid.Row="2" Grid.Column="0"
-                       Style="{StaticResource CenterTextBlock}" Grid.ColumnSpan="3"
-                       Height="64" Width="681" Margin="10,4,10.667,9">
-                       Для начала работы неоходимо:
-                       1. Подключиться к Telegram заполнив предварительно данные в окне "Настройки"
-                       2. Ввести желаемый текст/слово/часть слова для поиска.
-                       3. Указать канал из выпадающего списка в котором будет производиться мониторинг указанного текста в НОВЫХ публикуемых сообщениях выбранного канала.
-            </TextBlock>-->
-
-            <!--ЛОГ-->
-            <GroupBox Grid.Row="3" Grid.ColumnSpan="3"
+            
+            <GroupBox x:Name="LogContainer"
+                      Grid.Row="2" Grid.ColumnSpan="3"
                       Header="Лог" Foreground="White"
                       Margin="5,0,5,0">
 
@@ -385,29 +413,35 @@
                          VerticalScrollBarVisibility="Visible"
                          Text="{Binding Log, Mode=OneWay}" TextWrapping="Wrap"/>
             </GroupBox>
-
-            <!--СТАТУС БАР-->
-            <StatusBar Grid.Row="4" Grid.ColumnSpan="3"
-                       Background="Transparent" Margin="0,0,-0.333,0">
+            
+            <StatusBar x:Name="StatusBar"
+                       Grid.Row="3" Grid.ColumnSpan="3"
+                       Background="Transparent">
                 <StatusBarItem>
-                    <TextBlock Text="Статус:" Foreground="White"/>
+                    <TextBlock x:Name="Status"
+                               Text="Статус:" Foreground="White"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <Image Width="30" Height="20" Source= "{Binding IsOnline}"/>
-                </StatusBarItem>
-                <Separator/>
-                <StatusBarItem>
-                    <TextBlock Text="Пользователь:" Foreground="White"/>
-                </StatusBarItem>
-                <StatusBarItem>
-                    <TextBlock Text="{Binding User}" Width="40" Foreground="White"/>
+                    <Image x:Name="StatusImage" Width="30"
+                           Height="20" Source= "{Binding IsOnline}"/>
                 </StatusBarItem>
                 <Separator/>
                 <StatusBarItem>
-                    <TextBlock Text="Кол-во пересланных сообщений:" Foreground="White"/>
+                    <TextBlock x:Name="User"
+                               Text="Пользователь:" Foreground="White"/>
                 </StatusBarItem>
                 <StatusBarItem>
-                    <TextBlock Text="{Binding CountOfGeneralFWDMessages}" Foreground="White"/>
+                    <TextBlock x:Name="UserName" Text="{Binding User}"
+                               Width="40" Foreground="White"/>
+                </StatusBarItem>
+                <Separator/>
+                <StatusBarItem>
+                    <TextBlock x:Name="ForwardedMessages" 
+                               Text="Кол-во пересланных сообщений:" Foreground="White"/>
+                </StatusBarItem>
+                <StatusBarItem>
+                    <TextBlock x:Name="GeneralForwardedMessages" 
+                               Text="{Binding CountOfGeneralFWDMessages}" Foreground="White"/>
                 </StatusBarItem>
             </StatusBar>
         </Grid>
