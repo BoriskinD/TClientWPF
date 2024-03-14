@@ -214,8 +214,8 @@ namespace TClientWPF.Model
             {
                 await Connect();
                 await GetUserChats();
-                ConnectionRestored?.Invoke(this, EventArgs.Empty);
                 logger.AddText($"INFO: Переподключение выполнено успешно.");
+                ConnectionRestored?.Invoke(this, EventArgs.Empty);
             }
             catch (ArgumentException aEx)
             {

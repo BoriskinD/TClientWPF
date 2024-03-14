@@ -229,6 +229,7 @@ namespace TClientWPF.ViewModel
             telegramClientWrapper = new TClient();
             telegramClientWrapper.PropertyChanged += OnTClientChanged;
             telegramClientWrapper.ConnectionDropped += OnConnectionDropped;
+            telegramClientWrapper.ConnectionRestored += OnConnectionRestored;
             dialogService = new DefaultDialogService();
             window = new WindowService();
             SettingsCommand = new RelayCommand(ShowSettings);
@@ -369,6 +370,36 @@ namespace TClientWPF.ViewModel
                 IsDisconnectButtonEnable = false;
                 IsCheckMsgHistoryButtonEnable = false;
             }
+        }
+
+        private async void OnConnectionRestored(object sender, EventArgs e)
+        {
+            checkingHistoryInProgress = true;
+            IsCheckMsgHistoryButtonEnable = false;
+            try 
+            { 
+                await telegramClientWrapper.CheckHistory();
+            }
+            catch (Exception ex)
+            {
+                logger.AddText($"WARNING: Ошибка проверки истории сообщений после переподключения к Telegram - {ex.Message}");
+                return;
+            }
+            finally
+            {
+                telegramClientWrapper.CountOfHistoryFWDMessages = 0;
+                checkingHistoryInProgress = false;
+                IsCheckMsgHistoryButtonEnable = true;
+                if (!telegramClientWrapper.IsOnline)
+                {
+                    IsSettingsButtonEnable = true;
+                    IsConnectButtonEnable = true;
+                    IsCheckMsgHistoryButtonEnable = false;
+                    IsDisconnectButtonEnable = false;
+                }
+            }
+
+            logger.AddText($"INFO: История сообщений в канале {ComboBoxSelectedItem.Value.Title} после восстановления связи с Telegram была успешно проверена. Было переслано {telegramClientWrapper.CountOfHistoryFWDMessages} сообщений");
         }
 
         private void Disconnect()
